@@ -1,0 +1,40 @@
+header {
+    background-color: #0C0A35;
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto; 
+}
+
+.logo {
+    width: 150px;
+    flex-shrink: 0; 
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    flex-grow: 1; /* Makes the nav take up remaining space */
+    justify-content: flex-end; /* Pushes the nav items to the right */
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a {
+    color: #00ffdc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color: #F67A3D;
+}

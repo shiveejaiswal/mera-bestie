@@ -1,0 +1,90 @@
+/* Parent wrapper styling */
+.body-wrapper {
+  background-color: white;  /* Sets the background color to white */
+  padding: 20px;
+  margin: 40px 20px;
+  border-radius: 15px; /* Adds padding of 40px */
+}
+
+/* Main body styling */
+.main-body {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Card container styling */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+/* Individual card styling */
+.card {
+  perspective: 1000px;
+  width: 250px;
+  height: 370px;
+}
+
+/* Card inner flip effect */
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden; /* Ensure content fits within card dimensions */
+}
+
+/* Ensure image fills the card and maintains consistent size */
+.card-front img {
+  width: 100%;
+  height: 100%; /* Ensure image fills the card height */
+  object-fit: cover; /* Maintain aspect ratio without distortion */
+}
+
+.card-back {
+  background-color: #F67A3D;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+.card-back p {
+  padding: 0 20px;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .card-container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .card {
+      width: 80%;
+      height: auto; /* Adjust height to fit the content on smaller screens */
+  }
+
+  .card-front img {
+      height: auto;
+  }
+}
