@@ -3,7 +3,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import Navbar from "../../components/user/navbar/navbar";
 import { motion } from 'framer-motion';  // Import motion
-
+import { Helmet } from "react-helmet";
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const { signup } = useAuth();
@@ -29,6 +29,10 @@ export default function SignUp() {
   };
 
   return (
+    <>
+    <Helmet>
+      <title>Sign Up | Mera Bestie</title>
+    </Helmet>
     <div className="min-h-screen bg-pink-100 py-12 px-4 sm:px-6 lg:px-8 flex flex-col">
       <div className="fixed top-0 left-0 w-full z-50">
         <Navbar />
@@ -135,5 +139,6 @@ export default function SignUp() {
         </motion.div>
       </div>
     </div>
+    </>
   );
 }

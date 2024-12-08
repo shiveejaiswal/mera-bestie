@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/admin/sidebar';
 import { Search, ArrowUpDown } from 'lucide-react';
+import { Helmet } from "react-helmet";
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
@@ -107,6 +108,9 @@ const Customers = () => {
 
   return (
     <div className="flex">
+    <Helmet>
+      <title>Customers | Admin | Mera Bestie</title>
+    </Helmet>
       <Sidebar />
       <div className="flex-1 p-8 ml-[5rem] lg:ml-64 bg-pink-50 min-h-screen">
         <div className="mb-6 flex justify-center">

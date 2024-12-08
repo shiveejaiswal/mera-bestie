@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/admin/sidebar';
 import { Pencil, Save, Search, ArrowUpDown } from 'lucide-react';
+import { Helmet } from "react-helmet";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -120,6 +121,9 @@ const Product = () => {
 
   return (
     <div className="flex">
+    <Helmet>
+      <title>Products | Admin | Mera Bestie</title>
+    </Helmet>
       <Sidebar />
       <div className="flex-1 p-8 ml-[5rem] lg:ml-64 bg-pink-50 min-h-screen">
         <div className="mb-6 flex justify-between items-center">

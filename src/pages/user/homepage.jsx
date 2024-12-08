@@ -5,6 +5,7 @@ import Navbar from "../../components/user/navbar/navbar";
 import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css"; // AOS styles
+import { Helmet } from "react-helmet";
 
 // Scroll Progress Bar Component
 const ScrollProgress = () => {
@@ -43,6 +44,10 @@ const HomePage = () => {
   }, []);
 
   return (
+    <>
+    <Helmet>
+      <title>Home | Mera Bestie</title>
+    </Helmet>
     <div className="w-full">
       <ScrollProgress />
       <Navbar />
@@ -204,6 +209,7 @@ const HomePage = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 

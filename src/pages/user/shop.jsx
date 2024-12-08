@@ -3,6 +3,7 @@ import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 import Navbar from '../../components/user/navbar/navbar';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Helmet } from "react-helmet";
 
 const Shop = () => {
   const [viewMode, setViewMode] = useState('grid'); // State for toggling between grid and list views
@@ -106,7 +107,11 @@ const Shop = () => {
     setLoadMore(6);
   };
 
-  return (
+  return (  
+    <>
+    <Helmet>
+      <title>Shop | Mera Bestie</title>
+    </Helmet>
     <div className="bg-pink-100">
       <div className="fixed top-0 left-0 w-full z-50">
         <Navbar />
@@ -256,6 +261,7 @@ const Shop = () => {
         </div>
       </footer>
     </div>
+    </>
   );
 };
 

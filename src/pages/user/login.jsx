@@ -8,6 +8,8 @@ import {
 } from "react-icons/fa";
 import { useAuth } from '../../context/AuthContext';
 import Navbar from "../../components/user/navbar/navbar";
+import { Helmet } from "react-helmet";
+
 
 const Login = () => {
   const { login } = useAuth();
@@ -28,6 +30,10 @@ const Login = () => {
   };
 
   return (
+    <>
+    <Helmet>
+      <title>Login | Mera Bestie</title>
+    </Helmet>
     <div className="min-h-screen bg-gradient-to-br from-pink-100 via-pink-200 to-pink-300 py-12 px-4 sm:px-6 lg:px-8 flex flex-col animate-fade-in">
       <div className="fixed top-0 left-0 w-full z-50">
         <Navbar />
@@ -86,6 +92,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

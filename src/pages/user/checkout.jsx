@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 import Navbar from '../../components/user/navbar/navbar';
+import { Helmet } from "react-helmet";    
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -165,6 +166,9 @@ const Checkout = () => {
 
   return (      
     <>
+    <Helmet>
+      <title>Checkout | Mera Bestie</title>
+    </Helmet>
     <Navbar/>
     <div className="container mx-auto p-4 flex flex-col md:flex-row gap-6">
       {/* Address Form Section */}

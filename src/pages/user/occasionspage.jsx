@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Search, Cake, Heart, Gift, Sparkles, Music, Utensils, GraduationCap } from 'lucide-react';
 import Navbar from '../../components/user/navbar/navbar';
+import { Helmet } from "react-helmet";
 
 const occasions = [
   { id: 1, title: 'Birthdays', Icon: Cake },
@@ -22,6 +23,9 @@ export default function OccasionsPage() {
 
   return (
     <>
+    <Helmet>
+      <title>Occasions | Mera Bestie</title>
+    </Helmet>
       <Navbar />
       <div className="min-h-screen bg-pink-50 py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">
         <div className="max-w-7xl mx-auto">

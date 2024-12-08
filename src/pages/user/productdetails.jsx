@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../../components/user/navbar/navbar';
+import { Helmet } from "react-helmet";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -93,6 +94,9 @@ const ProductDetail = () => {
 
   return (
     <>
+    <Helmet>
+      <title>Product Details | Mera Bestie</title>
+    </Helmet>
       <Navbar />
       <ToastContainer />
       <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white py-12">

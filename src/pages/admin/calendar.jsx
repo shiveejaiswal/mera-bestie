@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import Sidebar from '../../components/admin/sidebar';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { Helmet } from "react-helmet";
 
 const CalendarPage = () => {
   const [date, setDate] = useState(new Date());
 
   return (
+    <>
+    <Helmet>
+      <title>Calendar | Admin | Mera Bestie</title>
+    </Helmet>
     <div className="flex">
       <Sidebar />
       <div className="flex-1 p-8 ml-[5rem] lg:ml-64 bg-pink-50 min-h-screen">
@@ -38,6 +43,7 @@ const CalendarPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

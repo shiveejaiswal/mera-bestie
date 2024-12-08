@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaHome, FaExclamationTriangle } from 'react-icons/fa';
-
+import { Helmet } from "react-helmet";
 const NotFoundPage = () => {
   return (
+    <>
+    <Helmet>
+      <title>404 | Mera Bestie</title>
+    </Helmet>
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-4">
       <div className="text-center">
         <FaExclamationTriangle className="text-yellow-500 text-6xl mb-8 mx-auto" />
@@ -19,6 +23,7 @@ const NotFoundPage = () => {
         </Link>
       </div>
     </div>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Navbar from "../../components/user/navbar/navbar";
+import { Helmet } from "react-helmet";
 
 function About() {
   useEffect(() => {
@@ -10,6 +11,9 @@ function About() {
 
   return (
     <>
+    <Helmet>
+      <title>About Us | Mera Bestie</title>
+    </Helmet>
     <Navbar />    
     <div className="min-h-screen bg-gradient-to-b from-pink-100 to-pink-50">
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">

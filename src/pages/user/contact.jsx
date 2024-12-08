@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Navbar from "../../components/user/navbar/navbar";
+import { Helmet } from "react-helmet";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -50,6 +51,9 @@ const ContactUs = () => {
 
   return (
     <>
+    <Helmet>
+      <title>Contact Us | Mera Bestie</title>
+    </Helmet>
     <Navbar />
     <div className="min-h-screen bg-pink-100 py-12 px-4 sm:px-6 lg:px-8">
       {showSuccess && (

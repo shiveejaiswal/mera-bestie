@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/admin/sidebar';
 import { Search, ArrowUpDown } from 'lucide-react';
+import { Helmet } from "react-helmet";
 
 const Complaints = () => {
   const [complaints, setComplaints] = useState([]);
@@ -78,6 +79,9 @@ const Complaints = () => {
 
   return (
     <div className="flex">
+    <Helmet>
+      <title>Complaints | Admin | Mera Bestie</title>
+    </Helmet>
       <Sidebar />
       <div className="flex-1 p-8 ml-[5rem] lg:ml-64 bg-pink-50 min-h-screen">
         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-10 w-full max-w-2xl px-4">

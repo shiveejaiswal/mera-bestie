@@ -5,10 +5,14 @@ import RecentlyViewed from "../../components/user/cart/recentlyviewed";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Navbar from "../../components/user/navbar/navbar";
+import { Helmet } from "react-helmet";
 
 const ShoppingCartPage = () => {
   return (
     <>
+    <Helmet>
+      <title>Cart | Mera Bestie</title>
+    </Helmet>
     <Navbar />
     <div className="container mx-auto p-4 md:p-6 space-y-6">
       
