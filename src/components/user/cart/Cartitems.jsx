@@ -77,7 +77,7 @@ const CartItems = () => {
     if (newQuantity >= 1) {
       try {
         const userId = sessionStorage.getItem('userId');
-        const response = await fetch('https://ecommercebackend-8gx8.onrender.comupdate-quantity', {
+        const response = await fetch('https://ecommercebackend-8gx8.onrender.com/update-quantity', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -108,7 +108,7 @@ const CartItems = () => {
   const handleRemoveItem = async (itemId) => {
     try {
       const userId = sessionStorage.getItem('userId');
-      const response = await fetch('https://ecommercebackend-8gx8.onrender.comdelete-items', {
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/delete-items', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
