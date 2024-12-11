@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../../components/user/footer/footer";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/user/navbar/navbar";
 import { motion } from "framer-motion";
 import AOS from "aos";
-import "aos/dist/aos.css"; // AOS styles
+import "aos/dist/aos.css";
 import { Helmet } from "react-helmet";
+
+import Navbar from "../../components/user/navbar/navbar";
+import Footer from "../../components/user/footer/footer";
 
 // Scroll Progress Bar Component
 const ScrollProgress = () => {
@@ -26,10 +27,10 @@ const ScrollProgress = () => {
   return (
     <motion.div
       style={{ scaleX: scrollProgress / 100 }}
-      className="fixed top-0 left-0 h-2 bg-blue-500 origin-left z-50"
+      className="fixed top-0 left-0 h-1 bg-gradient-to-r from-pink-500 to-blue-500 origin-left z-50"
       initial={{ scaleX: 0 }}
       animate={{ scaleX: scrollProgress / 100 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
     />
   );
 };
@@ -37,178 +38,197 @@ const ScrollProgress = () => {
 const HomePage = () => {
   useEffect(() => {
     AOS.init({
-      duration: 1200, // Animation duration in milliseconds
-      easing: "ease-in-out", // Animation easing
-      once: true, // Whether animation should run only once
+      duration: 1200,
+      easing: "ease-in-out-cubic",
+      once: true,
     });
   }, []);
 
+  const productCategories = [
+    {
+      img: "https://i.pinimg.com/originals/96/24/6e/96246e3c133e6cb5ae4c7843f9e45b22.jpg",
+      title: "Stationery",
+      description: "Elevate your workspace with our premium stationery.",
+      category: "Stationery"
+    },
+    {
+      img: "https://tse1.mm.bing.net/th?id=OIP.EYAqW5p_HzCoXKq1dXvGyQHaFj&pid=Api&P=0&h=180",
+      title: "Gift Boxes",
+      description: "Curated gifts that speak volumes of your affection.",
+      category: "Gift Boxes"
+    },
+    {
+      img: "https://tse3.mm.bing.net/th?id=OIP.90zsFkK9l2Nttf3fQu12ZwHaE8&pid=Api&P=0&h=180",
+      title: "Books",
+      description: "Transform spaces with our sophisticated decor books.",
+      category: "Books"
+    }
+  ];
+
   return (
     <>
-    <Helmet>
-      <title>Home | Mera Bestie</title>
-    </Helmet>
-    <div className="w-full">
+      <Helmet>
+        <title>Mera Bestie | Unique Gifting Experience</title>
+        <meta name="description" content="Discover unique gifts and thoughtful collections for every occasion." />
+      </Helmet>
       <ScrollProgress />
       <Navbar />
+      <div className="w-full bg-white">
 
-      {/* Hero Section */}
-      <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <motion.img
-            src="https://cdn.wallpapersafari.com/89/8/lybQgH.jpg"
-            alt="Background"
-            className="w-full h-full object-cover"
-            initial={{ scale: 1.2 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 2, ease: "easeOut" }}
-          />
-        </div>
+        {/* Hero Section with Enhanced Design */}
+        <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <motion.img
+              src="https://cdn.wallpapersafari.com/89/8/lybQgH.jpg"
+              alt="Elegant Gift Background"
+              className="w-full h-full object-cover filter brightness-75"
+              initial={{ scale: 1.1 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 2, ease: "easeOut" }}
+            />
+          </div>
 
-        {/* Content */}
-        <motion.div
-          className="relative z-10 container mx-auto max-w-4xl px-4"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <div className="bg-pink-100/90 p-8 md:p-12 rounded-lg backdrop-blur-sm">
-            <h1 className="mb-6 text-4xl md:text-5xl font-serif text-center">
-              Revolutionizing Gift Giving
-            </h1>
-            <p className="mb-8 text-gray-700 text-center max-w-2xl mx-auto">
-              A world of unique gifts for every moment and milestone
-            </p>
-            <div className="text-center">
+          <motion.div
+            className="relative z-10 container mx-auto max-w-4xl px-4"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <div className="bg-white/90 p-10 md:p-16 rounded-2xl shadow-2xl text-center">
+              <h1 className="mb-6 text-5xl md:text-6xl font-bold text-gray-800 leading-tight">
+                Crafting Memorable Moments
+              </h1>
+              <p className="mb-8 text-xl text-gray-600 max-w-2xl mx-auto">
+                Transforming ordinary moments into extraordinary memories with our curated collections
+              </p>
+              <div className="space-x-4">
+                <Link to="/about">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-pink-500 text-white hover:bg-pink-600 px-10 py-3 rounded-full uppercase text-sm tracking-wider font-semibold shadow-lg transition-all"
+                  >
+                    Explore Our Story
+                  </motion.button>
+                </Link>
+                <Link to="/shop">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-white border-2 border-pink-500 text-pink-500 hover:bg-pink-50 px-10 py-3 rounded-full uppercase text-sm tracking-wider font-semibold shadow-md transition-all"
+                  >
+                    Shop Now
+                  </motion.button>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* Product Categories Section */}
+        <section className="px-4 py-20 bg-gray-50">
+          <div className="container mx-auto max-w-6xl">
+            <motion.div
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: -50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              <h2 className="text-4xl font-bold mb-4 text-gray-800">Our Collections</h2>
+              <div className="w-24 h-1 bg-pink-500 mx-auto mb-6"></div>
+              <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+                Discover meticulously crafted categories designed to inspire and delight
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="grid gap-10 md:grid-cols-3"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: { 
+                    delayChildren: 0.3, 
+                    staggerChildren: 0.2 
+                  }
+                }
+              }}
+            >
+              {productCategories.map((category, index) => (
+                <Link to={'/shop'}>
+                  <motion.div
+                  key={index}
+                  className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group"
+                  variants={{
+                    hidden: { opacity: 0, y: 30 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
+                >
+                  <div className="relative h-80 overflow-hidden">
+                    <img
+                      src={category.img}
+                      alt={category.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-6 text-center bg-white">
+                    <h3 className="text-2xl font-bold mb-3 text-gray-800">{category.title}</h3>
+                    <p className="text-gray-600">{category.description}</p>
+                  </div>
+                </motion.div>
+                </Link>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Vision Section with Refined Design */}
+        <section className="relative min-h-[80vh] flex items-center" data-aos="fade-up">
+          <div className="absolute inset-0 z-0">
+            <img
+              src="https://tse3.mm.bing.net/th?id=OIP.RNJBshhRJcxPoSt2Slj5bAHaEK&pid=Api&P=0&h=180"
+              alt="Vision Background"
+              className="w-full h-full object-cover filter brightness-50"
+              loading="lazy"
+            />
+          </div>
+
+          <div className="container relative z-10 mx-auto max-w-6xl px-4">
+            <motion.div
+              className="bg-white/90 p-12 md:p-16 rounded-3xl max-w-2xl mx-auto text-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            >
+              <h2 className="text-5xl font-bold mb-8 text-gray-800">
+                Our Vision
+              </h2>
+              <p className="text-xl text-gray-700 mb-10 leading-relaxed">
+                We believe in creating more than just products – we craft experiences that connect hearts, 
+                celebrate relationships, and turn ordinary moments into extraordinary memories. 
+                Our mission is to be your partner in expressing love, appreciation, and thoughtfulness.
+              </p>
               <Link to="/about">
                 <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  className="bg-white text-black hover:bg-gray-50 px-8 py-2 rounded uppercase text-sm tracking-wider"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-pink-500 text-white hover:bg-pink-600 px-12 py-4 rounded-full uppercase text-sm tracking-wider font-semibold shadow-xl transition-all"
                 >
-                  Learn More
+                  Our Journey
                 </motion.button>
               </Link>
-            </div>
+            </motion.div>
           </div>
-        </motion.div>
-      </section>
+        </section>
 
-      {/* Products Section */}
-      <section className="px-4 py-16">
-        <div className="container mx-auto max-w-6xl">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: -50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-          >
-            <h2 className="text-4xl font-bold mb-4">Products</h2>
-            <div className="w-24 h-0.5 bg-gray-300 mx-auto mb-8"></div>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Discover our diverse range of products crafted for all occasions.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0, scale: 0.9 },
-              visible: {
-                opacity: 1,
-                scale: 1,
-                transition: { delayChildren: 0.2, staggerChildren: 0.2 },
-              },
-            }}
-          >
-            {[
-              {
-                img: "https://i.pinimg.com/originals/96/24/6e/96246e3c133e6cb5ae4c7843f9e45b22.jpg",
-                title: "Stationery Items",
-              },
-              {
-                img: "https://tse1.mm.bing.net/th?id=OIP.EYAqW5p_HzCoXKq1dXvGyQHaFj&pid=Api&P=0&h=180",
-                title: "Gift Items",
-              },
-              {
-                img: "https://tse3.mm.bing.net/th?id=OIP.90zsFkK9l2Nttf3fQu12ZwHaE8&pid=Api&P=0&h=180",
-                title: "Decor Items",
-              },
-            ].map((product, index) => (
-              <motion.div
-                key={index}
-                className="overflow-hidden rounded-lg shadow-md group"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-              >
-                <div className="relative h-64">
-                  <img
-                    src={product.img}
-                    alt={`Product: ${product.title}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="p-6 bg-pink-100">
-                  <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
-                  <p className="text-gray-600 text-sm">
-                    Discover high-quality and creative gift ideas.
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Vision Section */}
-      <section className="relative min-h-[600px] overflow-hidden" data-aos="zoom-in">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://tse3.mm.bing.net/th?id=OIP.RNJBshhRJcxPoSt2Slj5bAHaEK&pid=Api&P=0&h=180"
-            alt="Vision background"
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-cyan-400/20"></div>
-        </div>
-
-        {/* Content */}
-        <div className="container relative z-10 mx-auto max-w-6xl px-4 py-16">
-          <motion.div
-            className="max-w-xl"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-          >
-            <div className="bg-pink-100/90 p-8 md:p-12 rounded-lg backdrop-blur-sm">
-              <h2 className="text-4xl font-bold mb-6">Our Vision</h2>
-              <p className="text-gray-700 mb-8">
-                Penatibus sem vitae mollis luctus mi tellus. Maximus eu eleifend
-                aptent dapibus metus maecenas consequat. Elementum interdum a
-                semper.
-              </p>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                className="bg-black text-white hover:bg-gray-900 px-6 py-2 rounded uppercase text-sm font-medium tracking-wider"
-              >
-                Learn More
-              </motion.button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+        <Footer />
+      </div>
     </>
   );
 };

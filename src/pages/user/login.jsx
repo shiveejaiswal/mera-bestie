@@ -1,21 +1,17 @@
 import React, { useState } from "react";
-import {
-  FaGoogle,
-  FaFacebook,
-  FaTwitter,
-  FaEye,
-  FaEyeSlash,
-} from "react-icons/fa";
+import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
+import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 import Navbar from "../../components/user/navbar/navbar";
+import { motion } from 'framer-motion';
 import { Helmet } from "react-helmet";
-
 
 const Login = () => {
   const { login } = useAuth();
   const [emailOrMobile, setEmailOrMobile] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,73 +21,105 @@ const Login = () => {
         window.location.href = '/';
       }
     } catch (error) {
+      setError('Login failed. Please check your credentials.');
       console.error('Login failed:', error);
     }
   };
 
   return (
     <>
-    <Helmet>
-      <title>Login | Mera Bestie</title>
-    </Helmet>
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-pink-200 to-pink-300 py-12 px-4 sm:px-6 lg:px-8 flex flex-col animate-fade-in">
-      <div className="fixed top-0 left-0 w-full z-50">
-        <Navbar />
-      </div>
-      <div className="flex-grow flex items-center justify-center mt-16">
-        <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8 animate-zoom-in">
-          <h2 className="text-3xl font-bold mb-6 text-center text-gray-900 animate-text-focus-in">
-            Login
-          </h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label className="block text-lg text-gray-700">Email</label>
-              <input
-                type="text"
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
-                value={emailOrMobile}
-                onChange={(e) => setEmailOrMobile(e.target.value)}
-              />
+      <Helmet>
+        <title>Login | Mera Bestie</title>
+      </Helmet>
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 to-pink-100 flex items-center justify-center p-4">
+        <div className="fixed top-0 left-0 w-full z-50">
+          <Navbar />
+        </div>
+        
+        <motion.div 
+          className="w-full max-w-md bg-white shadow-2xl rounded-2xl overflow-hidden"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ 
+            duration: 0.5,
+            type: "spring",
+            stiffness: 120
+          }}
+        >
+          <div className="p-8">
+            <div className="text-center mb-8">
+              <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+                Welcome Back
+              </h2>
+              <p className="text-pink-600 mt-2">
+                Log in to Mera Bestie
+              </p>
             </div>
-            <div className="mb-4 animate-fade-in-right">
-              <label className="block text-lg text-gray-700">Password</label>
+
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg mb-6 text-center">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Email/Mobile Input */}
               <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Mail className="text-pink-400" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Email or Mobile Number"
+                  required
+                  className="w-full pl-10 pr-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-300"
+                  value={emailOrMobile}
+                  onChange={(e) => setEmailOrMobile(e.target.value)}
+                />
+              </div>
+
+              {/* Password Input */}
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className="text-pink-400" />
+                </div>
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                  placeholder="Password"
+                  required
+                  className="w-full pl-10 pr-12 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-300"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <button
                   type="button"
-                  className="absolute right-2 top-2 text-gray-700 hover:text-pink-500 transition-all"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-pink-400 hover:text-pink-600 transition"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
+
+              {/* Submit Button */}
+              <motion.button
+                type="submit"
+                className="w-full bg-pink-500 text-white py-3 rounded-lg font-semibold hover:bg-pink-600 transition duration-300 transform active:scale-95"
+                whileTap={{ scale: 0.95 }}
+              >
+                Log In
+              </motion.button>
+            </form>
+            <div className="mt-6 text-center">
+              <p className="text-gray-600 text-sm">
+                Don't have an account? 
+                <a href="/signup" className="text-pink-600 hover:text-pink-800 ml-2 font-semibold">
+                  Sign Up
+                </a>
+              </p>
             </div>
-            <button
-              type="submit"
-              className="w-full bg-pink-500 text-white py-2 rounded-md hover:bg-pink-600 transition-all duration-300 transform hover:scale-105 animate-bounce-on-hover text-lg"
-            >
-              Login
-            </button>
-          </form>
-          <div className="mt-6 flex justify-center space-x-4">
-            <button className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition-transform duration-300 transform hover:rotate-12 animate-float">
-              <FaFacebook />
-            </button>
-            <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-transform duration-300 transform hover:rotate-12 animate-float">
-              <FaGoogle />
-            </button>
-            <button className="bg-blue-400 text-white p-2 rounded-full hover:bg-blue-500 transition-transform duration-300 transform hover:rotate-12 animate-float">
-              <FaTwitter />
-            </button>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
     </>
   );
 };

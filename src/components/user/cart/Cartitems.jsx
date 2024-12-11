@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import emptyCart from '../../Images/empty_cart.webp';
 import { Link } from 'react-router-dom';
@@ -9,6 +9,7 @@ const CartItems = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [voucher, setVoucher] = useState('');
+  const [discount, setDiscount] = useState(0);
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -29,7 +30,6 @@ const CartItems = () => {
           return;
         }
 
-        // Group items by productId and sum quantities
         const groupedItems = cartData.cart.reduce((acc, item) => {
           if (!acc[item.productId]) {
             acc[item.productId] = {
@@ -42,7 +42,6 @@ const CartItems = () => {
           return acc;
         }, {});
 
-        // Fetch product details for each unique product
         const productPromises = Object.values(groupedItems).map(async (item) => {
           const productResponse = await fetch(`https://ecommercebackend-8gx8.onrender.com/product/${item.productId}`);
           const productData = await productResponse.json();
@@ -129,14 +128,24 @@ const CartItems = () => {
   };
 
   const calculateTotal = () => {
-    return cartItems.reduce((total, item) => {
+    const subtotal = cartItems.reduce((total, item) => {
       return total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity);
-    }, 0).toFixed(2);
+    }, 0);
+    const discountedTotal = subtotal * (1 - discount);
+    return discountedTotal.toFixed(2);
+  };
+
+  const handleVoucherRedeem = () => {
+    if (voucher.toUpperCase() === 'OFF10') {
+      setDiscount(0.1); 
+    } else {
+      setDiscount(0);
+    }
   };
 
   if (loading) {
     return (
-      <div className="bg-pink-100 p-4 md:p-6 flex justify-center items-center h-64">
+      <div className="flex justify-center items-center h-64 bg-pink-50">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-pink-600"></div>
       </div>
     );
@@ -144,107 +153,149 @@ const CartItems = () => {
 
   if (error || cartItems.length === 0) {
     return (
-      <div className="bg-pink-100 p-4 md:p-6 flex flex-col items-center justify-center h-96">
+      <div className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
         <img src={emptyCart} alt="Empty Cart" className="w-48 h-48 mb-4" />
-        <p className="text-lg text-gray-600">{error || 'Your cart is empty'}</p>
+        <p className="text-lg text-gray-600 mb-4">{error || 'Your cart is empty'}</p>
+        <Link 
+          to="/shop" 
+          className="px-4 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600 transition-colors"
+        >
+          Continue Shopping
+        </Link>
       </div>
     );
   }
 
   return (
-    <>
-        <div className="space-y-4">
-      <div className="bg-pink-100 p-4 md:p-6 space-y-4">
-        {cartItems.map((item) => (
-          <div
-            key={item._id}
-            className="flex flex-col md:flex-row items-center justify-between bg-white p-4 shadow-sm rounded-md space-y-4 md:space-y-0"
-          >
-            {/* Product Info Section */}
-            <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 bg-gray-300 rounded-md flex-shrink-0">
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="w-full h-full object-cover rounded-md"
-                />
+    <div className="space-y-6">
+      <div className="bg-white shadow-md rounded-lg">
+        <div className="p-4 border-b">
+          <h2 className="text-xl font-bold text-gray-800">Your Cart</h2>
+        </div>
+        <div className="p-4 space-y-4">
+          {cartItems.map((item) => (
+            <div
+              key={item._id}
+              className="flex items-center justify-between border-b pb-4 last:border-b-0"
+            >
+              <div className="flex items-center space-x-4">
+                <div className="w-20 h-20 bg-gray-100 rounded-md overflow-hidden">
+                  <img
+                    src={item.img}
+                    alt={item.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-base">{item.name}</h3>
+                  <p className="text-sm text-gray-500">{item.description}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-sm md:text-base">
-                  {item.name}
-                </h3>
-                <p className="text-xs md:text-sm text-gray-500">{item.description}</p>
+
+              <div className="flex items-center space-x-4">
+                <span className="font-medium text-base">Rs. {item.price}</span>
+                
+                <div className="flex items-center border rounded-md">
+                  <button 
+                    onClick={() => handleQuantityChange(item._id, -1)}
+                    className="px-2 py-1 text-gray-600 hover:bg-gray-100"
+                  >
+                    <FontAwesomeIcon icon={faMinus} className="text-sm" />
+                  </button>
+                  <input
+                    type="text"
+                    value={item.quantity}
+                    readOnly
+                    className="w-12 text-center border-none text-sm"
+                  />
+                  <button 
+                    onClick={() => handleQuantityChange(item._id, 1)}
+                    className="px-2 py-1 text-gray-600 hover:bg-gray-100"
+                  >
+                    <FontAwesomeIcon icon={faPlus} className="text-sm" />
+                  </button>
+                </div>
+                
+                <span className="font-medium text-base">
+                  Rs. {(parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity).toFixed(2)}
+                </span>
+                
+                <button 
+                  onClick={() => handleRemoveItem(item._id)}
+                  className="text-red-500 hover:text-red-700 transition-colors"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
               </div>
             </div>
+          ))}
+        </div>
+      </div>
 
-            {/* Price and Quantity Section */}
-            <div className="flex items-center space-x-4 md:space-x-6">
-              <span className="font-medium text-sm md:text-base">
-                Rs. {item.price}
-              </span>
-              <div className="flex items-center border px-2 py-1 rounded-md">
-                <button 
-                  onClick={() => handleQuantityChange(item._id, -1)}
-                  className="px-2 text-sm md:text-lg font-semibold"
-                >
-                  -
-                </button>
-                <input
-                  type="text"
-                  value={item.quantity}
-                  readOnly
-                  className="w-8 text-center text-xs md:text-sm border-none outline-none"
-                />
-                <button 
-                  onClick={() => handleQuantityChange(item._id, 1)}
-                  className="px-2 text-sm md:text-lg font-semibold"
-                >
-                  +
-                </button>
+      <div className="bg-white shadow-md rounded-lg">
+        <div className="p-4 border-b">
+          <h2 className="text-xl font-bold text-gray-800">Order Summary</h2>
+        </div>
+        <div className="p-4 space-y-4">
+          <div className="flex items-center space-x-2">
+            <input
+              type="text"
+              placeholder="Enter voucher code"
+              value={voucher}
+              onChange={(e) => setVoucher(e.target.value)}
+              className="flex-grow border rounded-md px-3 py-2"
+            />
+            <button 
+              className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600" 
+              onClick={handleVoucherRedeem}
+            >
+              Redeem
+            </button>
+          </div>
+          
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span>Subtotal</span>
+              <span>Rs. {cartItems.reduce((total, item) => 
+                total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity), 
+                0).toFixed(2)}</span>
+            </div>
+            {discount > 0 && (
+              <div className="flex justify-between text-green-600">
+                <span>Discount (10%)</span>
+                <span>- Rs. {(cartItems.reduce((total, item) => 
+                  total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity), 
+                  0) * discount).toFixed(2)}</span>
               </div>
-              <span className="font-medium text-sm md:text-base">
-                Rs. {(parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity).toFixed(2)}
-              </span>
-              <button 
-                onClick={() => handleRemoveItem(item._id)}
-                className="text-red-500"
-              >
-                <FontAwesomeIcon icon={faTrash} className="hover:bg-red-300" />
-              </button>
+            )}
+            <div className="flex justify-between">
+              <span>Shipping</span>
+              <span>Rs. 0.00</span>
+            </div>
+            <div className="flex justify-between font-bold text-base">
+              <span>Total</span>
+              <span>Rs. {calculateTotal()}</span>
             </div>
           </div>
-        ))}
-      </div>
-
-      <div className="bg-pink-100 p-4 md:p-6 shadow-md rounded-md">
-        <h3 className="text-base md:text-lg font-semibold mb-2">
-          Do you have a voucher?
-        </h3>
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
-          <input
-            type="text"
-            placeholder="Enter the code"
-            value={voucher}
-            onChange={(e) => setVoucher(e.target.value)}
-            className="flex-grow border p-2 rounded-md outline-none text-sm md:text-base"
-          />
-          <button className="bg-black text-white px-4 py-2 rounded-md text-sm md:text-base hover:bg-gray-500">
-            Redeem
-          </button>
+          
+          <Link 
+            to={{
+              pathname: "/checkout",
+              state: {
+                total: cartItems.reduce((total, item) => 
+                  total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity), 
+                  0).toFixed(2)
+              }
+            }}
+            className="block"
+          >
+            <button className="w-full bg-pink-500 text-white py-2 rounded-md hover:bg-pink-600">
+              Proceed to Checkout
+            </button>
+          </Link>
         </div>
-        <div className="text-gray-600 space-y-2 text-sm md:text-base">
-          <p>Subtotal: Rs. {calculateTotal()}</p>
-          <p>Shipping: Rs. 0.00</p>
-          <h4 className="text-base md:text-lg font-semibold">Total: Rs. {calculateTotal()}</h4>
-        </div>
-        <Link to="/checkout" className="block">
-          <button className="bg-black text-white w-full py-2 rounded-md mt-4 text-sm md:text-base hover:bg-gray-500">
-            Proceed to Checkout
-          </button>
-        </Link>
       </div>
     </div>
-    </>
   );
 };
 
