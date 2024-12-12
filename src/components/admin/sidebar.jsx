@@ -144,6 +144,8 @@ const Sidebar = () => {
                             value={productData.rating}
                             onChange={handleInputChange}
                             className="w-full mb-3 p-2 border rounded"
+                            min={0}
+                            max={5}
                         />
                         <div className="flex mb-3">
                             <input

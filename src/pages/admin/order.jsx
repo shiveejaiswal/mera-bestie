@@ -96,8 +96,6 @@ const Orders = () => {
     try {
       const response = await fetch('https://ecommercebackend-8gx8.onrender.com/get-orders');
       const data = await response.json();
-      
-      // Add a simulated status for demonstration
       const ordersWithStatus = data.orders.map(order => ({
         ...order,
         status: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'][
