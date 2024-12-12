@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, MapPin, ShoppingCart, CreditCard } from 'lucide-react';
+import { CheckCircle, MapPin, ShoppingCart, CreditCard, Tag } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Helmet } from "react-helmet";
 import Navbar from '../../components/user/navbar/navbar';
+import { useLocation } from 'react-router-dom';
 
 const Checkout = () => {
+  const location = useLocation()
+  const total = parseFloat(location.state?.total || 0)
+  const discount = parseFloat(location.state?.discount || 0)
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -85,10 +89,15 @@ const Checkout = () => {
     return Object.values(address).every(value => value.trim() !== '');
   };
 
-  const calculateTotal = () => {
+  const calculateSubtotal = () => {
     return cartItems.reduce((total, item) => {
       return total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity);
-    }, 0).toFixed(2);
+    }, 0);
+  };
+
+  const calculateDiscountAmount = () => {
+    const subtotal = calculateSubtotal();
+    return (subtotal * (discount / 100)).toFixed(2);
   };
 
   const handlePlaceOrder = async () => {
@@ -113,8 +122,8 @@ const Checkout = () => {
 
     // Get current date and time
     const now = new Date();
-    const date = now.toLocaleDateString('en-GB'); // dd-mm-yyyy format
-    const time = now.toLocaleTimeString('en-GB'); // 24hr format
+    const date = now.toLocaleDateString('en-GB');
+    const time = now.toLocaleTimeString('en-GB');
 
     // Prepare products ordered array
     const productsOrdered = cartItems.map(item => ({
@@ -133,7 +142,7 @@ const Checkout = () => {
           date,
           time,
           address: Object.values(address).join(', '),
-          price: calculateTotal(),
+          price: total,
           productsOrdered
         })
       });
@@ -285,15 +294,30 @@ const Checkout = () => {
             <div className="mt-6 space-y-4">
               <div className="flex justify-between text-gray-700">
                 <span>Subtotal</span>
-                <span className="font-semibold">Rs. {calculateTotal()}</span>
+                <span className="font-semibold">Rs. {calculateSubtotal().toFixed(2)}</span>
               </div>
+              
+              {/* Discount Section */}
+              {discount > 0 && (
+                <div className="flex justify-between text-gray-700">
+                  <div className="flex items-center space-x-2">
+                    <Tag className="w-5 h-5 text-green-600" />
+                    <span>Discount ({discount}%)</span>
+                  </div>
+                  <span className="font-semibold text-green-600">
+                    - Rs. {calculateDiscountAmount()}
+                  </span>
+                </div>
+              )}
+              
               <div className="flex justify-between text-gray-700">
                 <span>Shipping</span>
                 <span className="font-semibold text-green-600">Free</span>
               </div>
+              
               <div className="flex justify-between text-xl font-bold border-t pt-4">
                 <span>Total</span>
-                <span>Rs. {calculateTotal()}</span>
+                <span className="text-pink-600">Rs. {total.toFixed(2)}</span>
               </div>
               
               <button

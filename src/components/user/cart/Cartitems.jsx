@@ -9,7 +9,14 @@ const CartItems = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [voucher, setVoucher] = useState('');
-  const [discount, setDiscount] = useState(0);
+  const [discountInfo, setDiscountInfo] = useState({
+    code: '',
+    percentage: 0,
+    message: ''
+  });
+  const VOUCHERS = {
+    'OFF10': { percentage: 0.1, message: '10% discount applied!' },
+  };
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -131,15 +138,25 @@ const CartItems = () => {
     const subtotal = cartItems.reduce((total, item) => {
       return total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity);
     }, 0);
-    const discountedTotal = subtotal * (1 - discount);
+    const discountedTotal = subtotal * (1 - discountInfo.percentage);
     return discountedTotal.toFixed(2);
   };
 
   const handleVoucherRedeem = () => {
-    if (voucher.toUpperCase() === 'OFF10') {
-      setDiscount(0.1); 
+    const normalizedVoucher = voucher.toUpperCase().trim();
+    
+    if (VOUCHERS[normalizedVoucher]) {
+      setDiscountInfo({
+        code: normalizedVoucher,
+        percentage: VOUCHERS[normalizedVoucher].percentage,
+        message: VOUCHERS[normalizedVoucher].message
+      });
     } else {
-      setDiscount(0);
+      setDiscountInfo({
+        code: '',
+        percentage: 0,
+        message: 'Invalid voucher code'
+      });
     }
   };
 
@@ -253,6 +270,12 @@ const CartItems = () => {
             </button>
           </div>
           
+          {discountInfo.message && (
+            <div className={`text-sm ${discountInfo.code ? 'text-green-600' : 'text-red-600'}`}>
+              {discountInfo.message}
+            </div>
+          )}
+          
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span>Subtotal</span>
@@ -260,12 +283,12 @@ const CartItems = () => {
                 total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity), 
                 0).toFixed(2)}</span>
             </div>
-            {discount > 0 && (
+            {discountInfo.percentage > 0 && (
               <div className="flex justify-between text-green-600">
-                <span>Discount (10%)</span>
+                <span>Discount ({discountInfo.percentage * 100}%)</span>
                 <span>- Rs. {(cartItems.reduce((total, item) => 
                   total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity), 
-                  0) * discount).toFixed(2)}</span>
+                  0) * discountInfo.percentage).toFixed(2)}</span>
               </div>
             )}
             <div className="flex justify-between">
@@ -279,13 +302,10 @@ const CartItems = () => {
           </div>
           
           <Link 
-            to={{
-              pathname: "/checkout",
-              state: {
-                total: cartItems.reduce((total, item) => 
-                  total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity), 
-                  0).toFixed(2)
-              }
+            to={'/checkout'}
+            state={{
+              total: calculateTotal(),
+              discount: discountInfo.percentage
             }}
             className="block"
           >
