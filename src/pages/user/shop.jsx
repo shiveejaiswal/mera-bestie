@@ -94,6 +94,19 @@ const Shop = ({category}) => {
     setLoadMore(prevLoadMore=>prevLoadMore-6);
   };
 
+  const addPostToRecentlyViewed = (productId) => {
+    var existingEntries = JSON.parse(localStorage.getItem("recently") || '[]');
+    if (!existingEntries.includes(productId)) {
+      if (existingEntries.length >= 4) {
+        existingEntries.shift();
+      }
+      existingEntries.push(productId);
+      localStorage.setItem("recently", JSON.stringify(existingEntries));
+    } else {
+      console.log(productId + ' already exists');
+    }
+  }
+
   return (  
     <>
       <Helmet>
@@ -287,7 +300,7 @@ const Shop = ({category}) => {
                     >
                       <button 
                         className="w-full bg-pink-50 text-pink-600 py-2 rounded-md 
-                        hover:bg-pink-100 transition-colors"
+                        hover:bg-pink-100 transition-colors" onClick={e=>{addPostToRecentlyViewed(product._id)}}
                       >
                         View Details
                       </button>
