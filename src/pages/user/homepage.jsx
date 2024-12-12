@@ -73,15 +73,14 @@ const HomePage = () => {
       </Helmet>
       <ScrollProgress />
       <Navbar />
-      <div className="w-full bg-white">
-
-        {/* Hero Section with Enhanced Design */}
-        <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+      <div className="w-full bg-white overflow-hidden">
+        {/* Hero Section with Modern Glassmorphism Design */}
+        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <motion.img
               src="https://cdn.wallpapersafari.com/89/8/lybQgH.jpg"
               alt="Elegant Gift Background"
-              className="w-full h-full object-cover filter brightness-75"
+              className="w-full h-full object-cover filter brightness-50"
               initial={{ scale: 1.1 }}
               animate={{ scale: 1 }}
               transition={{ duration: 2, ease: "easeOut" }}
@@ -94,19 +93,19 @@ const HomePage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <div className="bg-white/90 p-10 md:p-16 rounded-2xl shadow-2xl text-center">
-              <h1 className="mb-6 text-5xl md:text-6xl font-bold text-gray-800 leading-tight">
+            <div className="bg-white/20 backdrop-blur-md border border-white/30 p-12 md:p-16 rounded-3xl shadow-2xl text-center">
+              <h1 className="mb-6 text-5xl md:text-6xl font-extrabold text-white tracking-tight bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500 text-transparent">
                 Crafting Memorable Moments
               </h1>
-              <p className="mb-8 text-xl text-gray-600 max-w-2xl mx-auto">
+              <p className="mb-8 text-xl text-white/90 max-w-2xl mx-auto">
                 Transforming ordinary moments into extraordinary memories with our curated collections
               </p>
-              <div className="space-x-4">
+              <div className="space-x-4 flex justify-center">
                 <Link to="/about">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-pink-500 text-white hover:bg-pink-600 px-10 py-3 rounded-full uppercase text-sm tracking-wider font-semibold shadow-lg transition-all"
+                    className="bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 px-10 py-3 rounded-full uppercase text-sm tracking-wider font-semibold shadow-xl transition-all"
                   >
                     Explore Our Story
                   </motion.button>
@@ -115,7 +114,7 @@ const HomePage = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-white border-2 border-pink-500 text-pink-500 hover:bg-pink-50 px-10 py-3 rounded-full uppercase text-sm tracking-wider font-semibold shadow-md transition-all"
+                    className="bg-gradient-to-r from-pink-500 to-blue-500 text-white hover:opacity-90 px-10 py-3 rounded-full uppercase text-sm tracking-wider font-semibold shadow-xl transition-all"
                   >
                     Shop Now
                   </motion.button>
@@ -125,7 +124,7 @@ const HomePage = () => {
           </motion.div>
         </section>
 
-        {/* Product Categories Section */}
+        {/* Product Categories Section with Refined Styling */}
         <section className="px-4 py-20 bg-gray-50">
           <div className="container mx-auto max-w-6xl">
             <motion.div
@@ -135,8 +134,10 @@ const HomePage = () => {
               viewport={{ once: true }}
               transition={{ duration: 1 }}
             >
-              <h2 className="text-4xl font-bold mb-4 text-gray-800">Our Collections</h2>
-              <div className="w-24 h-1 bg-pink-500 mx-auto mb-6"></div>
+              <h2 className="text-4xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500">
+                Our Collections
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-pink-500 to-blue-500 mx-auto mb-6"></div>
               <p className="text-gray-600 max-w-2xl mx-auto text-lg">
                 Discover meticulously crafted categories designed to inspire and delight
               </p>
@@ -159,35 +160,36 @@ const HomePage = () => {
               }}
             >
               {productCategories.map((category, index) => (
-                <Link to={'/shop'}>
+                <Link to='/shop' key={index}>
                   <motion.div
-                  key={index}
-                  className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group"
-                  variants={{
-                    hidden: { opacity: 0, y: 30 },
-                    visible: { opacity: 1, y: 0 }
-                  }}
-                >
-                  <div className="relative h-80 overflow-hidden">
-                    <img
-                      src={category.img}
-                      alt={category.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="p-6 text-center bg-white">
-                    <h3 className="text-2xl font-bold mb-3 text-gray-800">{category.title}</h3>
-                    <p className="text-gray-600">{category.description}</p>
-                  </div>
-                </motion.div>
+                    className="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group transform hover:-translate-y-4"
+                    variants={{
+                      hidden: { opacity: 0, y: 30 },
+                      visible: { opacity: 1, y: 0 }
+                    }}
+                  >
+                    <div className="relative h-80 overflow-hidden">
+                      <img
+                        src={category.img}
+                        alt={category.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="p-6 text-center bg-white">
+                      <h3 className="text-2xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500">
+                        {category.title}
+                      </h3>
+                      <p className="text-gray-600">{category.description}</p>
+                    </div>
+                  </motion.div>
                 </Link>
               ))}
             </motion.div>
           </div>
         </section>
 
-        {/* Vision Section with Refined Design */}
+        {/* Vision Section with Modern Overlay Design */}
         <section className="relative min-h-[80vh] flex items-center" data-aos="fade-up">
           <div className="absolute inset-0 z-0">
             <img
@@ -200,16 +202,16 @@ const HomePage = () => {
 
           <div className="container relative z-10 mx-auto max-w-6xl px-4">
             <motion.div
-              className="bg-white/90 p-12 md:p-16 rounded-3xl max-w-2xl mx-auto text-center"
+              className="bg-white/20 backdrop-blur-md border border-white/30 p-12 md:p-16 rounded-3xl max-w-2xl mx-auto text-center shadow-2xl"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1, ease: "easeOut" }}
             >
-              <h2 className="text-5xl font-bold mb-8 text-gray-800">
+              <h2 className="text-5xl font-extrabold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500">
                 Our Vision
               </h2>
-              <p className="text-xl text-gray-700 mb-10 leading-relaxed">
+              <p className="text-xl text-white/90 mb-10 leading-relaxed">
                 We believe in creating more than just products – we craft experiences that connect hearts, 
                 celebrate relationships, and turn ordinary moments into extraordinary memories. 
                 Our mission is to be your partner in expressing love, appreciation, and thoughtfulness.
@@ -218,7 +220,7 @@ const HomePage = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-pink-500 text-white hover:bg-pink-600 px-12 py-4 rounded-full uppercase text-sm tracking-wider font-semibold shadow-xl transition-all"
+                  className="bg-gradient-to-r from-pink-500 to-blue-500 text-white hover:opacity-90 px-12 py-4 rounded-full uppercase text-sm tracking-wider font-semibold shadow-xl transition-all"
                 >
                   Our Journey
                 </motion.button>
