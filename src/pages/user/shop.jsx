@@ -124,7 +124,8 @@ const Shop = ({category}) => {
           }}
         >
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-5xl font-extrabold text-pink-800 mb-4 tracking-tight">SHOP BY CATEGORY</h2>
+            <h2 className="text-5xl font-extrabold text-pink-800 mb-4 tracking-tight">Discover Our Curated Collections
+            </h2>
             <p className="text-gray-700 text-xl max-w-2xl mx-auto leading-relaxed">
               Discover our exclusive collections tailored just for you, with carefully curated products that speak to your style and personality.
             </p>
