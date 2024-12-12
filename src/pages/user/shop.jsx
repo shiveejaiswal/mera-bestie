@@ -253,7 +253,7 @@ const Shop = ({category}) => {
                     {}
                     <div className="absolute top-2 right-2">
                       <span className="bg-pink-500 text-white text-xs px-2 py-1 rounded">
-                        Save {Math.round(((400 - product.price.split('₹')[2]?product.price.split('₹')[2]:0) / 400) * 100)}%
+                        Save {Math.round(((400 - product.price.split('₹')[2]?product.price.split('₹')[2]:product.price) / 400) * 100)}%
                       </span>
                     </div>
                   </div>
@@ -275,8 +275,8 @@ const Shop = ({category}) => {
                       
                       <div className={`flex ${viewMode === 'grid' ? 'justify-center' : 'justify-between'} items-center space-x-2`}>
                         <div className="flex items-center space-x-2">
-                          <span className="text-gray-500 line-through text-xs" hidden={!product.price.split('₹')[1]}>
-                            ₹{product.price.split('₹')[1]}
+                          <span className="text-gray-500 line-through text-xs">
+                            ₹{product.price.split('₹')[1]||400}
                           </span>
                           <span className="font-bold text-pink-600">
                             ₹{product.price.split('₹')[2]|| product.price}

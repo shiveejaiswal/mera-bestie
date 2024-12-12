@@ -104,15 +104,15 @@ const RecentlyViewed = () => {
                 />
                 <div className="absolute top-2 right-2">
                   <span className="bg-pink-500 text-white text-xs px-2 py-1 rounded">
-                    Save {Math.round(((400 - parseFloat(product.price.split('₹')[2]?.trim() || 400)) / 400) * 100)}%
+                    Save {Math.round(((400 - parseFloat(product.price.split('₹')[2]?.trim() || product.price)) / 400) * 100)}%
                   </span>
                 </div>
               </div>
               <div className="p-3 text-center">
                 <h4 className="font-semibold text-sm mb-1">{product.name}</h4>
                 <div className="flex items-center space-x-2">
-                  <span className="text-gray-500 line-through text-xs" hidden={!product.price.split('₹')[1]}>
-                    ₹{product.price.split('₹')[1]}
+                  <span className="text-gray-500 line-through text-xs">
+                    ₹{product.price.split('₹')[1]||400}
                   </span>
                   <span className="font-bold text-pink-600">
                     ₹{product.price.split('₹')[2]|| product.price}
