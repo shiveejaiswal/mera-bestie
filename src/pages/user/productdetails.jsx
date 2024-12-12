@@ -185,7 +185,7 @@ const ProductDetail = () => {
                   </h1>
                   <div className="flex items-center justify-between">
                     <p className="text-3xl font-semibold text-pink-600">
-                      ${product.price}
+                      {product.price}
                     </p>
                     <div className="flex items-center space-x-2 bg-yellow-50 px-3 py-1 rounded-full">
                       <FaStar className="text-yellow-400" />
