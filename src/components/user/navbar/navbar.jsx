@@ -13,7 +13,7 @@ const ProfessionalNavbar = () => {
   const [userName, setUserName] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const [cartItemCount,setCartItemCount] = useState(0)
+  const [cartItemCount, setCartItemCount] = useState(0)
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
@@ -21,34 +21,33 @@ const ProfessionalNavbar = () => {
   const isActive = (path) => location.pathname === path;
   const searchRef = useRef()
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchCartItems = async () => {
       var total = 0
       const userId = sessionStorage.getItem('userId');
       if (!userId) return;
       const cartResponse = await fetch(`https://ecommercebackend-8gx8.onrender.com/cart/${userId}`);
       const cartData = await cartResponse.json()
-      cartData.cart?.forEach(item=>{
+      cartData.cart?.forEach(item => {
         total = total + item.productQty
-      }
-    )
-    setCartItemCount(total)
-  }
+      })
+      setCartItemCount(total)
+    }
     fetchCartItems()
-},[])
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-        if (searchRef.current && !searchRef.current.contains(event.target)) {
-            setIsSearchOpen(false);
-        }
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setIsSearchOpen(false);
+      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-}, []);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -165,7 +164,12 @@ const ProfessionalNavbar = () => {
               <button 
                 className="text-gray-800 hover:text-pink-600 transition"
               >
-                {isSearchOpen?<div ref={searchRef}><SearchBar /></div>:<FaSearch className="w-5 h-5" onClick={toggleSearch} />}
+                {isSearchOpen ? 
+                  <div ref={searchRef}>
+                    <SearchBar />
+                  </div> : 
+                  <FaSearch className="w-5 h-5" onClick={toggleSearch} />
+                }
               </button>
 
               <Link 
@@ -174,10 +178,11 @@ const ProfessionalNavbar = () => {
               >
                 <FaShoppingCart className="w-5 h-5" />
                 <span className="ml-2 hidden md:block">Cart</span>
-                {cartItemCount?<span className="absolute top-[-8px] right-[-8px] bg-pink-600 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
-                  {cartItemCount}
-                </span>:null}
-                
+                {cartItemCount ? (
+                  <span className="absolute top-[-8px] right-[-8px] bg-pink-600 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
+                    {cartItemCount}
+                  </span>
+                ) : null}
               </Link>
 
               <button className="text-gray-800 hover:text-pink-600 transition hidden md:block">
@@ -218,6 +223,12 @@ const ProfessionalNavbar = () => {
                         >
                           Sign Up
                         </Link>
+                        <Link
+                          to="/admin"
+                          className="block px-4 py-2 hover:bg-pink-50 transition"
+                        >
+                          Seller
+                        </Link>
                       </>
                     )}
                   </div>
@@ -249,6 +260,35 @@ const ProfessionalNavbar = () => {
               </button>
               
               <div className="mt-12 space-y-4">
+                {userId ? (
+                  <Link
+                    to="/logout"
+                    onClick={handleLogout}
+                    className="py-2.5 text-lg font-medium text-gray-800 hover:text-pink-600 transition flex items-center"
+                  >
+                    <FaUser className="mr-3 text-pink-600" />
+                    Logout
+                  </Link>
+                ) : (
+                  <>
+                    {[
+                      { path: "/login", name: "Login", icon: FaUser },
+                      { path: "/Signup", name: "Sign Up", icon: FaUser },
+                      { path: "/admin", name: "Seller Dashboard", icon: FaStore }
+                    ].map(({ path, name, icon: Icon }) => (
+                      <Link
+                        key={path}
+                        to={path}
+                        onClick={toggleMenu}
+                        className="py-2.5 text-lg font-medium text-gray-800 hover:text-pink-600 transition flex items-center"
+                      >
+                        <Icon className="mr-3 text-pink-600" />
+                        {name}
+                      </Link>
+                    ))}
+                  </>
+                )}
+
                 {[
                   { path: "/HomePage", name: "Home", icon: FaHome },
                   { path: "/shop", name: "Shop", icon: FaStore },

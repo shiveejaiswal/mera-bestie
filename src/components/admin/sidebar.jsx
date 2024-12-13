@@ -236,10 +236,18 @@ const Sidebar = () => {
                         </p>
                         <button 
                             onClick={() => setShowDialog(true)}
-                            className="w-full bg-pink-300 text-white py-2 rounded hover:bg-pink-400"
+                            className="w-full bg-pink-300 text-white py-2 rounded hover:bg-pink-400 mb-2"
                         >
                             + Add Product
                         </button>
+                        
+                        {/* New Go to Website button */}
+                        <Link 
+                            to="/" 
+                            className="w-full flex items-center justify-center bg-green-500 text-white py-2 rounded hover:bg-green-600"
+                        >
+                            Go to Website
+                        </Link>
                     </div>
 
                     <footer className={`text-center text-gray-500 text-sm p-4 ${isOpen ? 'block' : 'hidden'}`}>
