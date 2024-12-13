@@ -22,6 +22,23 @@ const Checkout = () => {
     phone: ''
   });
   const [saveAddress, setSaveAddress] = useState(false);
+  useEffect(() => {
+    const savedAddress = localStorage.getItem('savedShippingAddress');
+    const savedSaveAddressPreference = localStorage.getItem('saveAddressPreference');
+    
+    if (savedAddress) {
+      try {
+        const parsedAddress = JSON.parse(savedAddress);
+        setAddress(parsedAddress);
+      } catch (error) {
+        console.error('Error parsing saved address:', error);
+      }
+    }
+
+    if (savedSaveAddressPreference) {
+      setSaveAddress(JSON.parse(savedSaveAddressPreference));
+    }
+  }, []);
 
   useEffect(() => {
     fetchCartItems();
@@ -79,10 +96,32 @@ const Checkout = () => {
 
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
-    setAddress(prev => ({
-      ...prev,
+    const updatedAddress = {
+      ...address,
       [name]: value
-    }));
+    };
+    
+    setAddress(updatedAddress);
+
+    if (saveAddress) {
+      localStorage.setItem('savedShippingAddress', JSON.stringify(updatedAddress));
+    }
+  };
+
+  const handleSaveAddressToggle = (e) => {
+    const isChecked = e.target.checked;
+    setSaveAddress(isChecked);
+
+    // Save address preference
+    localStorage.setItem('saveAddressPreference', JSON.stringify(isChecked));
+
+    if (isChecked) {
+      // Save current address to localStorage
+      localStorage.setItem('savedShippingAddress', JSON.stringify(address));
+    } else {
+      // Remove saved address from localStorage
+      localStorage.removeItem('savedShippingAddress');
+    }
   };
 
   const isAddressValid = () => {
@@ -120,12 +159,10 @@ const Checkout = () => {
       }
     }
 
-    // Get current date and time
     const now = new Date();
     const date = now.toLocaleDateString('en-GB');
     const time = now.toLocaleTimeString('en-GB');
 
-    // Prepare products ordered array
     const productsOrdered = cartItems.map(item => ({
       productId: item._id,
       productQty: item.quantity
@@ -253,7 +290,7 @@ const Checkout = () => {
                   type="checkbox"
                   id="saveAddress"
                   checked={saveAddress}
-                  onChange={(e) => setSaveAddress(e.target.checked)}
+                  onChange={handleSaveAddressToggle}
                   className="text-pink-600 focus:ring-pink-500 rounded"
                 />
                 <label htmlFor="saveAddress" className="text-sm text-gray-700">
@@ -262,8 +299,6 @@ const Checkout = () => {
               </div>
             </div>
           </div>
-
-          {/* Order Summary Section */}
           <div className="md:w-1/3 bg-white rounded-2xl shadow-lg p-8">
             <div className="flex items-center mb-6 space-x-4">
               <ShoppingCart className="text-pink-600 w-8 h-8" />
@@ -335,8 +370,6 @@ const Checkout = () => {
             </div>
           </div>
         </div>
-
-        {/* Success Modal */}
         {showSuccess && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white rounded-2xl p-10 text-center shadow-2xl">
@@ -349,7 +382,7 @@ const Checkout = () => {
               >
                 Back to Cart
               </button>
-            </div>
+              </div>
           </div>
         )}
       </div>
