@@ -26,7 +26,11 @@ const ProfessionalNavbar = () => {
       var total = 0
       const userId = sessionStorage.getItem('userId');
       if (!userId) return;
+<<<<<<< HEAD
       const cartResponse = await fetch(`https://ecommerse-assingment-backend.onrender.com/cart/${userId}`);
+=======
+      const cartResponse = await fetch(`https://ecommercebackend-8gx8.onrender.com/cart/${userId}`);
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
       const cartData = await cartResponse.json()
       cartData.cart?.forEach(item => {
         total = total + item.productQty
@@ -65,7 +69,11 @@ const ProfessionalNavbar = () => {
       const userId = sessionStorage.getItem("userId");
       if (userId) {
         try {
+<<<<<<< HEAD
           const response = await fetch(`https://ecommerse-assingment-backend.onrender.com/auth/user/${userId}`);
+=======
+          const response = await fetch(`https://ecommercebackend-8gx8.onrender.com/auth/user/${userId}`);
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
           const data = await response.json();
           setUserName(data.name);
         } catch (error) {

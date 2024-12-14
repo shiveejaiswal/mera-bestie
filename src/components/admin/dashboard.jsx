@@ -18,7 +18,11 @@ const Dashboard = () => {
     const getOrderData = async () => {
         try {
             setIsLoading(true);
+<<<<<<< HEAD
             const response = await fetch("https://ecommerse-assingment-backend.onrender.com/get-orders");
+=======
+            const response = await fetch("https://ecommercebackend-8gx8.onrender.com/get-orders");
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
             if (!response.ok) {
                 throw new Error('Failed to fetch orders');
             }

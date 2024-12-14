@@ -28,7 +28,11 @@ const CartItems = () => {
       }
 
       try {
+<<<<<<< HEAD
         const cartResponse = await fetch(`https://ecommerse-assingment-backend.onrender.com/cart/${userId}`);
+=======
+        const cartResponse = await fetch(`https://ecommercebackend-8gx8.onrender.com/cart/${userId}`);
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         const cartData = await cartResponse.json();
 
         if (!cartData.success) {
@@ -50,7 +54,11 @@ const CartItems = () => {
         }, {});
 
         const productPromises = Object.values(groupedItems).map(async (item) => {
+<<<<<<< HEAD
           const productResponse = await fetch(`https://ecommerse-assingment-backend.onrender.com/product/${item.productId}`);
+=======
+          const productResponse = await fetch(`https://ecommercebackend-8gx8.onrender.com/product/${item.productId}`);
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
           const productData = await productResponse.json();
           
           if (productData.success) {
@@ -83,7 +91,11 @@ const CartItems = () => {
     if (newQuantity >= 1) {
       try {
         const userId = sessionStorage.getItem('userId');
+<<<<<<< HEAD
         const response = await fetch('https://ecommerse-assingment-backend.onrender.com/update-quantity', {
+=======
+        const response = await fetch('https://ecommercebackend-8gx8.onrender.com/update-quantity', {
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -114,7 +126,11 @@ const CartItems = () => {
   const handleRemoveItem = async (itemId) => {
     try {
       const userId = sessionStorage.getItem('userId');
+<<<<<<< HEAD
       const response = await fetch('https://ecommerse-assingment-backend.onrender.com/delete-items', {
+=======
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/delete-items', {
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

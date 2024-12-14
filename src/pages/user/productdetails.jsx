@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { motion, AnimatePresence } from 'framer-motion';
+=======
+import { motion } from 'framer-motion';
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
@@ -26,15 +30,50 @@ const ProductDetail = () => {
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showAddAnimation, setShowAddAnimation] = useState(false);
   const [stockStatus, setStockStatus] = useState(null);
+<<<<<<< HEAD
+=======
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [recentlyViewed, setRecentlyViewed] = useState([]);
+  const [showReviewDialog, setShowReviewDialog] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [rating, setRating] = useState(1);
+  const [reviewText, setReviewText] = useState('');
+  const [reviews, setReviews] = useState([
+    {
+      name: 'John Doe',
+      rating: 4,
+      reviewText: 'Great product! Really useful and high quality.'
+    },
+    {
+      name: 'Jane Smith',
+      rating: 5,
+      reviewText: 'Exceeded my expectations. Worth every penny!'
+    },
+    {
+      name: 'Alex Johnson',
+      rating: 3,
+      reviewText: 'It’s okay, but I was expecting more features.'
+    }
+  ]);
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+<<<<<<< HEAD
         const response = await fetch(`https://ecommerse-assingment-backend.onrender.com/product/${productId}`);
+=======
+        const response = await fetch(`https://ecommercebackend-8gx8.onrender.com/product/${productId}`);
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         const data = await response.json();
         if (data.success) {
           setProduct(data.product);
           calculateStockStatus(data.product);
+<<<<<<< HEAD
+=======
+          fetchRelatedProducts(data.product.category); // Fetch related products
+          updateRecentlyViewed(data.product); // Update recently viewed products
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         }
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -65,6 +104,32 @@ const ProductDetail = () => {
     setStockStatus({ status, color, stock });
   };
 
+<<<<<<< HEAD
+=======
+  const fetchRelatedProducts = async (category) => {
+    try {
+      const response = await fetch(`https://ecommercebackend-8gx8.onrender.com/products?category=${category}`);
+      const data = await response.json();
+      if (data.success) {
+        setRelatedProducts(data.products.slice(0, 4)); // Fetch 4 related products
+      }
+    } catch (error) {
+      console.error('Error fetching related products:', error);
+    }
+  };
+
+  const updateRecentlyViewed = (productData) => {
+    let viewedProducts = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+    viewedProducts = viewedProducts.filter((p) => p.productId !== productData.productId); // Avoid duplicates
+    viewedProducts.unshift(productData); // Add the current product at the start
+    if (viewedProducts.length > 5) {
+      viewedProducts.pop(); // Limit to 5 recently viewed products
+    }
+    localStorage.setItem('recentlyViewed', JSON.stringify(viewedProducts));
+    setRecentlyViewed(viewedProducts);
+  };
+
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
   const handleQuantityChange = (change) => {
     const newQuantity = quantity + change;
     if (newQuantity >= 1 && newQuantity <= (stockStatus?.stock || 1)) {
@@ -86,7 +151,11 @@ const ProductDetail = () => {
     }
 
     try {
+<<<<<<< HEAD
       const response = await fetch('https://ecommerse-assingment-backend.onrender.com/add-to-cart', {
+=======
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/add-to-cart', {
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,7 +175,11 @@ const ProductDetail = () => {
           setShowAddAnimation(false);
           toast(
             <div className="flex items-center cursor-pointer" onClick={() => navigate('/cart')}>
+<<<<<<< HEAD
               Go to Cart →
+=======
+              Go to Cart → 
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
             </div>,
             {
               position: "top-right",
@@ -125,6 +198,31 @@ const ProductDetail = () => {
     }
   };
 
+<<<<<<< HEAD
+=======
+  const handleWriteReview = () => {
+    setShowReviewDialog(true);
+  };
+
+  const closeReviewDialog = () => {
+    setShowReviewDialog(false);
+  };
+
+  const handleSubmitReview = () => {
+    const newReview = {
+      name: userName || 'Anonymous',
+      rating,
+      reviewText,
+    };
+    setReviews([newReview, ...reviews]);
+    setShowReviewDialog(false);
+    setUserName('');
+    setRating(1);
+    setReviewText('');
+    toast.success('Review submitted successfully');
+  };
+
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
   if (!product) {
     return (
       <div className="min-h-screen bg-pink-50 flex items-center justify-center">
@@ -149,9 +247,12 @@ const ProductDetail = () => {
       <Navbar />
       <ToastContainer />
 
+<<<<<<< HEAD
       {/* Login Dialog and Add to Cart Animation (previous implementation) */}
       {/* ... (keep the existing dialog and animation components) */}
 
+=======
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
       <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
@@ -208,13 +309,19 @@ const ProductDetail = () => {
                     </span>
                   </div>
                   <div className="bg-pink-50 px-4 py-2 rounded-full flex items-center">
+<<<<<<< HEAD
                     <FaTag className="mr-2 text-pink-600" />
                     <span className="text-pink-600 font-medium">
+=======
+                    <FaTag className="mr-2 text-pink-500" />
+                    <span className="font-medium text-pink-600">
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
                       {product.category}
                     </span>
                   </div>
                 </div>
 
+<<<<<<< HEAD
                 {/* Description Section */}
                 <div className="border-t border-b border-pink-100 py-6">
                   <h2 className="text-xl font-semibold mb-4 text-pink-700">
@@ -272,14 +379,155 @@ const ProductDetail = () => {
                       </span>
                       </Link>
                     </motion.button>
+=======
+                {/* Quantity Section */}
+                <div className="flex items-center space-x-4 py-6">
+                  <button
+                    onClick={() => handleQuantityChange(-1)}
+                    className="bg-pink-600 text-white px-4 py-2 rounded-full disabled:opacity-50"
+                    disabled={quantity <= 1}
+                  >
+                    <FaMinus />
+                  </button>
+                  <span className="text-xl font-medium text-gray-700">{quantity}</span>
+                  <button
+                    onClick={() => handleQuantityChange(1)}
+                    className="bg-pink-600 text-white px-4 py-2 rounded-full disabled:opacity-50"
+                    disabled={quantity >= stockStatus?.stock}
+                  >
+                    <FaPlus />
+                  </button>
+                </div>
+
+                {/* Add to Cart Button */}
+                <div className="flex justify-center">
+                  <button
+                    onClick={handleAddToCart}
+                    className="w-full py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700"
+                  >
+                    Add to Cart
+                  </button>
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
                 </div>
               </div>
             </div>
           </motion.div>
+<<<<<<< HEAD
         </div>
       </div>
+=======
+
+          {/* Reviews Section */}
+<div className="mt-12">
+<h2 className="text-2xl font-semibold text-gray-800 mb-6">Reviews</h2>
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  {reviews.map((review, index) => (
+    <div
+      key={index}
+      className="bg-gray-50 p-4 rounded-xl shadow-md flex flex-col items-center w-full max-w-sm"
+    >
+      <span className="font-semibold">{review.name}</span>
+      <div className="flex items-center mt-2">
+        {[...Array(5)].map((_, idx) => (
+          <FaStar
+            key={idx}
+            className={`ml-1 ${idx < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+          />
+        ))}
+      </div>
+      <p className="mt-2 text-gray-700 text-sm">{review.reviewText}</p>
+    </div>
+  ))}
+</div>
+
+{/* Write a Review Button */}
+<div className="mt-7 flex justify-center">
+  <button
+    onClick={handleWriteReview}
+    className="w-64 py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700"
+  >
+    Write a Review
+  </button>
+</div>
+          </div>
+
+          {/* Review Dialog */}
+          {showReviewDialog && (
+            <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+              <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                <h2 className="text-2xl font-semibold mb-4">Write a Review</h2>
+                <input
+                  type="text"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  placeholder="Your Name"
+                  className="w-full p-3 mb-4 border border-gray-300 rounded-lg"
+                />
+                <div className="flex space-x-2 mb-4">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <FaStar
+                      key={star}
+                      className={`cursor-pointer ${rating >= star ? 'text-yellow-400' : 'text-gray-300'}`}
+                      onClick={() => setRating(star)}
+                    />
+                  ))}
+                </div>
+                <textarea
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
+                  placeholder="Write your review"
+                  className="w-full p-3 mb-4 border border-gray-300 rounded-lg"
+                  rows="4"
+                />
+                <div className="flex justify-between">
+                  <button
+                    onClick={closeReviewDialog}
+                    className="py-2 px-4 bg-gray-300 rounded-lg"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSubmitReview}
+                    className="py-2 px-4 bg-pink-600 text-white rounded-lg"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      {/* Recently Viewed Section */}
+{recentlyViewed.length > 0 && (
+  <div className="mt-12 max-w-7xl mx-auto p-9 pt-0">
+    <h2 className="text-3xl font-semibold text-gray-900 mb-6">Recently Viewed</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {recentlyViewed.map((item) => (
+        <Link key={item.productId} to={`/product/${item.productId}`}>
+          <div className="bg-white shadow-lg rounded-xl overflow-hidden">
+            <img 
+              src={item.img} 
+              alt={item.name} 
+              className="w-full h-64 object-cover" 
+            />
+            <div className="p-6">
+              <h3 className="text-xl font-bold text-gray-900">{item.name}</h3>
+              <p className="text-lg font-semibold text-pink-600">{item.price}</p>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  </div>
+)}
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
     </>
   );
 };
 
+<<<<<<< HEAD
 export default ProductDetail;
+=======
+export default ProductDetail;
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c

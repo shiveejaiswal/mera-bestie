@@ -4,6 +4,11 @@ import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Helmet } from "react-helmet";
+<<<<<<< HEAD
+=======
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
 
 import Navbar from "../../components/user/navbar/navbar";
 import Footer from "../../components/user/footer/footer";
@@ -142,6 +147,7 @@ const HomePage = () => {
                 Discover meticulously crafted categories designed to inspire and delight
               </p>
             </motion.div>
+<<<<<<< HEAD
 
             <motion.div
               className="grid gap-10 md:grid-cols-3"
@@ -186,6 +192,162 @@ const HomePage = () => {
                 </Link>
               ))}
             </motion.div>
+=======
+            <Carousel
+  showThumbs={false}
+  autoPlay
+  infiniteLoop
+  showStatus={false}
+  renderArrowPrev={(onClickHandler, hasPrev, label) =>
+    hasPrev && (
+      <button
+        type="button"
+        onClick={onClickHandler}
+        title={label}
+        style={{
+          position: 'absolute',
+          left: '20px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          background: 'rgba(255, 105, 180, 0.8)', // Pink background with opacity
+          border: 'none',
+          borderRadius: '50%',
+          width: '60px',
+          height: '60px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#fff',
+          fontSize: '30px',
+          cursor: 'pointer',
+          opacity: 0.9,
+          transition: 'opacity 0.3s, transform 0.3s',
+          zIndex: 2,
+        }}
+        onMouseOver={(e) => (e.currentTarget.style.opacity = 1)}
+        onMouseOut={(e) => (e.currentTarget.style.opacity = 0.9)}
+      >
+        &#8592;
+      </button>
+    )
+  }
+  renderArrowNext={(onClickHandler, hasNext, label) =>
+    hasNext && (
+      <button
+        type="button"
+        onClick={onClickHandler}
+        title={label}
+        style={{
+          position: 'absolute',
+          right: '20px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          background: 'rgba(255, 105, 180, 0.8)', // Pink background with opacity
+          border: 'none',
+          borderRadius: '50%',
+          width: '60px',
+          height: '60px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#fff',
+          fontSize: '30px',
+          cursor: 'pointer',
+          opacity: 0.9,
+          transition: 'opacity 0.3s, transform 0.3s',
+          zIndex: 2,
+        }}
+        onMouseOver={(e) => (e.currentTarget.style.opacity = 1)}
+        onMouseOut={(e) => (e.currentTarget.style.opacity = 0.9)}
+      >
+        &#8594;
+      </button>
+    )
+  }
+  renderIndicator={(onClickHandler, isSelected, index, label) => {
+    const style = {
+      background: isSelected ? '#ff69b4' : 'pink',
+      width: '12px',
+      height: '12px',
+      borderRadius: '50%',
+      display: 'inline-block',
+      margin: '0 8px',
+      cursor: 'pointer',
+      opacity: isSelected ? 1 : 0.5,
+      transition: 'opacity 0.3s',
+    };
+    return (
+      <span
+        key={index}
+        style={style}
+        onClick={onClickHandler}
+        onKeyDown={onClickHandler}
+        role="button"
+        tabIndex={0}
+        aria-label={`${label} ${index + 1}`}
+        aria-selected={isSelected}
+      />
+    );
+  }}
+  className="bg-white p-4 rounded-lg"
+>
+  {[
+    ...productCategories,
+    ...productCategories, // Repeat for more sections
+    ...productCategories
+  ]
+    .reduce((acc, curr, index, array) => {
+      if (index % 2 === 0) {
+        acc.push(array.slice(index, index + 2));
+      }
+      return acc;
+    }, [])
+    .map((pair, idx) => (
+      <div key={idx} className="flex justify-center space-x-4">
+        {pair.map((category, index) => (
+          <Link
+            to={`/shop?category=${encodeURIComponent(category.category)}`}
+            key={index}
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              padding: '16px',
+              borderRadius: '8px',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              width: '50%',
+              transition: 'transform 0.3s',
+              textDecoration: 'none',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+          >
+            <img
+              src={category.img}
+              alt={category.title}
+              style={{
+                width: '100%',
+                height: '192px', // 48 * 4 = 192px
+                objectFit: 'cover',
+                borderRadius: '4px',
+              }}
+            />
+            <div
+              style={{
+                marginTop: '16px',
+                color: '#ff69b4',
+                textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+              }}
+            >
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '8px' }}>
+                {category.title}
+              </h3>
+              <p style={{ fontSize: '0.875rem' }}>{category.description}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    ))}
+</Carousel>
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
           </div>
         </section>
 

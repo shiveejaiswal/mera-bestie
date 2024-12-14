@@ -52,7 +52,11 @@ const Checkout = () => {
     }
 
     try {
+<<<<<<< HEAD
       const cartResponse = await fetch(`https://ecommerse-assingment-backend.onrender.com/cart/${userId}`);
+=======
+      const cartResponse = await fetch(`https://ecommercebackend-8gx8.onrender.com/cart/${userId}`);
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
       const cartData = await cartResponse.json();
 
       if (!cartData.success) {
@@ -73,7 +77,11 @@ const Checkout = () => {
       }, {});
 
       const productPromises = Object.values(groupedItems).map(async (item) => {
+<<<<<<< HEAD
         const productResponse = await fetch(`https://ecommerse-assingment-backend.onrender.com/product/${item.productId}`);
+=======
+        const productResponse = await fetch(`https://ecommercebackend-8gx8.onrender.com/product/${item.productId}`);
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         const productData = await productResponse.json();
         
         if (productData.success) {
@@ -144,7 +152,11 @@ const Checkout = () => {
 
     if (saveAddress) {
       try {
+<<<<<<< HEAD
         await fetch('https://ecommerse-assingment-backend.onrender.com/update-address', {
+=======
+        await fetch('https://ecommercebackend-8gx8.onrender.com/update-address', {
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -169,7 +181,11 @@ const Checkout = () => {
     }));
 
     try {
+<<<<<<< HEAD
       const response = await fetch('https://ecommerse-assingment-backend.onrender.com/place-order', {
+=======
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/place-order', {
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

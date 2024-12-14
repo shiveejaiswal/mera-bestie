@@ -16,7 +16,11 @@ const RecentlyViewed = () => {
       }
 
       const productPromises = recentlyViewedProducts.map(async (element) => {
+<<<<<<< HEAD
         const response = await fetch('https://ecommerse-assingment-backend.onrender.com/product/' + element);
+=======
+        const response = await fetch('https://ecommercebackend-8gx8.onrender.com/product/' + element);
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         const productDetail = await response.json();
         return productDetail.product;
       });

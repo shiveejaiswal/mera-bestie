@@ -36,7 +36,11 @@ const SearchBar = () => {
     const fetchProducts = async (input) => {
         setIsLoading(true);
         try {
+<<<<<<< HEAD
             const response = await fetch('https://ecommerse-assingment-backend.onrender.com/get-product');
+=======
+            const response = await fetch('https://ecommercebackend-8gx8.onrender.com/get-product');
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
             const data = await response.json();
             if (data.success) {
                 const validProducts = data.products.filter(product => 

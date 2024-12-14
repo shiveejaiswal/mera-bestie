@@ -32,7 +32,11 @@ const Complaints = () => {
 
   const fetchComplaints = async () => {
     try {
+<<<<<<< HEAD
       const response = await fetch('https://ecommerse-assingment-backend.onrender.com/get-complaints');
+=======
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/get-complaints');
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
       const data = await response.json();
       setComplaints(data.complaints);
     } catch (error) {
@@ -42,7 +46,11 @@ const Complaints = () => {
 
   const handleStatusChange = async (complaintId, newStatus) => {
     try {
+<<<<<<< HEAD
       const response = await fetch('https://ecommerse-assingment-backend.onrender.com/update-complaint-status', {
+=======
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/update-complaint-status', {
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

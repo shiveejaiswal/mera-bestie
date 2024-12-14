@@ -17,7 +17,11 @@ const Customers = () => {
 
   const fetchCustomers = async () => {
     try {
+<<<<<<< HEAD
       const response = await fetch('https://ecommerse-assingment-backend.onrender.com/get-user');
+=======
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/get-user');
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
       const data = await response.json();
       if (data.success) {
         // Map the user data and set default values if fields are missing
@@ -44,7 +48,11 @@ const Customers = () => {
 
   const handleStatusChange = async (userId, newStatus) => {
     try {
+<<<<<<< HEAD
       const response = await fetch('https://ecommerse-assingment-backend.onrender.com/update-account-status', {
+=======
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/update-account-status', {
+>>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
