@@ -19,10 +19,7 @@
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
     "react-icons": "^5.4.0",
-<<<<<<< HEAD
-=======
     "react-responsive-carousel": "^3.2.23",
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
     "react-router-dom": "^6.28.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.6",

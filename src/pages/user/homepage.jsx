@@ -4,11 +4,10 @@ import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Helmet } from "react-helmet";
-<<<<<<< HEAD
-=======
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
+
+
 
 import Navbar from "../../components/user/navbar/navbar";
 import Footer from "../../components/user/footer/footer";
@@ -147,52 +146,6 @@ const HomePage = () => {
                 Discover meticulously crafted categories designed to inspire and delight
               </p>
             </motion.div>
-<<<<<<< HEAD
-
-            <motion.div
-              className="grid gap-10 md:grid-cols-3"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: { 
-                    delayChildren: 0.3, 
-                    staggerChildren: 0.2 
-                  }
-                }
-              }}
-            >
-              {productCategories.map((category, index) => (
-                <Link to='/shop' key={index}>
-                  <motion.div
-                    className="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group transform hover:-translate-y-4"
-                    variants={{
-                      hidden: { opacity: 0, y: 30 },
-                      visible: { opacity: 1, y: 0 }
-                    }}
-                  >
-                    <div className="relative h-80 overflow-hidden">
-                      <img
-                        src={category.img}
-                        alt={category.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="p-6 text-center bg-white">
-                      <h3 className="text-2xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500">
-                        {category.title}
-                      </h3>
-                      <p className="text-gray-600">{category.description}</p>
-                    </div>
-                  </motion.div>
-                </Link>
-              ))}
-            </motion.div>
-=======
             <Carousel
   showThumbs={false}
   autoPlay
@@ -347,7 +300,6 @@ const HomePage = () => {
       </div>
     ))}
 </Carousel>
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
           </div>
         </section>
 

@@ -65,11 +65,7 @@ const Sidebar = () => {
 
     const handleSubmit = async () => {
         try {
-<<<<<<< HEAD
-            const response = await fetch('https://ecommerse-assingment-backend.onrender.com/create-product', {
-=======
             const response = await fetch('https://ecommercebackend-8gx8.onrender.com/create-product', {
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
-import { motion, AnimatePresence } from 'framer-motion';
-=======
 import { motion } from 'framer-motion';
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
@@ -30,8 +26,6 @@ const ProductDetail = () => {
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showAddAnimation, setShowAddAnimation] = useState(false);
   const [stockStatus, setStockStatus] = useState(null);
-<<<<<<< HEAD
-=======
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
   const [showReviewDialog, setShowReviewDialog] = useState(false);
@@ -55,25 +49,17 @@ const ProductDetail = () => {
       reviewText: 'It’s okay, but I was expecting more features.'
     }
   ]);
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-<<<<<<< HEAD
-        const response = await fetch(`https://ecommerse-assingment-backend.onrender.com/product/${productId}`);
-=======
         const response = await fetch(`https://ecommercebackend-8gx8.onrender.com/product/${productId}`);
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         const data = await response.json();
         if (data.success) {
           setProduct(data.product);
           calculateStockStatus(data.product);
-<<<<<<< HEAD
-=======
           fetchRelatedProducts(data.product.category); // Fetch related products
           updateRecentlyViewed(data.product); // Update recently viewed products
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         }
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -104,8 +90,6 @@ const ProductDetail = () => {
     setStockStatus({ status, color, stock });
   };
 
-<<<<<<< HEAD
-=======
   const fetchRelatedProducts = async (category) => {
     try {
       const response = await fetch(`https://ecommercebackend-8gx8.onrender.com/products?category=${category}`);
@@ -129,7 +113,6 @@ const ProductDetail = () => {
     setRecentlyViewed(viewedProducts);
   };
 
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
   const handleQuantityChange = (change) => {
     const newQuantity = quantity + change;
     if (newQuantity >= 1 && newQuantity <= (stockStatus?.stock || 1)) {
@@ -151,11 +134,7 @@ const ProductDetail = () => {
     }
 
     try {
-<<<<<<< HEAD
-      const response = await fetch('https://ecommerse-assingment-backend.onrender.com/add-to-cart', {
-=======
       const response = await fetch('https://ecommercebackend-8gx8.onrender.com/add-to-cart', {
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -175,11 +154,7 @@ const ProductDetail = () => {
           setShowAddAnimation(false);
           toast(
             <div className="flex items-center cursor-pointer" onClick={() => navigate('/cart')}>
-<<<<<<< HEAD
-              Go to Cart →
-=======
               Go to Cart → 
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
             </div>,
             {
               position: "top-right",
@@ -198,8 +173,6 @@ const ProductDetail = () => {
     }
   };
 
-<<<<<<< HEAD
-=======
   const handleWriteReview = () => {
     setShowReviewDialog(true);
   };
@@ -222,7 +195,6 @@ const ProductDetail = () => {
     toast.success('Review submitted successfully');
   };
 
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
   if (!product) {
     return (
       <div className="min-h-screen bg-pink-50 flex items-center justify-center">
@@ -247,12 +219,6 @@ const ProductDetail = () => {
       <Navbar />
       <ToastContainer />
 
-<<<<<<< HEAD
-      {/* Login Dialog and Add to Cart Animation (previous implementation) */}
-      {/* ... (keep the existing dialog and animation components) */}
-
-=======
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
       <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
@@ -309,77 +275,13 @@ const ProductDetail = () => {
                     </span>
                   </div>
                   <div className="bg-pink-50 px-4 py-2 rounded-full flex items-center">
-<<<<<<< HEAD
-                    <FaTag className="mr-2 text-pink-600" />
-                    <span className="text-pink-600 font-medium">
-=======
                     <FaTag className="mr-2 text-pink-500" />
                     <span className="font-medium text-pink-600">
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
                       {product.category}
                     </span>
                   </div>
                 </div>
 
-<<<<<<< HEAD
-                {/* Description Section */}
-                <div className="border-t border-b border-pink-100 py-6">
-                  <h2 className="text-xl font-semibold mb-4 text-pink-700">
-                    Description
-                  </h2>
-                  <p className="text-gray-600 leading-relaxed">
-                    {product.description || 'No description available'}
-                  </p>
-                </div>
-
-                <div className="space-y-6">
-                  {/* Quantity Selector */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-700 font-medium">Quantity:</span>
-                    <div className="flex items-center bg-gray-100 rounded-lg overflow-hidden">
-                      <button 
-                        className="px-4 py-2 bg-gray-200 hover:bg-gray-300 transition"
-                        onClick={() => handleQuantityChange(-1)}
-                        disabled={quantity <= 1}
-                      >
-                        <FaMinus className="text-gray-600" />
-                      </button>
-                      <input
-                        type="text"
-                        value={quantity}
-                        className="w-16 text-center bg-transparent focus:outline-none"
-                        readOnly
-                      />
-                      <button 
-                        className="px-4 py-2 bg-gray-200 hover:bg-gray-300 transition"
-                        onClick={() => handleQuantityChange(1)}
-                        disabled={quantity >= (stockStatus?.stock || 1)}
-                      >
-                        <FaPlus className="text-gray-600" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Add to Cart Button */}
-                    <motion.button 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`w-full py-4 rounded-xl hover:shadow-xl transition duration-300 flex items-center justify-center space-x-3 ${
-                        stockStatus?.stock === 0 
-                        ? 'bg-gray-400 cursor-not-allowed' 
-                        : 'bg-gradient-to-r from-pink-600 to-rose-500 text-white'
-                      }`}
-                      onClick={handleAddToCart}
-                      disabled={stockStatus?.stock === 0}
-                    >
-                      <FaShoppingCart />
-                      <Link to={'/cart'}>
-                      <span>
-                        {stockStatus?.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-                      </span>
-                      </Link>
-                    </motion.button>
-=======
                 {/* Quantity Section */}
                 <div className="flex items-center space-x-4 py-6">
                   <button
@@ -407,15 +309,10 @@ const ProductDetail = () => {
                   >
                     Add to Cart
                   </button>
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
                 </div>
               </div>
             </div>
           </motion.div>
-<<<<<<< HEAD
-        </div>
-      </div>
-=======
 
           {/* Reviews Section */}
 <div className="mt-12">
@@ -521,13 +418,8 @@ const ProductDetail = () => {
     </div>
   </div>
 )}
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
     </>
   );
 };
 
-<<<<<<< HEAD
 export default ProductDetail;
-=======
-export default ProductDetail;
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c

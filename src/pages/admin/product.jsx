@@ -23,11 +23,7 @@ const Product = () => {
 
   const fetchProducts = async () => {
     try {
-<<<<<<< HEAD
-      const response = await fetch('https://ecommerse-assingment-backend.onrender.com/get-product');
-=======
       const response = await fetch('https://ecommercebackend-8gx8.onrender.com/get-product');
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
       const data = await response.json();
       setProducts(data.products); // Access the products array from response
     } catch (error) {
@@ -45,11 +41,7 @@ const Product = () => {
 
   const handleSave = async (productId) => {
     try {
-<<<<<<< HEAD
-      const response = await fetch('https://ecommerse-assingment-backend.onrender.com/instock-update', {
-=======
       const response = await fetch('https://ecommercebackend-8gx8.onrender.com/instock-update', {
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -72,11 +64,7 @@ const Product = () => {
 
   const handleVisibilityChange = async (productId, newVisibility) => {
     try {
-<<<<<<< HEAD
-      const response = await fetch('https://ecommerse-assingment-backend.onrender.com/update-visibility', {
-=======
       const response = await fetch('https://ecommercebackend-8gx8.onrender.com/update-visibility', {
->>>>>>> c726f7cb12e06362591c911674ee46a3fad7d10c
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
