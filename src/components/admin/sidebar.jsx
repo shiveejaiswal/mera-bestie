@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Package, ShoppingBag, MessageSquare, Users, Calendar, Menu, LayoutDashboard } from 'lucide-react';
+import { Package, ShoppingBag, MessageSquare, Users, Calendar, Menu, LayoutDashboard, LogOut, Ticket } from 'lucide-react';
 
 const Sidebar = () => {
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [showDialog, setShowDialog] = useState(false);
     const [productData, setProductData] = useState({
@@ -45,6 +46,7 @@ const Sidebar = () => {
         { name: 'Complaints', icon: <MessageSquare />, path: '/admin/complaints' },
         { name: 'Customers', icon: <Users />, path: '/admin/customers' },
         { name: 'Calendar', icon: <Calendar />, path: '/admin/calendar' },
+        { name: 'Coupons', icon: <Ticket />, path: '/seller/coupons' },
     ];
 
     const toggleSidebar = () => {
@@ -61,6 +63,21 @@ const Sidebar = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setProductData({...productData, [name]: value});
+    };
+
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('https://ecommercebackend-8gx8.onrender.com/seller/logout', {
+                method: 'POST',
+                credentials: 'include'
+            });
+            
+            if(response.ok) {
+                navigate('/seller/login');
+            }
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
     };
 
     const handleSubmit = async () => {
@@ -241,13 +258,20 @@ const Sidebar = () => {
                             + Add Product
                         </button>
                         
-                        {/* New Go to Website button */}
                         <Link 
                             to="/" 
-                            className="w-full flex items-center justify-center bg-green-500 text-white py-2 rounded hover:bg-green-600"
+                            className="w-full flex items-center justify-center bg-green-500 text-white py-2 rounded hover:bg-green-600 mb-2"
                         >
                             Go to Website
                         </Link>
+
+                        <button
+                            onClick={handleLogout}
+                            className="w-full flex items-center justify-center bg-red-500 text-white py-2 rounded hover:bg-red-600"
+                        >
+                            <LogOut className="mr-2" size={18} />
+                            Logout
+                        </button>
                     </div>
 
                     <footer className={`text-center text-gray-500 text-sm p-4 ${isOpen ? 'block' : 'hidden'}`}>

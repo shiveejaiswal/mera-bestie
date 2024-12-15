@@ -14,9 +14,6 @@ const CartItems = () => {
     percentage: 0,
     message: ''
   });
-  const VOUCHERS = {
-    'OFF10': { percentage: 0.1, message: '10% discount applied!' },
-  };
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -138,24 +135,43 @@ const CartItems = () => {
     const subtotal = cartItems.reduce((total, item) => {
       return total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity);
     }, 0);
-    const discountedTotal = subtotal * (1 - discountInfo.percentage);
+    const discountedTotal = subtotal * (1 - (discountInfo.percentage / 100));
     return discountedTotal.toFixed(2);
   };
 
-  const handleVoucherRedeem = () => {
-    const normalizedVoucher = voucher.toUpperCase().trim();
-    
-    if (VOUCHERS[normalizedVoucher]) {
-      setDiscountInfo({
-        code: normalizedVoucher,
-        percentage: VOUCHERS[normalizedVoucher].percentage,
-        message: VOUCHERS[normalizedVoucher].message
+  const handleVoucherRedeem = async () => {
+    try {
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/verify-coupon', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          code: voucher
+        })
       });
-    } else {
+
+      const data = await response.json();
+
+      if (data.message === 'Invalid coupon code') {
+        setDiscountInfo({
+          code: '',
+          percentage: 0,
+          message: 'Invalid coupon code'
+        });
+      } else if (data.discountPercentage) {
+        setDiscountInfo({
+          code: voucher,
+          percentage: data.discountPercentage,
+          message: `${data.discountPercentage}% discount applied!`
+        });
+      }
+    } catch (err) {
+      console.error('Error verifying coupon:', err);
       setDiscountInfo({
         code: '',
         percentage: 0,
-        message: 'Invalid voucher code'
+        message: 'Error verifying coupon'
       });
     }
   };
@@ -285,10 +301,10 @@ const CartItems = () => {
             </div>
             {discountInfo.percentage > 0 && (
               <div className="flex justify-between text-green-600">
-                <span>Discount ({discountInfo.percentage * 100}%)</span>
+                <span>Discount ({discountInfo.percentage}%)</span>
                 <span>- Rs. {(cartItems.reduce((total, item) => 
                   total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity), 
-                  0) * discountInfo.percentage).toFixed(2)}</span>
+                  0) * (discountInfo.percentage / 100)).toFixed(2)}</span>
               </div>
             )}
             <div className="flex justify-between">
