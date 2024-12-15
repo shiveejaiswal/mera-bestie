@@ -10,6 +10,8 @@ import Shop from "./pages/user/shop";
 import OccasionsPage from "./pages/user/occasionspage";
 import Checkout from "./pages/user/checkout";
 import Product from "./pages/admin/product";
+import LoginPage from "./pages/admin/login";
+import SellerPage from "./pages/admin/signup";
 import Complaints from "./pages/admin/complaints"; 
 import Orders from "./pages/admin/order";
 import Customers from "./pages/admin/customer";
@@ -17,6 +19,7 @@ import CalendarPage from "./pages/admin/calendar";
 import NotFoundPage from "./pages/user/notfound";
 import { AuthProvider } from "./context/AuthContext";
 import Admin from "./pages/user/admin";
+import CouponPage from "./pages/admin/coupon";
 
 function App() {
   return (
@@ -36,6 +39,9 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/:productId" element={<ProductDetail />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/seller/login" element={<LoginPage />} />
+          <Route path="/seller/coupons" element={<CouponPage />} />
+          <Route path="/seller/signup" element={<SellerPage />} />
           <Route path="/admin/products" element={<Product />} />
           <Route path="/admin/complaints" element={<Complaints />} />
           <Route path="/admin/orders" element={<Orders />} />

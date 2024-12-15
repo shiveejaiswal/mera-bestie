@@ -245,12 +245,13 @@ const ProfessionalNavbar = () => {
                         >
                           Sign Up
                         </Link>
-                        <button
+                        <Link
+                          to="/seller/login"
                           className="block w-full text-left px-4 py-2 hover:bg-pink-50 transition"
                           onClick={toggleSellerLogin}
                         >
                           Seller
-                        </button>
+                        </Link>
                       </>
                     )}
                   </div>
