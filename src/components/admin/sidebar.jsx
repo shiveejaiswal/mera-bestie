@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Package, ShoppingBag, MessageSquare, Users, Calendar, Menu, LayoutDashboard, LogOut, Ticket } from 'lucide-react';
 
 const Sidebar = () => {
     const navigate = useNavigate();
+    const { sellerId } = useParams();
     const [isOpen, setIsOpen] = useState(false);
     const [showDialog, setShowDialog] = useState(false);
     const [productData, setProductData] = useState({
@@ -40,13 +41,13 @@ const Sidebar = () => {
     }, []);
 
     const menuItems = [
-        { name: 'Dashboard', icon: <LayoutDashboard />, path: '/admin' },
-        { name: 'Products', icon: <Package />, path: '/admin/products' },
-        { name: 'Orders', icon: <ShoppingBag />, path: '/admin/orders' },
-        { name: 'Complaints', icon: <MessageSquare />, path: '/admin/complaints' },
-        { name: 'Customers', icon: <Users />, path: '/admin/customers' },
-        { name: 'Calendar', icon: <Calendar />, path: '/admin/calendar' },
-        { name: 'Coupons', icon: <Ticket />, path: '/seller/coupons' },
+        { name: 'Dashboard', icon: <LayoutDashboard />, path: `/admin/${sellerId}` },
+        { name: 'Products', icon: <Package />, path: `/admin/products/${sellerId}` },
+        { name: 'Orders', icon: <ShoppingBag />, path: `/admin/orders/${sellerId}` },
+        { name: 'Complaints', icon: <MessageSquare />, path: `/admin/complaints/${sellerId}` },
+        { name: 'Customers', icon: <Users />, path: `/admin/customers/${sellerId}` },
+        { name: 'Calendar', icon: <Calendar />, path: `/admin/calendar/${sellerId}` },
+        { name: 'Coupons', icon: <Ticket />, path: `/seller/coupons/${sellerId}` },
     ];
 
     const toggleSidebar = () => {
@@ -67,9 +68,13 @@ const Sidebar = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch('https://ecommercebackend-8gx8.onrender.com/seller/logout', {
+            const response = await fetch('http://localhost:5000/seller/logout', {
                 method: 'POST',
-                credentials: 'include'
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ sellerId })
             });
             
             if(response.ok) {
@@ -275,7 +280,7 @@ const Sidebar = () => {
                     </div>
 
                     <footer className={`text-center text-gray-500 text-sm p-4 ${isOpen ? 'block' : 'hidden'}`}>
-                        Mera Bestie Admin Dashboard © 2023
+                        Mera Bestie Admin Dashboard © 2024
                     </footer>
                 </div>
             </div>

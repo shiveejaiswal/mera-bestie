@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/admin/sidebar';
 import { Pencil, Save, Search, ArrowUpDown } from 'lucide-react';
 import { Helmet } from "react-helmet";
+import { useParams, useNavigate } from 'react-router-dom';
 
 const Product = () => {
+  const { sellerId } = useParams();
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editValues, setEditValues] = useState({
@@ -16,6 +19,36 @@ const Product = () => {
     key: null,
     direction: 'ascending'
   });
+
+  useEffect(() => {
+    const verifySeller = async () => {
+      if (!sellerId) {
+        navigate('/seller/login');
+        return;
+      }
+
+      try {
+        const response = await fetch('https://ecommercebackend-8gx8.onrender.com/verify-seller', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ sellerId })
+        });
+
+        const data = await response.json();
+        
+        if (data.loggedIn !== 'loggedin') {
+          navigate('/seller/login');
+        }
+      } catch (error) {
+        console.error('Error verifying seller:', error);
+        navigate('/seller/login');
+      }
+    };
+
+    verifySeller();
+  }, [sellerId, navigate]);
 
   useEffect(() => {
     fetchProducts();

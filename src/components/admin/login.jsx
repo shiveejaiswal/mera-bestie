@@ -21,7 +21,7 @@ const AdminLogin = () => {
     }
 
     try {
-      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/seller/login', {
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/api/seller/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -36,7 +36,8 @@ const AdminLogin = () => {
       const data = await response.json();
 
       if (response.ok && data.message === 'Login successful') {
-        navigate('/admin');
+        // Navigate to admin route with sellerId
+        navigate(`/admin/${data.sellerId}`);
       } else {
         setError(data.message || 'Login failed. Please try again.');
       }
@@ -181,14 +182,7 @@ const AdminLogin = () => {
                 Login
               </motion.button>
 
-              <div className="text-center mt-4">
-                <p className="text-gray-600">
-                  New to MERA Bestie?{' '}
-                  <Link to="/seller/signup" className="text-pink-500 hover:text-pink-600 font-semibold">
-                    Register here
-                  </Link>
-                </p>
-              </div>
+            
             </div>
           </div>
         </motion.div>

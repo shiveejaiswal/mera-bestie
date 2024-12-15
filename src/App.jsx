@@ -20,6 +20,7 @@ import NotFoundPage from "./pages/user/notfound";
 import { AuthProvider } from "./context/AuthContext";
 import Admin from "./pages/user/admin";
 import CouponPage from "./pages/admin/coupon";
+import DashboardPage from "./pages/admin/daashboard";
 
 function App() {
   return (
@@ -36,17 +37,17 @@ function App() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/OccasionsPage" element={<OccasionsPage />} />
           <Route path="/cart" element={<ShoppingCartPage />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/:sellerId" element={<DashboardPage />} />
           <Route path="/:productId" element={<ProductDetail />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/seller/login" element={<LoginPage />} />
-          <Route path="/seller/coupons" element={<CouponPage />} />
+          <Route path="/seller/coupons/:sellerId" element={<CouponPage />} />
           <Route path="/seller/signup" element={<SellerPage />} />
-          <Route path="/admin/products" element={<Product />} />
-          <Route path="/admin/complaints" element={<Complaints />} />
-          <Route path="/admin/orders" element={<Orders />} />
-          <Route path="/admin/customers" element={<Customers />} />
-          <Route path="/admin/calendar" element={<CalendarPage />} />
+          <Route path="/admin/products/:sellerId" element={<Product />} />
+          <Route path="/admin/complaints/:sellerId" element={<Complaints />} />
+          <Route path="/admin/orders/:sellerId" element={<Orders />} />
+          <Route path="/admin/customers/:sellerId" element={<Customers />} />
+          <Route path="/admin/calendar/:sellerId" element={<CalendarPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

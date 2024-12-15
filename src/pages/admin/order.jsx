@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, ArrowUpDown, Eye, PackageOpen, Truck, CheckCircle } from 'lucide-react';
 import { Helmet } from "react-helmet";
 import Sidebar from '../../components/admin/sidebar';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const OrderStatusBadge = ({ status }) => {
   const statusColors = {
@@ -80,6 +81,8 @@ const OrderDetailsModal = ({ order, onClose }) => {
 };
 
 const Orders = () => {
+  const { sellerId } = useParams();
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortConfig, setSortConfig] = useState({
@@ -87,6 +90,36 @@ const Orders = () => {
     direction: 'ascending'
   });
   const [selectedOrder, setSelectedOrder] = useState(null);
+
+  useEffect(() => {
+    const verifySeller = async () => {
+      if (!sellerId) {
+        navigate('/seller/login');
+        return;
+      }
+
+      try {
+        const response = await fetch('https://ecommercebackend-8gx8.onrender.com/verify-seller', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ sellerId })
+        });
+
+        const data = await response.json();
+        
+        if (data.loggedIn !== 'loggedin') {
+          navigate('/seller/login');
+        }
+      } catch (error) {
+        console.error('Error verifying seller:', error);
+        navigate('/seller/login');
+      }
+    };
+
+    verifySeller();
+  }, [sellerId, navigate]);
 
   useEffect(() => {
     fetchOrders();

@@ -3,8 +3,11 @@ import { Plus, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import Sidebar from '../../components/admin/sidebar';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const CouponPage = () => {
+  const { sellerId } = useParams();
+  const navigate = useNavigate();
   const [coupons, setCoupons] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -13,6 +16,36 @@ const CouponPage = () => {
     code: '',
     discountPercentage: ''
   });
+
+  useEffect(() => {
+    const verifySeller = async () => {
+      if (!sellerId) {
+        navigate('/seller/login');
+        return;
+      }
+
+      try {
+        const response = await fetch('https://ecommercebackend-8gx8.onrender.com/verify-seller', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ sellerId })
+        });
+
+        const data = await response.json();
+        
+        if (data.loggedIn !== 'loggedin') {
+          navigate('/seller/login');
+        }
+      } catch (error) {
+        console.error('Error verifying seller:', error);
+        navigate('/seller/login');
+      }
+    };
+
+    verifySeller();
+  }, [sellerId, navigate]);
 
   useEffect(() => {
     fetchCoupons();
