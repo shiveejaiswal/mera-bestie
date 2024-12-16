@@ -164,7 +164,7 @@ const Checkout = () => {
     const time = now.toLocaleTimeString('en-GB');
 
     const productsOrdered = cartItems.map(item => ({
-      productId: item._id,
+      productId: item.productId,
       productQty: item.quantity
     }));
 

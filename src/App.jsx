@@ -21,6 +21,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Admin from "./pages/user/admin";
 import CouponPage from "./pages/admin/coupon";
 import DashboardPage from "./pages/admin/daashboard";
+import Order from "./pages/user/orders";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/OccasionsPage" element={<OccasionsPage />} />
           <Route path="/cart" element={<ShoppingCartPage />} />
+          <Route path="/orders" element={<Order />} />
           <Route path="/admin/:sellerId" element={<DashboardPage />} />
           <Route path="/:productId" element={<ProductDetail />} />
           <Route path="/checkout" element={<Checkout />} />
