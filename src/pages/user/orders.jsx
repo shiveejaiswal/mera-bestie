@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import Navbar from '../../components/user/navbar/navbar';
 
-const Order= () => {
+const Order = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -39,6 +39,26 @@ const Order= () => {
     fetchOrders();
   }, [navigate]);
 
+  const fetchProductDetails = async (productId) => {
+    try {
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/:productId', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId }),
+      });
+  
+      const data = await response.json();
+      if (data.success) {
+        return data.product;
+      }
+    } catch (error) {
+      console.error('Error fetching product details:', error);
+    }
+    return null;
+  };
+  
   if (loading) {
     return (
       <div className="min-h-screen bg-pink-50">
@@ -72,39 +92,7 @@ const Order= () => {
             </div>
           ) : (
             orders.map((order) => (
-              <div key={order._id} className="bg-white rounded-lg shadow-md p-6 transition-transform hover:scale-[1.02]">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div>
-                    <h3 className="text-sm font-semibold text-gray-500">Order Date</h3>
-                    <p className="text-gray-800">{order.date} {order.time}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-semibold text-gray-500">Order Total</h3>
-                    <p className="text-gray-800">₹{order.price}</p>
-                  </div>
-                  <div className="md:col-span-2">
-                    <h3 className="text-sm font-semibold text-gray-500">Shipping Address</h3>
-                    <p className="text-gray-800">{order.address}</p>
-                  </div>
-                </div>
-                
-                <div className="mt-4">
-                  <h3 className="text-sm font-semibold text-gray-500 mb-2">Products Ordered</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {order.productIds.map((productId, index) => (
-                      <div key={index} className="bg-pink-50 p-3 rounded-md">
-                        <p className="text-gray-800">
-                          Product ID: {productId}
-                        </p>
-                        {/* Assuming product quantity is not provided in the sample data */}
-                        {/* <p className="text-gray-600">
-                          Quantity: {product.productQty}
-                        </p> */}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <OrderCard key={order.orderId} order={order} fetchProductDetails={fetchProductDetails} />
             ))
           )}
         </div>
@@ -113,4 +101,53 @@ const Order= () => {
   );
 };
 
+const OrderCard = ({ order, fetchProductDetails }) => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const productDetails = await Promise.all(
+        order.productIds.map(id => fetchProductDetails(id))
+      );
+      setProducts(productDetails.filter(product => product !== null));
+    };
+    loadProducts();
+  }, [order.productIds, fetchProductDetails]);
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6 transition-transform hover:scale-[1.02]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+        <div>
+          <h3 className="text-sm font-semibold text-gray-500">Order Date</h3>
+          <p className="text-gray-800">{order.date} {order.time}</p>
+        </div>
+        <div>
+          <h3 className="text-sm font-semibold text-gray-500">Order Total</h3>
+          <p className="text-gray-800">₹{order.price}</p>
+        </div>
+        <div className="md:col-span-2">
+          <h3 className="text-sm font-semibold text-gray-500">Shipping Address</h3>
+          <p className="text-gray-800">{order.address}</p>
+        </div>
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-semibold text-gray-500 mb-2">Products Ordered</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {products.map((product, index) => (
+            <div key={index} className="bg-pink-50 p-3 rounded-md flex items-center space-x-3">
+              <img src={product.img} alt={product.name} className="w-16 h-16 object-cover rounded" />
+              <div>
+                <p className="text-gray-800 font-semibold">{product.name}</p>
+                <p className="text-gray-600 text-sm">{product.price}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default Order;
+

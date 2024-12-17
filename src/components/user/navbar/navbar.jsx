@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { 
@@ -225,12 +224,20 @@ const ProfessionalNavbar = () => {
                 {isProfileMenuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg overflow-hidden z-50">
                     {userId ? (
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 hover:bg-pink-50 transition"
-                      >
-                        Logout
-                      </button>
+                      <>
+                        <Link
+                          to="/orders"
+                          className="block px-4 py-2 hover:bg-pink-50 transition"
+                        >
+                          My Orders
+                        </Link>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-4 py-2 hover:bg-pink-50 transition"
+                        >
+                          Logout
+                        </button>
+                      </>
                     ) : (
                       <>
                         <Link
