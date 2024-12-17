@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -9,6 +8,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Navbar from "../../components/user/navbar/navbar";
 import Footer from "../../components/user/footer/footer";
+import { FaStar } from 'react-icons/fa';
 
 // Scroll Progress Bar Component
 const ScrollProgress = () => {
@@ -46,44 +46,111 @@ const HomePage = () => {
     });
   }, []);
 
+  const reviews = [
+    {
+      name: 'John Doe',
+      rating: 4,
+      reviewText: 'Great product! Really useful and high quality.'
+    },
+    {
+      name: 'Jane Smith',
+      rating: 5,
+      reviewText: 'Exceeded my expectations. Worth every penny!'
+    },
+    {
+      name: 'Alex Johnson',
+      rating: 3,
+      reviewText: 'It’s okay, but I was expecting more features.'
+    },
+    {
+      name: 'Emily Davis',
+      rating: 5,
+      reviewText: 'Absolutely love it! Will definitely buy again.'
+    },
+    {
+      name: 'Michael Brown',
+      rating: 4,
+      reviewText: 'Very good quality and fast shipping.'
+    },
+    {
+      name: 'Sarah Wilson',
+      rating: 5,
+      reviewText: 'Fantastic! Highly recommend to everyone.'
+    },
+    {
+      name: 'David Lee',
+      rating: 2,
+      reviewText: 'Not what I expected. Quality could be better.'
+    },
+    // Add more reviews as needed
+  ];
+
   const productCategories = [
     {
-      img: "https://i.pinimg.com/originals/96/24/6e/96246e3c133e6cb5ae4c7843f9e45b22.jpg",
-      title: "Stationery",
-      description: "Elevate your workspace with our premium stationery.",
-      category: "Stationery"
-    },
-    {
-      img: "https://tse1.mm.bing.net/th?id=OIP.EYAqW5p_HzCoXKq1dXvGyQHaFj&pid=Api&P=0&h=180",
+      img: "https://images.pexels.com/photos/269887/pexels-photo-269887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", // Gift Boxes
       title: "Gift Boxes",
-      description: "Curated gifts that speak volumes of your affection.",
-      category: "Gift Boxes"
+      category: "Gift Boxes",
+      description: "Huge collection of Gift Boxes for every occasion.",
     },
     {
-      img: "https://tse3.mm.bing.net/th?id=OIP.90zsFkK9l2Nttf3fQu12ZwHaE8&pid=Api&P=0&h=180",
+      img: "https://i.pinimg.com/originals/96/24/6e/96246e3c133e6cb5ae4c7843f9e45b22.jpg", // Stationery
+      title: "Stationery",
+      category: "Stationery",
+      description: "Elegant and functional stationery items for every occasion."
+    },
+    {
+      img: "https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", // Books
       title: "Books",
-      description: "Transform spaces with our sophisticated decor books.",
-      category: "Books"
+      category: "Books",
+      description: "A diverse collection of books to inspire and educate."
     }
   ];
 
-  const responsive = {
+  // Separate responsive configuration for Product Categories Carousel
+  const categoryResponsive = {
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 1,
-      slidesToSlide: 1,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 1,
-      slidesToSlide: 1,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
+      breakpoint: { max: 3000, min: 0 },
       items: 1,
       slidesToSlide: 1,
     },
   };
+
+  // Existing responsive configuration for Reviews Carousel
+  const reviewResponsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 2,
+      slidesToSlide: 2,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 768 },
+      items: 2,
+      slidesToSlide: 2,
+    },
+    mobile: {
+      breakpoint: { max: 768, min: 0 },
+      items: 1,
+      slidesToSlide: 1,
+    },
+  };
+
+  const newArrivals = [
+    {
+      img: "https://images.pexels.com/photos/269887/pexels-photo-269887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", // Gift Boxes
+      title: "Gift Boxes",
+      category: "Gift Boxes"
+    },
+    {
+      img: "https://i.pinimg.com/originals/96/24/6e/96246e3c133e6cb5ae4c7843f9e45b22.jpg", // Stationery
+      title: "Stationery",
+      category: "Stationery"
+    },
+    {
+      img: "https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", // Books
+      title: "Books",
+      category: "Books"
+    }
+  ];
 
   return (
     <>
@@ -95,124 +162,100 @@ const HomePage = () => {
       <Navbar />
       <div className="w-full bg-white overflow-hidden">
         {/* Hero Section with Modern Glassmorphism Design */}
-        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 z-0">
-            <motion.img
-              src="https://cdn.wallpapersafari.com/89/8/lybQgH.jpg"
-              alt="Elegant Gift Background"
-              className="w-full h-full object-cover filter brightness-50"
-              initial={{ scale: 1.1 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 2, ease: "easeOut" }}
-            />
-          </div>
 
-          <motion.div
-            className="relative z-10 container mx-auto max-w-4xl px-4"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            <div className="bg-white/20 backdrop-blur-md border border-white/30 p-12 md:p-16 rounded-3xl shadow-2xl text-center">
-              <h1 className="mb-6 text-5xl md:text-6xl font-extrabold text-white tracking-tight bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500 text-transparent">
-                Crafting Memorable Moments
-              </h1>
-              <p className="mb-8 text-xl text-white/90 max-w-2xl mx-auto">
-                Transforming ordinary moments into extraordinary memories with our curated collections
-              </p>
-              <div className="space-x-4 flex justify-center">
-                <Link to="/about">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 px-10 py-3 rounded-full uppercase text-sm tracking-wider font-semibold shadow-xl transition-all"
-                  >
-                    Explore Our Story
-                  </motion.button>
-                </Link>
-                <Link to="/shop">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-pink-500 to-blue-500 text-white hover:opacity-90 px-10 py-3 rounded-full uppercase text-sm tracking-wider font-semibold shadow-xl transition-all"
-                  >
-                    Shop Now
-                  </motion.button>
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        </section>
+       {/* Product Categories Section with Refined Styling */}
+<section className="px-0 pt-0 py-20 bg-gray-50">
+  <div className="w-full">
+    {/* Removed carousel heading */}
 
-        {/* Product Categories Section with Refined Styling */}
-        <section className="px-4 py-20 bg-gray-50">
+    <Carousel
+      responsive={categoryResponsive} // Use separate responsive settings
+      infinite={true}
+      autoPlay={true}
+      autoPlaySpeed={3000}
+      keyBoardControl={true}
+      customTransition="transform 0.5s ease-in-out"
+      transitionDuration={500}
+      containerClass="carousel-container w-full" // Set carousel to full width
+      removeArrowOnDeviceType={[]} // Show arrows on all device types
+      showDots={false}
+      arrows={true} // Enable navigation arrows
+      dotListClass="custom-dot-list-style flex justify-center mt-4"
+      itemClass="carousel-item" // Removed padding class
+    >
+      {productCategories.map((category, index) => (
+        <Link
+          to={`/shop?category=${encodeURIComponent(category.category)}`}
+          key={index}
+          className="relative bg-white rounded-lg shadow-md hover:shadow-xl transition-all transform hover:scale-105"
+        >
+          <img
+            src={category.img}
+            alt={category.title}
+            className="object-cover w-full h-96 transition-transform duration-500 ease-in-out transform hover:scale-110" // Increased height from h-80 to h-96
+          />
+          {/* Overlay with Gradient, Centered Text, and Button */}
+<div className="absolute inset-0 flex flex-col justify-end items-center bg-gradient-to-t from-black via-transparent to-transparent opacity-85 pt-4 pb-8">
+  <h3 className="text-5xl font-extrabold text-white text-center mb-2">{category.title}</h3> {/* Reduced margin */}
+  <button
+    onClick={() => window.location.href="/shop"}
+    className="mt-4 bg-pink-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-pink-700 transition"
+  >
+    Shop Now
+  </button>
+</div>
+        </Link>
+      ))}
+    </Carousel>
+
+    {/* Optional: Remove the additional "Shop Now" button below the carousel if not needed */}
+    {/* <div className="text-center mt-8">
+      <button
+        onClick={() => window.location.href="#shop"}
+        className="bg-gradient-to-r from-pink-500 to-blue-500 text-white px-6 py-3 rounded-full shadow-lg hover:opacity-90 transition"
+      >
+        Shop Now
+      </button>
+    </div> */}
+  </div>
+</section>
+
+        {/* New Arrivals Section */}
+        <section className="px-0 py-20 bg-white">
           <div className="container mx-auto max-w-6xl">
             <motion.div
-              className="text-center mb-16"
+              className="text-center mb-12"
               initial={{ opacity: 0, y: -50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1 }}
             >
-              <h2 className="text-4xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500">
-                Our Collections
-              </h2>
+              <h2 className="text-4xl font-bold mb-4 text-pink-500">New Arrivals</h2>
               <div className="w-24 h-1 bg-gradient-to-r from-pink-500 to-blue-500 mx-auto mb-6"></div>
-              <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-                Discover meticulously crafted categories designed to inspire and delight
-              </p>
             </motion.div>
-
-            <Carousel
-              responsive={responsive}
-              infinite={true}
-              autoPlay={true}
-              autoPlaySpeed={3000}
-              keyBoardControl={true}
-              customTransition="transform 0.5s ease-in-out"
-              transitionDuration={500}
-              containerClass="carousel-container relative"
-              removeArrowOnDeviceType={["tablet", "mobile"]}
-              dotListClass="custom-dot-list-style flex justify-center mt-4"
-              itemClass="carousel-item-padding-40-px"
-              renderArrow={(direction, handleClick) => (
-                <button
-                  onClick={handleClick}
-                  className={`${
-                    direction === "prev"
-                      ? "left-4"
-                      : "right-4"
-                  } absolute top-1/2 transform -translate-y-1/2 text-white bg-gradient-to-r from-pink-500 to-blue-500 rounded-full p-3 shadow-xl transition-all hover:bg-opacity-90 z-10`}
-                  style={{
-                    boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
-                  }}
-                >
-                  <span className="material-icons text-xl">{direction === "prev" ? "keyboard_arrow_left" : "keyboard_arrow_right"}</span>
-                </button>
-              )}
-            >
-              {productCategories.map((category, index) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {newArrivals.map((item, index) => (
                 <Link
-                  to={`/shop?category=${encodeURIComponent(category.category)}`}
+                  to={`/shop?category=${encodeURIComponent(item.category)}`}
                   key={index}
-                  className="p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-all transform hover:scale-105"
+                  className="bg-pink-500 rounded-lg shadow-md hover:shadow-xl transition-all transform hover:scale-105"
                 >
-                  <div className="relative w-full h-80 overflow-hidden rounded-md transition-all ease-in-out">
+                  <div className="relative w-full h-60 overflow-hidden rounded-md">
                     <img
-                      src={category.img}
-                      alt={category.title}
+                      src={item.img}
+                      alt={item.title}
                       className="object-cover w-full h-full transition-transform duration-500 ease-in-out transform hover:scale-110"
                     />
                   </div>
                   <div className="mt-4 text-center">
-                    <h3 className="text-lg font-semibold text-pink-500">{category.title}</h3>
-                    <p className="text-gray-600">{category.description}</p>
+                    <h3 className="text-xl font-semibold text-white mb-4">{item.title}</h3>
                   </div>
                 </Link>
               ))}
-            </Carousel>
+            </div>
           </div>
         </section>
+        
 
         {/* Vision Section with Modern Overlay Design */}
         <section className="relative min-h-[80vh] flex items-center" data-aos="fade-up">
@@ -253,6 +296,45 @@ const HomePage = () => {
             </motion.div>
           </div>
         </section>
+
+        {/* Reviews Section */}
+        <div className="mt-12 max-w-7xl mx-auto p-9">
+          <h2 className="text-4xl font-semibold text-gray-900 mb-6">Customer Reviews</h2>
+          <Carousel
+            responsive={reviewResponsive} // Use separate responsive settings for reviews
+            infinite={true}
+            autoPlay={true}
+            autoPlaySpeed={1500} // Faster timing
+            keyBoardControl={true}
+            customTransition="transform 0.5s ease-in-out"
+            transitionDuration={500}
+            containerClass="carousel-container w-full" 
+            removeArrowOnDeviceType={["tablet", "mobile"]}
+            showDots={false} // Hide dots if desired
+            arrows={false} // Hide navigation arrows
+            dotListClass="custom-dot-list-style flex justify-center mt-4"
+            itemClass="carousel-item px-4" 
+          >
+            {reviews.map((review, index) => (
+              <div
+                key={index}
+                className="bg-gray-50 p-8 rounded-xl shadow-md w-full"
+              >
+                <span className="font-semibold text-lg">{review.name}</span>
+                <div className="flex items-center mt-3">
+                  {[...Array(5)].map((_, idx) => (
+                    <FaStar
+                      key={idx}
+                      className={`ml-1 ${idx < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                    />
+                  ))}
+                </div>
+                <p className="mt-3 text-gray-700 text-lg">{review.reviewText}</p>
+              </div>
+            ))}
+          </Carousel>
+        </div>
+        
 
         <Footer />
       </div>

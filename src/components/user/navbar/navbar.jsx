@@ -206,9 +206,7 @@ const ProfessionalNavbar = () => {
                 ) : null}
               </Link>
 
-              <button className="text-gray-800 hover:text-pink-600 transition hidden md:block">
-                <FaHeart className="w-5 h-5" />
-              </button>
+            
 
               <div className="relative">
                 <button
