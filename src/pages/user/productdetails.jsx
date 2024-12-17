@@ -53,7 +53,13 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`https://ecommercebackend-8gx8.onrender.com/product/${productId}`);
+        const response = await fetch(`https://ecommercebackend-8gx8.onrender.com/:productId`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ productId }),
+        });
         const data = await response.json();
         if (data.success) {
           setProduct(data.product);
@@ -124,7 +130,7 @@ const ProductDetail = () => {
     const userId = sessionStorage.getItem('userId');
     
     if (!userId) {
-      setShowLoginDialog(true);
+      navigate('/login');
       return;
     }
 

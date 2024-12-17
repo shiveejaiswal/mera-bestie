@@ -40,7 +40,7 @@ const Shop = ({ category }) => {
             product.price &&
             product.img &&
             product.category &&
-            product._id &&
+            product.productId &&
             (product.visibility === ("on") || product.visibility === "true")
           );
           console.log(validProducts)
@@ -242,7 +242,7 @@ const Shop = ({ category }) => {
                   }}
                 >
                   {/* Link wrapping both image and View Details button */}
-                  <Link to={`/${product._id}`} className="block">
+                  <Link to={`/${product.productId}`} className="block">
                   
                     {/* Image Section */}
                   <div 
@@ -286,7 +286,7 @@ const Shop = ({ category }) => {
                         </div>
                       </div>
                       <button
-                        onClick={() => addPostToRecentlyViewed(product._id)}
+                        onClick={() => addPostToRecentlyViewed(product.productId)}
                         className="w-full bg-pink-50 text-pink-600 py-2 rounded-md  hover:bg-pink-100 transition-colors"
                       >
                         View Details

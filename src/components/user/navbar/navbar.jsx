@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   FaSearch, FaTimes, FaBars, FaUser, FaHeart, FaShoppingCart, 
-  FaGift, FaHome, FaStore, FaEnvelope 
+  FaGift, FaHome, FaStore, FaEnvelope, FaChevronDown
 } from "react-icons/fa";
 import SearchBar from "./SearchBar";
 
@@ -12,15 +13,15 @@ const ProfessionalNavbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [userName, setUserName] = useState("");
   const [scrolled, setScrolled] = useState(false);
-  const [isSellerLoginOpen, setIsSellerLoginOpen] = useState(false); // Modal state for seller login
+  const [isSellerLoginOpen, setIsSellerLoginOpen] = useState(false);
   const location = useLocation();
   const [cartItemCount, setCartItemCount] = useState(0);
-  const navigate = useNavigate(); // To handle redirection
+  const navigate = useNavigate();
   
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
-  const toggleSellerLogin = () => setIsSellerLoginOpen(!isSellerLoginOpen); // Toggle modal
+  const toggleSellerLogin = () => setIsSellerLoginOpen(!isSellerLoginOpen);
   const isActive = (path) => location.pathname === path;
   const searchRef = useRef();
 
@@ -102,22 +103,74 @@ const ProfessionalNavbar = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    // Check if both email and password fields are filled
     if (!email || !password) {
       alert("Please fill in both email and password.");
       return;
     }
 
-    // If both fields are filled, redirect to /admin page
-    sessionStorage.setItem("userId", email);  // Store email temporarily as userId
-    navigate("/admin"); // Redirect to /admin after successful login
+    sessionStorage.setItem("userId", email);
+    navigate("/admin");
   };
 
   const userId = sessionStorage.getItem("userId");
 
+  const menuVariants = {
+    closed: {
+      x: "-100%",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 40
+      }
+    },
+    open: {
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 40
+      }
+    }
+  };
+
+  const linkVariants = {
+    closed: { x: -20, opacity: 0 },
+    open: i => ({
+      x: 0,
+      opacity: 1,
+      transition: {
+        delay: i * 0.1,
+        type: "spring",
+        stiffness: 300,
+        damping: 24
+      }
+    })
+  };
+
+  const mobileLinks = [
+    { path: "/shop", name: "Shop" },
+    { path: "/notepads", name: "Notepads" },
+    { path: "/sticky-notes", name: "Sticky Notes" },
+    { path: "/planners", name: "Planners" },
+    { path: "/notebooks", name: "Notebooks" },
+    { path: "/stickers", name: "Stickers" },
+    { path: "/keychains", name: "Keychains" },
+    { path: "/magnetic-bookmarks", name: "Magnetic Bookmarks" },
+    { path: "/wall-decor", name: "Wall Decor" },
+    { path: "/phone-cases", name: "Phone Cases" }
+  ];
+
+  const desktopLinks = [
+    { path: "/HomePage", name: "HOME" },
+    { path: "/shop", name: "SHOP" },
+    { path: "/OccasionsPage", name: "OCCASIONS" },
+    { path: "/contact", name: "CONTACT" },
+    { path: "/about", name: "ABOUT" }
+  ];
+
   return (
     <nav
-      className={`top-0 left-0 w-full z-50 transition-all duration-300 mb-auto ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled ? "bg-white shadow-md" : "bg-transparent"
       }`}
     >
@@ -143,7 +196,7 @@ const ProfessionalNavbar = () => {
             {/* Mobile Menu Toggle */}
             <button
               onClick={toggleMenu}
-              className="lg:hidden text-black hover:text-pink-600 transition"
+              className="md:hidden text-black hover:text-pink-600 transition"
             >
               <FaBars className="w-6 h-6" />
             </button>
@@ -151,46 +204,40 @@ const ProfessionalNavbar = () => {
             {/* Logo */}
             <Link
               to="/HomePage"
-              className="text-2xl flex items-center hover:opacity-80 transition"
+              className="text-2xl flex items-center hover:opacity-80 transition mx-auto md:mx-0"
             >
-              <span className="font-['Bodoni_MT'] font-bold text-2xl text-pink-600">
+              <span className="font-['Bodoni_MT'] font-bold text-3xl sm:text-4xl text-pink-600">
                 MERA Bestie
               </span>
             </Link>
 
             {/* Desktop Navigation Menu */}
-            <div className="hidden lg:flex space-x-8 text-sm font-medium">
-              {[{ path: "/HomePage", name: "HOME" }, { path: "/shop", name: "SHOP" }, { path: "/contact", name: "CONTACT" }, { path: "/about", name: "ABOUT" }]
-                .map(({ path, name }) => (
-                  <Link
-                    key={path}
-                    to={path}
-                    className={`relative group transition-colors ${
-                      isActive(path) ? "text-pink-600" : "text-gray-800"
-                    } hover:text-pink-600`}
-                  >
-                    {name}
-                    <span
-                      className={`absolute bottom-[-4px] left-0 w-0 h-0.5 bg-pink-600 transition-all duration-300 group-hover:w-full ${
-                        isActive(path) ? "w-full" : ""
-                      }`}
-                    />
-                  </Link>
-                ))}
+            <div className="hidden md:flex space-x-8 text-sm font-medium">
+              {desktopLinks.map(({ path, name }) => (
+                <Link
+                  key={path}
+                  to={path}
+                  className={`relative group transition-colors ${
+                    isActive(path) ? "text-pink-600" : "text-gray-800"
+                  } hover:text-pink-600`}
+                >
+                  {name}
+                  <span
+                    className={`absolute bottom-[-4px] left-0 w-0 h-0.5 bg-pink-600 transition-all duration-300 group-hover:w-full ${
+                      isActive(path) ? "w-full" : ""
+                    }`}
+                  />
+                </Link>
+              ))}
             </div>
 
             {/* Action Icons */}
             <div className="flex items-center space-x-6">
               <button
                 className="text-gray-800 hover:text-pink-600 transition"
+                onClick={toggleSearch}
               >
-                {isSearchOpen ? (
-                  <div ref={searchRef}>
-                    <SearchBar />
-                  </div>
-                ) : (
-                  <FaSearch className="w-5 h-5" onClick={toggleSearch} />
-                )}
+                <FaSearch className="w-5 h-5" />
               </button>
 
               <Link
@@ -199,11 +246,11 @@ const ProfessionalNavbar = () => {
               >
                 <FaShoppingCart className="w-5 h-5" />
                 <span className="ml-2 hidden md:block">Cart</span>
-                {cartItemCount ? (
+                {cartItemCount > 0 && (
                   <span className="absolute top-[-8px] right-[-8px] bg-pink-600 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
                     {cartItemCount}
                   </span>
-                ) : null}
+                )}
               </Link>
 
             
@@ -220,7 +267,12 @@ const ProfessionalNavbar = () => {
                 </button>
 
                 {isProfileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg overflow-hidden z-50">
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg overflow-hidden z-50"
+                  >
                     {userId ? (
                       <>
                         <Link
@@ -250,16 +302,15 @@ const ProfessionalNavbar = () => {
                         >
                           Sign Up
                         </Link>
-                        <Link
-                          to="/seller/login"
-                          className="block w-full text-left px-4 py-2 hover:bg-pink-50 transition"
+                        <button
                           onClick={toggleSellerLogin}
+                          className="block w-full text-left px-4 py-2 hover:bg-pink-50 transition"
                         >
                           Seller
-                        </Link>
+                        </button>
                       </>
                     )}
-                  </div>
+                  </motion.div>
                 )}
               </div>
             </div>
@@ -267,56 +318,155 @@ const ProfessionalNavbar = () => {
         </div>
       </div>
 
-      {/* Seller Login Modal */}
-      {isSellerLoginOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white w-[400px] p-6 rounded-lg shadow-lg relative">
-            <button
-              onClick={toggleSellerLogin}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
-            >
-              <FaTimes className="w-5 h-5" />
-            </button>
-            <h2 className="text-xl font-bold mb-4">Seller Login</h2>
-            <form onSubmit={handleSellerLogin}>
-              <div className="mb-4">
-                <label
-                  htmlFor="email"
-                  className="block text-gray-700 text-sm mb-2"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full border border-gray-300 rounded-md px-3 py-2"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="password"
-                  className="block text-gray-700 text-sm mb-2"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  className="w-full border border-gray-300 rounded-md px-3 py-2"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-pink-600 text-white py-2 px-4 rounded-md hover:bg-pink-700 transition"
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={menuVariants}
+            className="md:hidden fixed inset-0 z-50 bg-[#fdf9f3]"
+          >
+            <div className="flex justify-between items-center p-4 border-b">
+              <Link 
+                to="/HomePage" 
+                className="text-2xl font-bold text-pink-600 mx-auto" 
+                onClick={() => setIsMenuOpen(false)}
               >
-                Login
+                <span className="font-['Bodoni_MT'] text-4xl">MERA Bestie</span>
+              </Link>
+              <motion.button
+                whileHover={{ rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setIsMenuOpen(false)}
+                className="absolute right-4 text-gray-800"
+              >
+                <FaTimes className="w-6 h-6" />
+              </motion.button>
+            </div>
+            <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] p-4">
+              <div className="w-full max-w-md space-y-6">
+                {mobileLinks.map(({ path, name }, i) => (
+                  <motion.div
+                    key={path}
+                    custom={i}
+                    variants={linkVariants}
+                    initial="closed"
+                    animate="open"
+                    exit="closed"
+                  >
+                    <Link
+                      to={path}
+                      className={`block text-center text-xl py-3 w-full ${
+                        isActive(path) 
+                          ? "text-pink-600" 
+                          : "text-gray-800 hover:text-pink-600"
+                      } transition-colors duration-200`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Search Overlay */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white p-4 rounded-lg w-full max-w-md mx-4"
+              ref={searchRef}
+            >
+              <SearchBar />
+              <button 
+                onClick={toggleSearch}
+                className="mt-2 text-gray-600 hover:text-pink-600"
+              >
+                Close
               </button>
-            </form>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Seller Login Modal */}
+      <AnimatePresence>
+        {isSellerLoginOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white p-6 rounded-lg w-full max-w-md mx-4"
+            >
+              <h2 className="text-2xl font-bold mb-4">Seller Login</h2>
+              <form onSubmit={handleSellerLogin}>
+                <div className="mb-4">
+                  <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    required
+                  />
+                </div>
+                <div className="mb-6">
+                  <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    required
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <button
+                    type="submit"
+                    className="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  >
+                    Sign In
+                  </button>
+                  <button
+                    type="button"
+                    onClick={toggleSellerLogin}
+                    className="inline-block align-baseline font-bold text-sm text-pink-600 hover:text-pink-800"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
 
 export default ProfessionalNavbar;
+
