@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from "react-helmet";
 
-const Shop = ({category}) => {
+const Shop = ({ category }) => {
   const [viewMode, setViewMode] = useState('grid');
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loadMore, setLoadMore] = useState(6);
@@ -23,7 +23,7 @@ const Shop = ({category}) => {
       img: "http://images4.fanpop.com/image/photos/22200000/Christmas-gifts-christmas-gifts-22231235-2048-2048.jpg",
     },
     {
-      name: 'Stationery', 
+      name: 'Stationery',
       img: "https://tse1.mm.bing.net/th?id=OIP.UCpcTmMMOdXTF6WAhtD94QHaH0&pid=Api&P=0&h=180",
     },
   ];
@@ -35,10 +35,10 @@ const Shop = ({category}) => {
         const data = await response.json();
         console.log(data.products)
         if (data.success) {
-          const validProducts = data.products.filter(product => 
-            product.name && 
-            product.price && 
-            product.img && 
+          const validProducts = data.products.filter(product =>
+            product.name &&
+            product.price &&
+            product.img &&
             product.category &&
             product._id &&
             (product.visibility === ("on") || product.visibility === "true")
@@ -91,7 +91,7 @@ const Shop = ({category}) => {
   };
 
   const handleShowLess = () => {
-    setLoadMore(prevLoadMore=>prevLoadMore-6);
+    setLoadMore(prevLoadMore => prevLoadMore - 6);
   };
 
   const addPostToRecentlyViewed = (productId) => {
@@ -107,7 +107,7 @@ const Shop = ({category}) => {
     }
   }
 
-  return (  
+  return (
     <>
       <Helmet>
         <title>Shop | Mera Bestie</title>
@@ -116,7 +116,7 @@ const Shop = ({category}) => {
         <Navbar />
 
         {/* Hero Section with Refined Design */}
-        <section 
+        <section
           className="relative bg-cover bg-center py-20 text-center"
           style={{
             backgroundImage: "linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('src/assets/bg shop.png')",
@@ -124,8 +124,7 @@ const Shop = ({category}) => {
           }}
         >
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-5xl font-extrabold text-pink-800 mb-4 tracking-tight">Discover Our Curated Collections
-            </h2>
+            <h2 className="text-5xl font-extrabold text-pink-800 mb-4 tracking-tight">Discover Our Curated Collections</h2>
             <p className="text-gray-700 text-xl max-w-2xl mx-auto leading-relaxed">
               Discover our exclusive collections tailored just for you, with carefully curated products that speak to your style and personality.
             </p>
@@ -146,7 +145,7 @@ const Shop = ({category}) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div 
+                <div
                   className="h-56 bg-cover bg-center transition-transform duration-300 transform hover:scale-110"
                   style={{ backgroundImage: `url('${category.img}')` }}
                 />
@@ -163,13 +162,13 @@ const Shop = ({category}) => {
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
                 className="flex items-center bg-pink-100 text-pink-800 px-4 py-2 rounded-lg hover:bg-pink-200 transition"
               >
                 <FaFilter className="mr-2" /> Filters
               </button>
-              <button 
+              <button
                 className="bg-pink-100 text-pink-800 px-4 py-2 rounded-lg hover:bg-pink-200 transition"
                 onClick={() => filterProducts('all')}
               >
@@ -179,7 +178,7 @@ const Shop = ({category}) => {
             <div className="flex items-center space-x-4">
               <div className="flex items-center">
                 <FaSort className="mr-2 text-pink-800" />
-                <select 
+                <select
                   className="border-pink-300 border px-3 py-2 rounded-lg focus:ring-2 focus:ring-pink-500 transition"
                   onChange={(e) => sortProducts(e.target.value)}
                 >
@@ -215,7 +214,7 @@ const Shop = ({category}) => {
               animate="visible"
               variants={{
                 hidden: { opacity: 0 },
-                visible: { 
+                visible: {
                   opacity: 1,
                   transition: {
                     delayChildren: 0.2,
@@ -231,18 +230,21 @@ const Shop = ({category}) => {
                     ${viewMode === 'list' ? 'flex items-center p-4 space-x-6' : ''}`}
                   variants={{
                     hidden: { opacity: 0, y: 20 },
-                    visible: { 
-                      opacity: 1, 
+                    visible: {
+                      opacity: 1,
                       y: 0,
                       transition: { duration: 0.5 }
                     }
                   }}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.03,
                     boxShadow: "0 10px 20px rgba(0,0,0,0.12)"
                   }}
                 >
-                  {/* Image Section */}
+                  {/* Link wrapping both image and View Details button */}
+                  <Link to={`/${product._id}`} className="block">
+                  
+                    {/* Image Section */}
                   <div 
                     className={`relative ${viewMode === 'grid' ? 'aspect-video' : 'w-1/4'} bg-gray-100`}
                   >
@@ -259,70 +261,61 @@ const Shop = ({category}) => {
                     </div>
                   </div>
 
-                  {/* Product Details */}
-                  <div 
-                    className={`p-3 ${viewMode === 'grid' ? 'text-center' : 'flex-grow flex flex-col justify-between'}`}
-                  >
-                    <div>
-                      <h4 className={`font-semibold ${viewMode === 'grid' ? 'text-sm' : 'text-lg mb-2'}`}>
-                        {product.name}
-                      </h4>
-                      
-                      {viewMode === 'list' && (
-                        <p className="text-gray-600 mb-3 text-sm">
-                          Discover our premium {product.category.toLowerCase()} collection, carefully curated to bring joy and inspiration.
-                        </p>
-                      )}
-                      
-                      <div className={`flex ${viewMode === 'grid' ? 'justify-center' : 'justify-between'} items-center space-x-2`}>
-                        <div className="flex items-center space-x-2">
-                          <span className="text-gray-500 line-through text-xs">
-                            ₹{product.price.split('₹')[1]||400}
-                          </span>
-                          <span className="font-bold text-pink-600">
-                            ₹{product.price.split('₹')[2]|| product.price}
-                          </span>
-                        </div>
-                        
-                        <div className="flex items-center justify-center space-x-2">
-                          <div className="text-yellow-500">
-                            {'★'.repeat(Math.floor(product.rating))}
-                            <span className="text-gray-300">
-                              {'★'.repeat(5 - Math.floor(product.rating))}
+                    {/* Product Details */}
+                    <div
+                      className={`p-3 ${viewMode === 'grid' ? 'text-center' : 'flex-grow flex flex-col justify-between'}`}
+                    >
+                      <div>
+                        <h4 className={`font-semibold ${viewMode === 'grid' ? 'text-sm' : 'text-lg mb-2'}`}>
+                          {product.name}
+                        </h4>
+                        {viewMode === 'list' && (
+                          <p className="text-gray-600 mb-3 text-sm">
+                            Discover our premium {product.category.toLowerCase()} collection, carefully curated to bring joy and inspiration.
+                          </p>
+                        )}
+                        <div className={`flex ${viewMode === 'grid' ? 'justify-center' : 'justify-between'} items-center space-x-2`}>
+                          <div className="flex items-center space-x-2">
+                            <span className="text-gray-500 line-through text-xs">
+                              ₹{product.price.split('₹')[1] || 400}
+                            </span>
+                            <span className="font-bold text-pink-600">
+                              ₹{product.price.split('₹')[2] || product.price}
                             </span>
                           </div>
-                          <span className="text-gray-600">{product.rating}</span>
                         </div>
                       </div>
-                    </div>
-
-                    <Link 
-                      to={`/${product._id}`} 
-                      className={`block ${viewMode === 'grid' ? 'mt-2' : 'mt-4'}`}
-                    >
-                      <button 
-                        className="w-full bg-pink-50 text-pink-600 py-2 rounded-md 
-                        hover:bg-pink-100 transition-colors" onClick={e=>{addPostToRecentlyViewed(product._id)}}
+                      <button
+                        onClick={() => addPostToRecentlyViewed(product._id)}
+                        className="w-full bg-pink-50 text-pink-600 py-2 rounded-md  hover:bg-pink-100 transition-colors"
                       >
                         View Details
                       </button>
-                    </Link>
-                  </div>
+                    </div>
+
+
+
+
+                  </Link>
                 </motion.div>
               ))}
             </motion.div>
           </AnimatePresence>
+        </div>
 
-          <div className="text-center mt-12">
+        {/* Load More Button */}
+
+        <div className="text-center mt-8 mb-20 relative">
+          <div className="inline-block -mb-10">
             {loadMore < filteredProducts.length ? (
-              <button 
+              <button
                 className="bg-pink-600 text-white px-8 py-3 rounded-full hover:bg-pink-700 transition-colors duration-300 shadow-lg hover:shadow-xl"
                 onClick={handleLoadMore}
               >
                 Load More Products
               </button>
             ) : (
-              <button 
+              <button
                 className="bg-pink-600 text-white px-8 py-3 rounded-full hover:bg-pink-700 transition-colors duration-300 shadow-lg hover:shadow-xl"
                 onClick={handleShowLess}
                 hidden={filteredProducts.length < 6}
@@ -332,6 +325,8 @@ const Shop = ({category}) => {
             )}
           </div>
         </div>
+
+
 
         {/* Footer with Enhanced Design */}
         <footer className="bg-white py-16 text-black border-t border-pink-200">
@@ -365,3 +360,4 @@ const Shop = ({category}) => {
 };
 
 export default Shop;
+
