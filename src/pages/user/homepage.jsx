@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -51,20 +50,20 @@ const HomePage = () => {
       img: "https://i.pinimg.com/originals/96/24/6e/96246e3c133e6cb5ae4c7843f9e45b22.jpg",
       title: "Stationery",
       description: "Elevate your workspace with our premium stationery.",
-      category: "Stationery"
+      category: "Stationery",
     },
     {
       img: "https://tse1.mm.bing.net/th?id=OIP.EYAqW5p_HzCoXKq1dXvGyQHaFj&pid=Api&P=0&h=180",
       title: "Gift Boxes",
       description: "Curated gifts that speak volumes of your affection.",
-      category: "Gift Boxes"
+      category: "Gift Boxes",
     },
     {
       img: "https://tse3.mm.bing.net/th?id=OIP.90zsFkK9l2Nttf3fQu12ZwHaE8&pid=Api&P=0&h=180",
       title: "Books",
       description: "Transform spaces with our sophisticated decor books.",
-      category: "Books"
-    }
+      category: "Books",
+    },
   ];
 
   const responsive = {
@@ -89,7 +88,10 @@ const HomePage = () => {
     <>
       <Helmet>
         <title>Mera Bestie | Unique Gifting Experience</title>
-        <meta name="description" content="Discover unique gifts and thoughtful collections for every occasion." />
+        <meta
+          name="description"
+          content="Discover unique gifts and thoughtful collections for every occasion."
+        />
       </Helmet>
       <ScrollProgress />
       <Navbar />
@@ -118,7 +120,8 @@ const HomePage = () => {
                 Crafting Memorable Moments
               </h1>
               <p className="mb-8 text-xl text-white/90 max-w-2xl mx-auto">
-                Transforming ordinary moments into extraordinary memories with our curated collections
+                Transforming ordinary moments into extraordinary memories with
+                our curated collections
               </p>
               <div className="space-x-4 flex justify-center">
                 <Link to="/about">
@@ -159,7 +162,8 @@ const HomePage = () => {
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-pink-500 to-blue-500 mx-auto mb-6"></div>
               <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-                Discover meticulously crafted categories designed to inspire and delight
+                Discover meticulously crafted categories designed to inspire and
+                delight
               </p>
             </motion.div>
 
@@ -179,15 +183,17 @@ const HomePage = () => {
                 <button
                   onClick={handleClick}
                   className={`${
-                    direction === "prev"
-                      ? "left-4"
-                      : "right-4"
+                    direction === "prev" ? "left-4" : "right-4"
                   } absolute top-1/2 transform -translate-y-1/2 text-white bg-gradient-to-r from-pink-500 to-blue-500 rounded-full p-3 shadow-xl transition-all hover:bg-opacity-90 z-10`}
                   style={{
                     boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
                   }}
                 >
-                  <span className="material-icons text-xl">{direction === "prev" ? "keyboard_arrow_left" : "keyboard_arrow_right"}</span>
+                  <span className="material-icons text-xl">
+                    {direction === "prev"
+                      ? "keyboard_arrow_left"
+                      : "keyboard_arrow_right"}
+                  </span>
                 </button>
               )}
             >
@@ -205,7 +211,9 @@ const HomePage = () => {
                     />
                   </div>
                   <div className="mt-4 text-center">
-                    <h3 className="text-lg font-semibold text-pink-500">{category.title}</h3>
+                    <h3 className="text-lg font-semibold text-pink-500">
+                      {category.title}
+                    </h3>
                     <p className="text-gray-600">{category.description}</p>
                   </div>
                 </Link>
@@ -215,7 +223,10 @@ const HomePage = () => {
         </section>
 
         {/* Vision Section with Modern Overlay Design */}
-        <section className="relative min-h-[80vh] flex items-center" data-aos="fade-up">
+        <section
+          className="relative min-h-[80vh] flex items-center"
+          data-aos="fade-up"
+        >
           <div className="absolute inset-0 z-0">
             <img
               src="https://tse3.mm.bing.net/th?id=OIP.RNJBshhRJcxPoSt2Slj5bAHaEK&pid=Api&P=0&h=180"
@@ -237,9 +248,11 @@ const HomePage = () => {
                 Our Vision
               </h2>
               <p className="text-xl text-white/90 mb-10 leading-relaxed">
-                We believe in creating more than just products – we craft experiences that connect hearts, 
-                celebrate relationships, and turn ordinary moments into extraordinary memories. 
-                Our mission is to be your partner in expressing love, appreciation, and thoughtfulness.
+                We believe in creating more than just products – we craft
+                experiences that connect hearts, celebrate relationships, and
+                turn ordinary moments into extraordinary memories. Our mission
+                is to be your partner in expressing love, appreciation, and
+                thoughtfulness.
               </p>
               <Link to="/about">
                 <motion.button
