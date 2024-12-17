@@ -7,7 +7,6 @@ import "aos/dist/aos.css";
 import { Helmet } from "react-helmet";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-
 import Navbar from "../../components/user/navbar/navbar";
 import Footer from "../../components/user/footer/footer";
 
