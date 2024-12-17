@@ -124,7 +124,7 @@ const ProductDetail = () => {
     const userId = sessionStorage.getItem('userId');
     
     if (!userId) {
-      setShowLoginDialog(true);
+      navigate('/login');
       return;
     }
 
