@@ -7,7 +7,7 @@ import Signup from "./pages/user/signup";
 import HomePage from "./pages/user/homepage";
 import ShoppingCartPage from "./pages/user/cart";
 import Shop from "./pages/user/shop";
-import OccasionsPage from "./pages/user/occasionspage";
+// import OccasionsPage from "./pages/user/occasionspage";
 import Checkout from "./pages/user/checkout";
 import Product from "./pages/admin/product";
 import LoginPage from "./pages/admin/login";
@@ -36,7 +36,7 @@ function App() {
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
-          <Route path="/OccasionsPage" element={<OccasionsPage />} />
+          {/* <Route path="/OccasionsPage" element={<OccasionsPage />} /> */}
           <Route path="/cart" element={<ShoppingCartPage />} />
           <Route path="/orders" element={<Order />} />
           <Route path="/admin/:sellerId" element={<DashboardPage />} />

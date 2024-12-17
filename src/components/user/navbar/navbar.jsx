@@ -160,7 +160,7 @@ const ProfessionalNavbar = () => {
 
             {/* Desktop Navigation Menu */}
             <div className="hidden lg:flex space-x-8 text-sm font-medium">
-              {[{ path: "/HomePage", name: "HOME" }, { path: "/shop", name: "SHOP" }, { path: "/OccasionsPage", name: "OCCASIONS" }, { path: "/contact", name: "CONTACT" }, { path: "/about", name: "ABOUT" }]
+              {[{ path: "/HomePage", name: "HOME" }, { path: "/shop", name: "SHOP" }, { path: "/contact", name: "CONTACT" }, { path: "/about", name: "ABOUT" }]
                 .map(({ path, name }) => (
                   <Link
                     key={path}
