@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import Navbar from '../../components/user/navbar/navbar';
 
+
 const Shop = ({ category }) => {
   const [viewMode, setViewMode] = useState('grid');
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -104,61 +105,74 @@ const Shop = ({ category }) => {
       <div className="bg-gradient-to-b from-pink-50 to-pink-100 min-h-screen relative">
         <Navbar className="sticky top-0 z-50 bg-white shadow-md" />
 
-        {/* Toggle Menu */}
-        <button
-          className="fixed top-9 left-14 z-50 bg-pink-500 text-white p-3 rounded-full shadow-md"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
-        </button>
+    {/* Toggle Menu */}
+{/* Button for Small Screens */}
+<button
+  className="absolute top-20 left-4 sm:hidden p-3 rounded-full shadow-md bg-pink-500 text-white z-10" // Increased top value for more spacing
+  onClick={() => setIsMenuOpen(!isMenuOpen)}
+>
+  {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+</button>
 
-        <div
-          className={`fixed top-0 left-0 h-full bg-white shadow-md z-40 transform transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
-        >
-          <h2 className="text-xl font-bold text-pink-800 p-4 border-b">Categories</h2>
-          <ul className="p-4 space-y-4">
-            {categories.map((category, index) => (
-              <li
-                key={index}
-                className="cursor-pointer text-pink-800 hover:text-pink-600"
-                onClick={() => {
-                  navigate(`/${category.name.toLowerCase().replace(/ /g, '-')}`);
-                  setIsMenuOpen(false);
-                }}
-              >
-                {category.name}
-              </li>
-            ))}
-          </ul>
-        </div>
+{/* Button for Large Screens */}
+<button
+  className="hidden sm:block fixed top-9 left-14 z-50 p-3 rounded-full shadow-md bg-pink-500 text-white"
+  onClick={() => setIsMenuOpen(!isMenuOpen)}
+>
+  {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+</button>
 
-        {/* Hero Section */}
-        <section
-          className="relative bg-cover bg-center py-20 text-center"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('src/assets/bg-shop.png')",
-          }}
-        >
-          <div className="max-w-4xl mx-auto">
-            <motion.h1
-              className="text-5xl font-extrabold text-pink-800 mb-4 tracking-tight"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-            >
-              Welcome to Mera Bestie Shop
-            </motion.h1>
-            <motion.p
-              className="text-gray-700 text-xl max-w-2xl mx-auto leading-relaxed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.2 }}
-            >
-              Explore our handpicked categories and best-selling products for every occasion.
-            </motion.p>
-          </div>
-        </section>
+<div
+  className={`fixed top-0 left-0 h-full bg-white shadow-md z-40 transform transition-transform duration-300 ${
+    isMenuOpen ? "translate-x-0" : "-translate-x-full"
+  }`}
+>
+  <h2 className="text-xl font-bold text-pink-800 p-4 border-b">Categories</h2>
+  <ul className="p-4 space-y-4">
+    {categories.map((category, index) => (
+      <li
+        key={index}
+        className="cursor-pointer text-pink-800 hover:text-pink-600"
+        onClick={() => {
+          navigate(`/${category.name.toLowerCase().replace(/ /g, "-")}`);
+          setIsMenuOpen(false);
+        }}
+      >
+        {category.name}
+      </li>
+    ))}
+  </ul>
+</div>
+
+{/* Hero Section */}
+<section
+  className="relative bg-cover bg-center pt-24 pb-12 sm:py-16 md:py-20 lg:py-24 text-center" // Adjusted top padding
+  style={{
+    backgroundImage:
+      "linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('src/assets/bg-shop.png')",
+  }}
+>
+  <div className="max-w-4xl mx-auto flex justify-center items-center">
+    <motion.h1
+      className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-pink-800 mb-4 tracking-tight"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      Welcome to Mera Bestie Shop
+    </motion.h1>
+  </div>
+
+  <motion.p
+    className="text-lg sm:text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto leading-relaxed"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1 }}
+  >
+    Explore our handpicked categories and best-selling products for every occasion.
+  </motion.p>
+</section>
+
 
         {/* Main Categories */}
         <div className="max-w-7xl mx-auto px-6 py-12">
