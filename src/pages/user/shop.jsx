@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import Navbar from '../../components/user/navbar/navbar';
 
 
+
 const Shop = ({ category }) => {
   const [viewMode, setViewMode] = useState('grid');
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -17,18 +18,18 @@ const Shop = ({ category }) => {
   const [loading, setLoading] = useState(true); 
 
   const categories = [
-    // { name: 'Couple Gifts', img: 'https://th.bing.com/th/id/OIG4..gTkczkAHWyHb1BcyEKW?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn' },
-    // { name: 'Birthday Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-royal-rose-extravaganza-280964-m.jpg' },
-    // { name: 'Anniversary Gifts', img: 'https://th.bing.com/th/id/OIG1.eKK.1P1RMbR2LgtAkCbb?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn' },
-    // { name: 'Personalized Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-peach-and-pink-flowers-in-a-mug-188278-m.jpg' },
-    // { name: 'Corporate Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-corporate-essentials-ensemble-278928-m.jpg' },
-    // { name: 'Festive Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-festive-elegance-267303-m.jpg' },
-    // { name: 'DIY Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-personalized-diy-plushie-making-hamper-387950-m.jpg' },
-    // { name: 'Eco-friendly Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-sustainable-eco-friendly-3d-printed-curvy-table-lamp-304751-m.jpg' },
-    // { name: 'Luxury Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-luxury-raksha-bandhan-bhaiya-bhabhi-hamper-300859-m.jpg' },
-    // { name: 'Handmade Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-led-personalized-christmas-lamp-196860-m.jpg' },
-    // { name: 'Gourmet Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-personalized-gourmet-diwali-hamper-189222-m.jpg' },
-    // { name: 'Fashion Accessories', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-modish-fashion-necklace-25631-m.jpg' },
+    { name: 'Couple Gifts', img: 'https://th.bing.com/th/id/OIG4..gTkczkAHWyHb1BcyEKW?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn' },
+    { name: 'Birthday Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-royal-rose-extravaganza-280964-m.jpg' },
+    { name: 'Anniversary Gifts', img: 'https://th.bing.com/th/id/OIG1.eKK.1P1RMbR2LgtAkCbb?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn' },
+    { name: 'Personalized Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-peach-and-pink-flowers-in-a-mug-188278-m.jpg' },
+    { name: 'Corporate Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-corporate-essentials-ensemble-278928-m.jpg' },
+    { name: 'Festive Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-festive-elegance-267303-m.jpg' },
+    { name: 'DIY Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-personalized-diy-plushie-making-hamper-387950-m.jpg' },
+    { name: 'Eco-friendly Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-sustainable-eco-friendly-3d-printed-curvy-table-lamp-304751-m.jpg' },
+    { name: 'Luxury Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-luxury-raksha-bandhan-bhaiya-bhabhi-hamper-300859-m.jpg' },
+    { name: 'Handmade Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-led-personalized-christmas-lamp-196860-m.jpg' },
+    { name: 'Gourmet Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-personalized-gourmet-diwali-hamper-189222-m.jpg' },
+    { name: 'Fashion Accessories', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-modish-fashion-necklace-25631-m.jpg' },
     { name: 'Books', img: "https://tse2.mm.bing.net/th?id=OIP.uyi1Q5l2H8Zf9APJQplJfQHaEK&pid=Api&P=0&h=180" },
     { name: 'Gift Boxes', img: "http://images4.fanpop.com/image/photos/22200000/Christmas-gifts-christmas-gifts-22231235-2048-2048.jpg" },
     { name: 'Stationery', img: "https://tse1.mm.bing.net/th?id=OIP.UCpcTmMMOdXTF6WAhtD94QHaH0&pid=Api&P=0&h=180" },
@@ -104,26 +105,90 @@ const Shop = ({ category }) => {
       </Helmet>
       <div className="bg-gradient-to-b from-pink-50 to-pink-100 min-h-screen relative mt-16">
         <Navbar className="sticky top-0 z-50 bg-white shadow-md" />
-
-    {/* Toggle Menu */}
+{/* Toggle Menu */}
 {/* Button for Small Screens */}
 <button
-  className="absolute top-20 left-4 sm:hidden p-3 rounded-full shadow-md bg-pink-500 text-white z-10" // Increased top value for more spacing
+  className="sm:hidden p-3 rounded-full shadow-md bg-pink-500 text-white z-10 fixed bottom-10 left-4" // Positioned at the bottom on mobile
   onClick={() => setIsMenuOpen(!isMenuOpen)}
 >
   {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
 </button>
 
 {/* Button for Large Screens */}
-<button
-  className="hidden sm:block fixed top-9 left-14 z-50 p-3 rounded-full shadow-md bg-pink-500 text-white"
-  onClick={() => setIsMenuOpen(!isMenuOpen)}
->
-  {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
-</button>
+<div className="relative">
+  <button
+    className="hidden sm:block fixed top-9 left-20 p-3 rounded-full shadow-md bg-pink-500 text-white z-50" // Positioned fixed at the top left
+    onClick={() => setIsMenuOpen(!isMenuOpen)}
+  >
+    {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+  </button>
 
+  {/* Hero Section */}
+  <section
+    className="relative bg-cover bg-center pt-20 pb-12 sm:py-16 md:py-20 lg:py-24 text-center"
+    style={{
+      backgroundImage:
+        "linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('src/assets/bg-shop.png')",
+    }}
+  >
+    <div className="max-w-7xl mx-auto flex justify-between items-center px-4">
+      {/* Left Section with Brand Name */}
+      <div className="text-white text-xl font-bold">
+        <span>Mera Bestie Shop</span>
+      </div>
+    </div>
+
+    <div className="max-w-4xl mx-auto text-center mt-12">
+      <motion.h1
+        className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-pink-800 mb-4 tracking-tight"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        Welcome to Mera Bestie Shop
+      </motion.h1>
+
+      <motion.p
+        className="text-lg sm:text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto leading-relaxed"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        Explore our handpicked categories and best-selling products for every occasion.
+      </motion.p>
+    </div>
+  </section>
+</div>
+
+{/* Mobile Menu (for small screens) */}
 <div
-  className={`fixed top-0 left-0 h-full bg-white shadow-md z-40 transform transition-transform duration-300 ${
+  className={`sm:hidden fixed top-16 left-0 w-full bg-white shadow-md z-40 transform transition-transform duration-300 ${
+    isMenuOpen ? "translate-y-0" : "-translate-y-full"
+  }`}
+>
+  <h2 className="text-xl font-bold text-pink-800 p-4 border-b">Categories</h2>
+  <ul className="p-4 space-y-4">
+    {categories.map((category, index) => (
+      <li
+        key={index}
+        className="cursor-pointer text-pink-800 hover:text-pink-600"
+        onClick={() => {
+          navigate(`/${category.name.toLowerCase().replace(/ /g, "-")}`);
+          setIsMenuOpen(false);
+        }}
+      >
+        {category.name}
+      </li>
+    ))}
+  </ul>
+</div>
+
+
+
+
+{/* Sidebar Menu for Desktop */}
+<div
+  className={`hidden sm:block fixed top-0 left-0 h-full w-64 bg-white shadow-md z-40 transform transition-transform duration-300 ${
     isMenuOpen ? "translate-x-0" : "-translate-x-full"
   }`}
 >
@@ -144,58 +209,80 @@ const Shop = ({ category }) => {
   </ul>
 </div>
 
-{/* Hero Section */}
-<section
-  className="relative bg-cover bg-center pt-24 pb-12 sm:py-16 md:py-20 lg:py-24 text-center" // Adjusted top padding
-  style={{
-    backgroundImage:
-      "linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('src/assets/bg-shop.png')",
-  }}
+{/* Mobile Menu */}
+<div
+  className={`sm:hidden fixed top-16 left-0 w-full bg-white shadow-md z-40 transform transition-transform duration-300 ${
+    isMenuOpen ? "translate-y-0" : "-translate-y-full"
+  }`}
 >
-  <div className="max-w-4xl mx-auto flex justify-center items-center">
-    <motion.h1
-      className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-pink-800 mb-4 tracking-tight"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-    >
-      Welcome to Mera Bestie Shop
-    </motion.h1>
-  </div>
+  <h2 className="text-xl font-bold text-pink-800 p-4 border-b">Categories</h2>
+  <ul className="p-4 space-y-4">
+    {categories.map((category, index) => (
+      <li
+        key={index}
+        className="cursor-pointer text-pink-800 hover:text-pink-600"
+        onClick={() => {
+          navigate(`/${category.name.toLowerCase().replace(/ /g, "-")}`);
+          setIsMenuOpen(false); // Close the menu after category selection
+        }}
+      >
+        {category.name}
+      </li>
+    ))}
+  </ul>
+</div>
 
-  <motion.p
-    className="text-lg sm:text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto leading-relaxed"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 1 }}
-  >
-    Explore our handpicked categories and best-selling products for every occasion.
-  </motion.p>
-</section>
+{/* Desktop Sidebar Menu */}
+<div
+  className={`hidden sm:block fixed top-0 left-0 h-full w-64 bg-white shadow-md z-40 transform transition-transform duration-300 ${
+    isMenuOpen ? "translate-x-0" : "-translate-x-full"
+  }`}
+>
+  <h2 className="text-xl font-bold text-pink-800 p-4 border-b">Categories</h2>
+  <ul className="p-4 space-y-4">
+    {categories.map((category, index) => (
+      <li
+        key={index}
+        className="cursor-pointer text-pink-800 hover:text-pink-600"
+        onClick={() => {
+          navigate(`/${category.name.toLowerCase().replace(/ /g, "-")}`);
+          setIsMenuOpen(false); // Close the menu after category selection
+        }}
+      >
+        {category.name}
+      </li>
+    ))}
+  </ul>
+</div>
 
-
-        {/* Main Categories */}
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <h2 className="text-3xl font-bold text-pink-900 text-center mb-8">Shop by Category</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-            {categories.map((category, index) => (
-              <motion.div
-                key={index}
-                className="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                onClick={() => navigate(`/${category.name.toLowerCase().replace(/ /g, '-')}`)}
-              >
-                <div
-                  className="h-56 bg-cover bg-center"
-                  style={{ backgroundImage: `url('${category.img}')` }}
-                ></div>
-                <div className="p-4 text-center">
-                  <h3 className="text-xl font-bold text-pink-800">{category.name}</h3>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+{/* Main Categories */}
+<div className="max-w-7xl mx-auto px-6 py-12">
+  <h2 className="text-3xl font-bold text-pink-900 text-center mb-8">
+    Shop by Category
+  </h2>
+  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+    {categories.map((category, index) => (
+      <motion.div
+        key={index}
+        className="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+        onClick={() =>
+          navigate(`/${category.name.toLowerCase().replace(/ /g, "-")}`)
+        }
+      >
+        <div
+          className="h-56 bg-cover bg-center"
+          style={{ backgroundImage: `url('${category.img}')` }}
+        ></div>
+        <div className="p-4 text-center">
+          <h3 className="text-xl font-bold text-pink-800">{category.name}</h3>
         </div>
+      </motion.div>
+    ))}
+  </div>
+</div>
 
+
+       
         {/* Mixed Categories */}
         <div className="max-w-7xl mx-auto px-6 py-12">
           <h2 className="text-3xl font-bold text-pink-900 text-center mb-8">Explore More</h2>
