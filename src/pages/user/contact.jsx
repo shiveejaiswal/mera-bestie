@@ -20,7 +20,7 @@ const ContactUs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/post-complaints', {
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/complaints/post-complaints', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const ContactUs = () => {
       <meta name="description" content="Get in touch with Mera Bestie. We're here to help and answer any questions you may have." />
     </Helmet>
     <Navbar className='z-0 mb-auto' />
-    <div className="bg-gradient-to-br from-pink-50 to-blue-50 min-h-screen">
+    <div className="bg-gradient-to-br from-pink-50 to-blue-50 min-h-screen mt-16">
       
       <div className="container mx-auto px-4 py-16">
         {showSuccess && (

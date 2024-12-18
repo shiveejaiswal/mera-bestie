@@ -35,7 +35,7 @@ function About() {
         <meta name="description" content="Learn about Mera Bestie's journey, vision, and mission." />
       </Helmet>
       <Navbar />    
-      <div className="min-h-screen bg-gradient-to-b from-pink-100 to-pink-50">
+      <div className="min-h-screen bg-gradient-to-b from-pink-100 to-pink-50 mt-16">
         <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
           {/* Header Section */}
           <div className="text-center mb-16">

@@ -22,6 +22,7 @@ import Admin from "./pages/user/admin";
 import CouponPage from "./pages/admin/coupon";
 import DashboardPage from "./pages/admin/daashboard";
 import Order from "./pages/user/orders";
+import GiftBox from "./pages/user/gift-box";
 
 function App() {
   return (
@@ -37,6 +38,9 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
           {/* <Route path="/OccasionsPage" element={<OccasionsPage />} /> */}
+          <Route path="/gift-boxes" element={<GiftBox />} />
+          <Route path="/books" element={<GiftBox />} />
+          <Route path="/stationery" element={<GiftBox />} />
           <Route path="/cart" element={<ShoppingCartPage />} />
           <Route path="/orders" element={<Order />} />
           <Route path="/admin/:sellerId" element={<DashboardPage />} />

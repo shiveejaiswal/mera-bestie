@@ -156,11 +156,14 @@ const HomePage = () => {
     <>
       <Helmet>
         <title>Mera Bestie | Unique Gifting Experience</title>
-        <meta name="description" content="Discover unique gifts and thoughtful collections for every occasion." />
+        <meta
+          name="description"
+          content="Discover unique gifts and thoughtful collections for every occasion."
+        />
       </Helmet>
       <ScrollProgress />
       <Navbar />
-      <div className="w-full bg-white overflow-hidden">
+      <div className="w-full bg-white overflow-hidden mt-16">
         {/* Hero Section with Modern Glassmorphism Design */}
 
        {/* Product Categories Section with Refined Styling */}
@@ -258,7 +261,10 @@ const HomePage = () => {
         
 
         {/* Vision Section with Modern Overlay Design */}
-        <section className="relative min-h-[80vh] flex items-center" data-aos="fade-up">
+        <section
+          className="relative min-h-[80vh] flex items-center"
+          data-aos="fade-up"
+        >
           <div className="absolute inset-0 z-0">
             <img
               src="https://tse3.mm.bing.net/th?id=OIP.RNJBshhRJcxPoSt2Slj5bAHaEK&pid=Api&P=0&h=180"
@@ -280,9 +286,11 @@ const HomePage = () => {
                 Our Vision
               </h2>
               <p className="text-xl text-white/90 mb-10 leading-relaxed">
-                We believe in creating more than just products – we craft experiences that connect hearts, 
-                celebrate relationships, and turn ordinary moments into extraordinary memories. 
-                Our mission is to be your partner in expressing love, appreciation, and thoughtfulness.
+                We believe in creating more than just products – we craft
+                experiences that connect hearts, celebrate relationships, and
+                turn ordinary moments into extraordinary memories. Our mission
+                is to be your partner in expressing love, appreciation, and
+                thoughtfulness.
               </p>
               <Link to="/about">
                 <motion.button

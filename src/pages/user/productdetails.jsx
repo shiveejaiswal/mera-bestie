@@ -39,14 +39,14 @@ const ProductDetail = () => {
       reviewText: 'Great product! Really useful and high quality.'
     },
     {
-      name: 'Jane Smith',
+      name: 'Jane Smith', 
       rating: 5,
       reviewText: 'Exceeded my expectations. Worth every penny!'
     },
     {
       name: 'Alex Johnson',
       rating: 3,
-      reviewText: 'It’s okay, but I was expecting more features.'
+      reviewText: "It's okay, but I was expecting more features."
     }
   ]);
 
@@ -64,8 +64,8 @@ const ProductDetail = () => {
         if (data.success) {
           setProduct(data.product);
           calculateStockStatus(data.product);
-          fetchRelatedProducts(data.product.category); // Fetch related products
-          updateRecentlyViewed(data.product); // Update recently viewed products
+          fetchRelatedProducts(data.product.category);
+          updateRecentlyViewed(data.product);
         }
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -101,7 +101,7 @@ const ProductDetail = () => {
       const response = await fetch(`https://ecommercebackend-8gx8.onrender.com/products?category=${category}`);
       const data = await response.json();
       if (data.success) {
-        setRelatedProducts(data.products.slice(0, 4)); // Fetch 4 related products
+        setRelatedProducts(data.products.slice(0, 4));
       }
     } catch (error) {
       console.error('Error fetching related products:', error);
@@ -110,10 +110,10 @@ const ProductDetail = () => {
 
   const updateRecentlyViewed = (productData) => {
     let viewedProducts = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
-    viewedProducts = viewedProducts.filter((p) => p.productId !== productData.productId); // Avoid duplicates
-    viewedProducts.unshift(productData); // Add the current product at the start
+    viewedProducts = viewedProducts.filter((p) => p.productId !== productData.productId);
+    viewedProducts.unshift(productData);
     if (viewedProducts.length > 5) {
-      viewedProducts.pop(); // Limit to 5 recently viewed products
+      viewedProducts.pop();
     }
     localStorage.setItem('recentlyViewed', JSON.stringify(viewedProducts));
     setRecentlyViewed(viewedProducts);
@@ -140,7 +140,7 @@ const ProductDetail = () => {
     }
 
     try {
-      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/add-to-cart', {
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/cart/addtocart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -154,28 +154,18 @@ const ProductDetail = () => {
       
       const data = await response.json();
       
-      if (data.success && data.message === 'Product added to cart successfully') {
-        setShowAddAnimation(true);
-        setTimeout(() => {
-          setShowAddAnimation(false);
-          toast(
-            <div className="flex items-center cursor-pointer" onClick={() => navigate('/cart')}>
-              Go to Cart → 
-            </div>,
-            {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-            }
-          );
-        }, 1500);
+      if (data.success) {
+        toast.success(
+          <div className="flex items-center cursor-pointer" onClick={() => navigate('/cart')}>
+            Go to Cart →
+          </div>
+        );
+      } else {
+        toast.error('Product not saved to cart');
       }
     } catch (error) {
+      toast.error('Error adding product to cart');
       console.error('Error adding to cart:', error);
-      toast.error('Failed to add item to cart');
     }
   };
 
@@ -225,7 +215,7 @@ const ProductDetail = () => {
       <Navbar />
       <ToastContainer />
 
-      <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white py-12">
+      <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white py-12 mt-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -321,37 +311,37 @@ const ProductDetail = () => {
           </motion.div>
 
           {/* Reviews Section */}
-<div className="mt-12">
-<h2 className="text-2xl font-semibold text-gray-800 mb-6">Reviews</h2>
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-  {reviews.map((review, index) => (
-    <div
-      key={index}
-      className="bg-gray-50 p-4 rounded-xl shadow-md flex flex-col items-center w-full max-w-sm"
-    >
-      <span className="font-semibold">{review.name}</span>
-      <div className="flex items-center mt-2">
-        {[...Array(5)].map((_, idx) => (
-          <FaStar
-            key={idx}
-            className={`ml-1 ${idx < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
-          />
-        ))}
-      </div>
-      <p className="mt-2 text-gray-700 text-sm">{review.reviewText}</p>
-    </div>
-  ))}
-</div>
+          <div className="mt-12">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Reviews</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {reviews.map((review, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-50 p-4 rounded-xl shadow-md flex flex-col items-center w-full max-w-sm"
+                >
+                  <span className="font-semibold">{review.name}</span>
+                  <div className="flex items-center mt-2">
+                    {[...Array(5)].map((_, idx) => (
+                      <FaStar
+                        key={idx}
+                        className={`ml-1 ${idx < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                      />
+                    ))}
+                  </div>
+                  <p className="mt-2 text-gray-700 text-sm">{review.reviewText}</p>
+                </div>
+              ))}
+            </div>
 
-{/* Write a Review Button */}
-<div className="mt-7 flex justify-center">
-  <button
-    onClick={handleWriteReview}
-    className="w-64 py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700"
-  >
-    Write a Review
-  </button>
-</div>
+            {/* Write a Review Button */}
+            <div className="mt-7 flex justify-center">
+              <button
+                onClick={handleWriteReview}
+                className="w-64 py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700"
+              >
+                Write a Review
+              </button>
+            </div>
           </div>
 
           {/* Review Dialog */}
@@ -402,28 +392,28 @@ const ProductDetail = () => {
         </div>
       </div>
       {/* Recently Viewed Section */}
-{recentlyViewed.length > 0 && (
-  <div className="mt-12 max-w-7xl mx-auto p-9 pt-0">
-    <h2 className="text-3xl font-semibold text-gray-900 mb-6">Recently Viewed</h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {recentlyViewed.map((item) => (
-        <Link key={item.productId} to={`/product/${item.productId}`}>
-          <div className="bg-white shadow-lg rounded-xl overflow-hidden">
-            <img 
-              src={item.img} 
-              alt={item.name} 
-              className="w-full h-64 object-cover" 
-            />
-            <div className="p-6">
-              <h3 className="text-xl font-bold text-gray-900">{item.name}</h3>
-              <p className="text-lg font-semibold text-pink-600">{item.price}</p>
-            </div>
+      {recentlyViewed.length > 0 && (
+        <div className="mt-12 max-w-7xl mx-auto p-9 pt-0">
+          <h2 className="text-3xl font-semibold text-gray-900 mb-6">Recently Viewed</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {recentlyViewed.map((item) => (
+              <Link key={item.productId} to={`/product/${item.productId}`}>
+                <div className="bg-white shadow-lg rounded-xl overflow-hidden">
+                  <img 
+                    src={item.img} 
+                    alt={item.name} 
+                    className="w-full h-64 object-cover" 
+                  />
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900">{item.name}</h3>
+                    <p className="text-lg font-semibold text-pink-600">{item.price}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
-        </Link>
-      ))}
-    </div>
-  </div>
-)}
+        </div>
+      )}
     </>
   );
 };

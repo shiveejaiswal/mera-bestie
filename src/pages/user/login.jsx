@@ -31,7 +31,7 @@ const Login = () => {
       <Helmet>
         <title>Login | Mera Bestie</title>
       </Helmet>
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 to-pink-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 to-pink-100 flex items-center justify-center p-4 mt-16">
         <div className="fixed top-0 left-0 w-full z-50">
           <Navbar />
         </div>
