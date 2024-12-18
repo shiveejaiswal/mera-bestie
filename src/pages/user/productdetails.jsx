@@ -125,7 +125,6 @@ const ProductDetail = () => {
       setQuantity(newQuantity);
     }
   };
-
   const handleAddToCart = async () => {
     const userId = sessionStorage.getItem('userId');
     
@@ -140,7 +139,7 @@ const ProductDetail = () => {
     }
 
     try {
-      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/add-to-cart', {
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/addtocart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -148,13 +147,13 @@ const ProductDetail = () => {
         body: JSON.stringify({
           userId,
           productId,
-          quantity
+          productQty: quantity
         }),
       });
       
       const data = await response.json();
       
-      if (data.success && data.message === 'Product added to cart successfully') {
+      if (data.success) {
         setShowAddAnimation(true);
         setTimeout(() => {
           setShowAddAnimation(false);
@@ -172,10 +171,12 @@ const ProductDetail = () => {
             }
           );
         }, 1500);
+      } else {
+        throw new Error(data.message || 'Failed to add to cart');
       }
     } catch (error) {
       console.error('Error adding to cart:', error);
-      toast.error('Failed to add item to cart');
+      toast.error(error.message || 'Failed to add item to cart');
     }
   };
 
