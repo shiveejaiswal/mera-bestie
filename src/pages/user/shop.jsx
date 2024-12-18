@@ -16,18 +16,18 @@ const Shop = ({ category }) => {
   const [loading, setLoading] = useState(true); 
 
   const categories = [
-    { name: 'Couple Gifts', img: 'https://th.bing.com/th/id/OIG4..gTkczkAHWyHb1BcyEKW?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn' },
-    { name: 'Birthday Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-royal-rose-extravaganza-280964-m.jpg' },
-    { name: 'Anniversary Gifts', img: 'https://th.bing.com/th/id/OIG1.eKK.1P1RMbR2LgtAkCbb?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn' },
-    { name: 'Personalized Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-peach-and-pink-flowers-in-a-mug-188278-m.jpg' },
-    { name: 'Corporate Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-corporate-essentials-ensemble-278928-m.jpg' },
-    { name: 'Festive Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-festive-elegance-267303-m.jpg' },
-    { name: 'DIY Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-personalized-diy-plushie-making-hamper-387950-m.jpg' },
-    { name: 'Eco-friendly Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-sustainable-eco-friendly-3d-printed-curvy-table-lamp-304751-m.jpg' },
-    { name: 'Luxury Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-luxury-raksha-bandhan-bhaiya-bhabhi-hamper-300859-m.jpg' },
-    { name: 'Handmade Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-led-personalized-christmas-lamp-196860-m.jpg' },
-    { name: 'Gourmet Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-personalized-gourmet-diwali-hamper-189222-m.jpg' },
-    { name: 'Fashion Accessories', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-modish-fashion-necklace-25631-m.jpg' },
+    // { name: 'Couple Gifts', img: 'https://th.bing.com/th/id/OIG4..gTkczkAHWyHb1BcyEKW?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn' },
+    // { name: 'Birthday Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-royal-rose-extravaganza-280964-m.jpg' },
+    // { name: 'Anniversary Gifts', img: 'https://th.bing.com/th/id/OIG1.eKK.1P1RMbR2LgtAkCbb?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn' },
+    // { name: 'Personalized Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-peach-and-pink-flowers-in-a-mug-188278-m.jpg' },
+    // { name: 'Corporate Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-corporate-essentials-ensemble-278928-m.jpg' },
+    // { name: 'Festive Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-festive-elegance-267303-m.jpg' },
+    // { name: 'DIY Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-personalized-diy-plushie-making-hamper-387950-m.jpg' },
+    // { name: 'Eco-friendly Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-sustainable-eco-friendly-3d-printed-curvy-table-lamp-304751-m.jpg' },
+    // { name: 'Luxury Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-luxury-raksha-bandhan-bhaiya-bhabhi-hamper-300859-m.jpg' },
+    // { name: 'Handmade Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt7prodlp/products/p-led-personalized-christmas-lamp-196860-m.jpg' },
+    // { name: 'Gourmet Gifts', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-personalized-gourmet-diwali-hamper-189222-m.jpg' },
+    // { name: 'Fashion Accessories', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-modish-fashion-necklace-25631-m.jpg' },
     { name: 'Books', img: "https://tse2.mm.bing.net/th?id=OIP.uyi1Q5l2H8Zf9APJQplJfQHaEK&pid=Api&P=0&h=180" },
     { name: 'Gift Boxes', img: "http://images4.fanpop.com/image/photos/22200000/Christmas-gifts-christmas-gifts-22231235-2048-2048.jpg" },
     { name: 'Stationery', img: "https://tse1.mm.bing.net/th?id=OIP.UCpcTmMMOdXTF6WAhtD94QHaH0&pid=Api&P=0&h=180" },
@@ -101,7 +101,7 @@ const Shop = ({ category }) => {
       <Helmet>
         <title>Shop | Mera Bestie</title>
       </Helmet>
-      <div className="bg-gradient-to-b from-pink-50 to-pink-100 min-h-screen relative">
+      <div className="bg-gradient-to-b from-pink-50 to-pink-100 min-h-screen relative mt-16">
         <Navbar className="sticky top-0 z-50 bg-white shadow-md" />
 
         {/* Toggle Menu */}

@@ -9,7 +9,7 @@ const NotFoundPage = () => {
       <Helmet>
         <title>404 | Mera Bestie</title>
       </Helmet>
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-4 overflow-hidden relative">
+      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-4 overflow-hidden relative mt-16">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-pink-200 rounded-full blur-3xl filter" />

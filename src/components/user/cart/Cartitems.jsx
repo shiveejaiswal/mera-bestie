@@ -25,7 +25,14 @@ const CartItems = () => {
       }
 
       try {
-        const cartResponse = await fetch(`https://ecommercebackend-8gx8.onrender.com/cart/${userId}`);
+        // First fetch cart data
+        const cartResponse = await fetch(`https://ecommercebackend-8gx8.onrender.com/cart/get-cart`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userId })
+        });
         const cartData = await cartResponse.json();
 
         if (!cartData.success) {
@@ -34,27 +41,31 @@ const CartItems = () => {
           return;
         }
 
-        const groupedItems = cartData.cart.reduce((acc, item) => {
-          if (!acc[item.productId]) {
-            acc[item.productId] = {
-              productId: item.productId,
-              productQty: item.productQty
-            };
-          } else {
-            acc[item.productId].productQty += item.productQty;
-          }
+        // Create a map to track unique products and their counts
+        const productCountMap = cartData.cart.productsInCart.reduce((acc, item) => {
+          acc[item.productId] = (acc[item.productId] || 0) + 1;
           return acc;
         }, {});
 
-        const productPromises = Object.values(groupedItems).map(async (item) => {
-          const productResponse = await fetch(`https://ecommercebackend-8gx8.onrender.com/product/${item.productId}`);
+        // Get unique product IDs
+        const uniqueProductIds = [...new Set(cartData.cart.productsInCart.map(item => item.productId))];
+
+        // Get product details for each unique product
+        const productPromises = uniqueProductIds.map(async (productId) => {
+          const productResponse = await fetch('https://ecommercebackend-8gx8.onrender.com/:productId', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ productId })
+          });
           const productData = await productResponse.json();
-          
+
           if (productData.success) {
             return {
               ...productData.product,
-              quantity: item.productQty,
-              cartItemId: item._id
+              quantity: productCountMap[productId], // Set quantity from the count map
+              cartItemId: cartData.cart.productsInCart.find(item => item.productId === productId)._id
             };
           }
           return null;

@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  FaSearch, FaTimes, FaBars, FaUser, FaHeart, FaShoppingCart, 
-  FaGift, FaHome, FaStore, FaEnvelope, FaChevronDown
+  FaSearch, FaTimes, FaBars, FaUser, FaShoppingCart, FaGift
 } from "react-icons/fa";
 import SearchBar from "./SearchBar";
 
@@ -13,7 +12,6 @@ const ProfessionalNavbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [userName, setUserName] = useState("");
   const [scrolled, setScrolled] = useState(false);
-  const [isSellerLoginOpen, setIsSellerLoginOpen] = useState(false);
   const location = useLocation();
   const [cartItemCount, setCartItemCount] = useState(0);
   const navigate = useNavigate();
@@ -21,24 +19,38 @@ const ProfessionalNavbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
-  const toggleSellerLogin = () => setIsSellerLoginOpen(!isSellerLoginOpen);
   const isActive = (path) => location.pathname === path;
   const searchRef = useRef();
 
   useEffect(() => {
     const fetchCartItems = async () => {
-      var total = 0;
       const userId = sessionStorage.getItem("userId");
       if (!userId) return;
-      const cartResponse = await fetch(
-        `https://ecommercebackend-8gx8.onrender.com/cart/${userId}`
-      );
-      const cartData = await cartResponse.json();
-      cartData.cart?.forEach((item) => {
-        total = total + item.productQty;
-      });
-      setCartItemCount(total);
+
+      try {
+        const cartResponse = await fetch(
+          `https://ecommercebackend-8gx8.onrender.com/cart/get-cart`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId })
+          }
+        );
+        const cartData = await cartResponse.json();
+        
+        if (cartData.success && cartData.cart && Array.isArray(cartData.cart.productsInCart)) {
+          const total = cartData.cart.productsInCart.reduce((sum, item) => sum + 1, 0);
+          setCartItemCount(total);
+        } else {
+          setCartItemCount(0);
+        }
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+        setCartItemCount(0);
+      }
     };
+
     fetchCartItems();
   }, []);
 
@@ -97,21 +109,6 @@ const ProfessionalNavbar = () => {
     window.location.reload();
   };
 
-  const handleSellerLogin = (e) => {
-    e.preventDefault();
-    
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
-    if (!email || !password) {
-      alert("Please fill in both email and password.");
-      return;
-    }
-
-    sessionStorage.setItem("userId", email);
-    navigate("/admin");
-  };
-
   const userId = sessionStorage.getItem("userId");
 
   const menuVariants = {
@@ -147,23 +144,9 @@ const ProfessionalNavbar = () => {
     })
   };
 
-  const mobileLinks = [
-    { path: "/shop", name: "Shop" },
-    { path: "/notepads", name: "Notepads" },
-    { path: "/sticky-notes", name: "Sticky Notes" },
-    { path: "/planners", name: "Planners" },
-    { path: "/notebooks", name: "Notebooks" },
-    { path: "/stickers", name: "Stickers" },
-    { path: "/keychains", name: "Keychains" },
-    { path: "/magnetic-bookmarks", name: "Magnetic Bookmarks" },
-    { path: "/wall-decor", name: "Wall Decor" },
-    { path: "/phone-cases", name: "Phone Cases" }
-  ];
-
-  const desktopLinks = [
+  const navLinks = [
     { path: "/HomePage", name: "HOME" },
     { path: "/shop", name: "SHOP" },
-    // { path: "/OccasionsPage", name: "OCCASIONS" },
     { path: "/contact", name: "CONTACT" },
     { path: "/about", name: "ABOUT" }
   ];
@@ -188,7 +171,6 @@ const ProfessionalNavbar = () => {
           </span>
         </div>
       </div>
-
       {/* Main Navigation */}
       <div className="bg-white border-b">
         <div className="max-w-[1200px] mx-auto px-4 lg:px-0">
@@ -196,7 +178,7 @@ const ProfessionalNavbar = () => {
             {/* Mobile Menu Toggle */}
             <button
               onClick={toggleMenu}
-              className="md:hidden text-black hover:text-pink-600 transition"
+              className="lg:hidden text-black hover:text-pink-600 transition"
             >
               <FaBars className="w-6 h-6" />
             </button>
@@ -204,29 +186,26 @@ const ProfessionalNavbar = () => {
             {/* Logo */}
             <Link
               to="/HomePage"
-              className="text-2xl flex items-center hover:opacity-80 transition mx-auto md:mx-0"
+              className="text-2xl flex items-center hover:opacity-80 transition mx-auto lg:mx-0"
             >
               <span className="font-['Bodoni_MT'] font-bold text-3xl sm:text-4xl text-pink-600">
                 MERA Bestie
               </span>
             </Link>
 
-            {/* Desktop Navigation Menu */}
-            <div className="hidden md:flex space-x-8 text-sm font-medium">
-              {desktopLinks.map(({ path, name }) => (
+            {/* Desktop Navigation Links */}
+            <div className="hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2">
+              {navLinks.map(({ path, name }) => (
                 <Link
                   key={path}
                   to={path}
-                  className={`relative group transition-colors ${
-                    isActive(path) ? "text-pink-600" : "text-gray-800"
-                  } hover:text-pink-600`}
+                  className={`px-4 py-2 mx-2 ${
+                    isActive(path)
+                      ? "text-pink-600"
+                      : "text-gray-800 hover:text-pink-600"
+                  } transition-colors duration-200`}
                 >
                   {name}
-                  <span
-                    className={`absolute bottom-[-4px] left-0 w-0 h-0.5 bg-pink-600 transition-all duration-300 group-hover:w-full ${
-                      isActive(path) ? "w-full" : ""
-                    }`}
-                  />
                 </Link>
               ))}
             </div>
@@ -252,8 +231,6 @@ const ProfessionalNavbar = () => {
                   </span>
                 )}
               </Link>
-
-            
 
               <div className="relative">
                 <button
@@ -303,12 +280,12 @@ const ProfessionalNavbar = () => {
                           Sign Up
                         </Link>
                         <Link
-                        to='/seller/signup'
-                        className="block w-full text-left px-4 py-2 hover:bg-pink-50 transition"
+                          to='/seller/login'
+                          className="block w-full text-left px-4 py-2 hover:bg-pink-50 transition"
                         >
                           Seller
                         </Link>
-                                             </>
+                      </>
                     )}
                   </motion.div>
                 )}
@@ -326,7 +303,7 @@ const ProfessionalNavbar = () => {
             animate="open"
             exit="closed"
             variants={menuVariants}
-            className="md:hidden fixed inset-0 z-50 bg-[#fdf9f3]"
+            className="lg:hidden fixed inset-0 z-50 bg-[#fdf9f3]"
           >
             <div className="flex justify-between items-center p-4 border-b">
               <Link 
@@ -347,7 +324,7 @@ const ProfessionalNavbar = () => {
             </div>
             <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] p-4">
               <div className="w-full max-w-md space-y-6">
-                {mobileLinks.map(({ path, name }, i) => (
+                {navLinks.map(({ path, name }, i) => (
                   <motion.div
                     key={path}
                     custom={i}
@@ -402,12 +379,8 @@ const ProfessionalNavbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Seller Login Modal */}
-      
     </nav>
   );
 };
 
 export default ProfessionalNavbar;
-

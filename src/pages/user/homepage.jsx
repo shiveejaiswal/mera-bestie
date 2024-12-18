@@ -163,7 +163,7 @@ const HomePage = () => {
       </Helmet>
       <ScrollProgress />
       <Navbar />
-      <div className="w-full bg-white overflow-hidden">
+      <div className="w-full bg-white overflow-hidden mt-16">
         {/* Hero Section with Modern Glassmorphism Design */}
 
        {/* Product Categories Section with Refined Styling */}

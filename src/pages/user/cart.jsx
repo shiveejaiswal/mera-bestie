@@ -15,7 +15,7 @@ const ShoppingCartPage = () => {
       </Helmet>
       <Navbar />
       
-      <div className="container mx-auto px-4 py-8 space-y-6">
+      <div className="container mx-auto px-4 py-8 space-y-6 mt-16">
         <div className="bg-white shadow-md rounded-lg">
           <div className="p-4 flex items-center justify-between">
             <h1 className="text-2xl font-bold text-gray-800">Shopping Cart</h1>
