@@ -163,7 +163,7 @@ const ProfessionalNavbar = () => {
   const desktopLinks = [
     { path: "/HomePage", name: "HOME" },
     { path: "/shop", name: "SHOP" },
-    { path: "/OccasionsPage", name: "OCCASIONS" },
+    // { path: "/OccasionsPage", name: "OCCASIONS" },
     { path: "/contact", name: "CONTACT" },
     { path: "/about", name: "ABOUT" }
   ];
