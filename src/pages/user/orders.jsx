@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
+import { motion } from 'framer-motion';
 import Navbar from '../../components/user/navbar/navbar';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -61,38 +63,72 @@ const Order = () => {
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-pink-50">
+      <div className="min-h-screen bg-gradient-to-br from-pink-100 to-purple-100">
         <Navbar />
-        <div className="flex justify-center items-center h-[calc(100vh-64px)]">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-pink-600"></div>
-          <p className="ml-4 text-lg text-gray-600">Fetching your orders...</p>
+        <div className="flex flex-col justify-center items-center h-[calc(100vh-64px)]">
+          <motion.div 
+            className="w-16 h-16 border-4 border-pink-600 border-t-transparent rounded-full"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mt-4 text-lg text-gray-700 font-medium"
+          >
+            Fetching your orders...
+          </motion.p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 to-purple-100">
       <Helmet>
         <title>My Orders | Mera Bestie</title>
       </Helmet>
       <Navbar />
       
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-white shadow-md rounded-lg mb-6">
-          <div className="p-4">
-            <h1 className="text-2xl font-bold text-gray-800">My Orders</h1>
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white shadow-lg rounded-lg mb-8 overflow-hidden"
+        >
+          <div className="bg-gradient-to-r from-pink-500 to-purple-500 p-6">
+            <h1 className="text-3xl font-bold text-white">My Orders</h1>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           {orders.length === 0 ? (
-            <div className="bg-white p-8 rounded-lg shadow-md text-center">
-              <p className="text-gray-600 text-lg">No orders found</p>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white p-8 rounded-lg shadow-md text-center"
+            >
+              <p className="text-gray-600 text-xl">No orders found</p>
+              <button 
+                onClick={() => navigate('/shop')} 
+                className="mt-4 px-6 py-2 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition-colors duration-300"
+              >
+                Start Shopping
+              </button>
+            </motion.div>
           ) : (
-            orders.map((order) => (
-              <OrderCard key={order.orderId} order={order} fetchProductDetails={fetchProductDetails} />
+            orders.map((order, index) => (
+              <motion.div
+                key={order.orderId}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <OrderCard order={order} fetchProductDetails={fetchProductDetails} />
+              </motion.div>
             ))
           )}
         </div>
@@ -103,6 +139,7 @@ const Order = () => {
 
 const OrderCard = ({ order, fetchProductDetails }) => {
   const [products, setProducts] = useState([]);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -115,36 +152,59 @@ const OrderCard = ({ order, fetchProductDetails }) => {
   }, [order.productIds, fetchProductDetails]);
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 transition-transform hover:scale-[1.02]">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-        <div>
-          <h3 className="text-sm font-semibold text-gray-500">Order Date</h3>
-          <p className="text-gray-800">{order.date} {order.time}</p>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
+      <div className="p-6 cursor-pointer" onClick={() => setExpanded(!expanded)}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+          <div>
+            <h3 className="text-sm font-semibold text-gray-500">Order Date</h3>
+            <p className="text-gray-800 font-medium">{order.date} {order.time}</p>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-gray-500">Order Total</h3>
+            <p className="text-gray-800 font-medium">₹{order.price}</p>
+          </div>
+          <div className="md:col-span-2">
+            <h3 className="text-sm font-semibold text-gray-500">Shipping Address</h3>
+            <p className="text-gray-800 font-medium">{order.address}</p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-sm font-semibold text-gray-500">Order Total</h3>
-          <p className="text-gray-800">₹{order.price}</p>
-        </div>
-        <div className="md:col-span-2">
-          <h3 className="text-sm font-semibold text-gray-500">Shipping Address</h3>
-          <p className="text-gray-800">{order.address}</p>
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold text-gray-700">Products Ordered</h3>
+          {expanded ? (
+            <ChevronUpIcon className="w-5 h-5 text-gray-500" />
+          ) : (
+            <ChevronDownIcon className="w-5 h-5 text-gray-500" />
+          )}
         </div>
       </div>
       
-      <div>
-        <h3 className="text-sm font-semibold text-gray-500 mb-2">Products Ordered</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {products.map((product, index) => (
-            <div key={index} className="bg-pink-50 p-3 rounded-md flex items-center space-x-3">
-              <img src={product.img} alt={product.name} className="w-16 h-16 object-cover rounded" />
-              <div>
-                <p className="text-gray-800 font-semibold">{product.name}</p>
-                <p className="text-gray-600 text-sm">{product.price}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {expanded && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3 }}
+          className="px-6 pb-6"
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {products.map((product, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="bg-gradient-to-br from-pink-100 to-purple-100 p-4 rounded-lg flex items-center space-x-4 shadow-sm hover:shadow-md transition-shadow duration-300"
+              >
+                <img src={product.img} alt={product.name} className="w-20 h-20 object-cover rounded-md" />
+                <div>
+                  <p className="text-gray-800 font-semibold">{product.name}</p>
+                  <p className="text-pink-600 font-medium">{product.price}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 };
