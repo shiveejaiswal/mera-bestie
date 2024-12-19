@@ -122,7 +122,7 @@ const HomePage = () => {
     {
       img: "https://images.pexels.com/photos/269887/pexels-photo-269887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", // Gift Boxes
       title: "Gift Boxes",
-      category: "Gift Boxes",
+      category: "Gift-Boxes",
       description: "Huge collection of Gift Boxes for every occasion.",
     },
     {
@@ -171,7 +171,7 @@ const HomePage = () => {
     {
       img: "https://images.pexels.com/photos/269887/pexels-photo-269887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", // Gift Boxes
       title: "Gift Boxes",
-      category: "Gift Boxes"
+      category: "Gift-Boxes"
     },
     {
       img: "https://i.pinimg.com/originals/96/24/6e/96246e3c133e6cb5ae4c7843f9e45b22.jpg", // Stationery
@@ -204,6 +204,7 @@ const HomePage = () => {
           <div className="w-full">
             {/* Removed carousel heading */}
 
+<<<<<<< Updated upstream
             <Carousel
               responsive={categoryResponsive} // Use separate responsive settings
               infinite={true}
@@ -249,6 +250,59 @@ const HomePage = () => {
             </Carousel>
           </div>
         </section>
+=======
+    <Carousel
+      responsive={categoryResponsive} // Use separate responsive settings
+      infinite={true}
+      autoPlay={true}
+      autoPlaySpeed={3000}
+      keyBoardControl={true}
+      customTransition="transform 0.5s ease-in-out"
+      transitionDuration={500}
+      containerClass="carousel-container w-full" // Set carousel to full width
+      removeArrowOnDeviceType={[]} // Show arrows on all device types
+      showDots={false}
+      arrows={true} // Enable navigation arrows
+      dotListClass="custom-dot-list-style flex justify-center mt-4"
+      itemClass="carousel-item" // Removed padding class
+    >
+      {productCategories.map((category, index) => (
+        <Link
+        to={`/${category.category}`} // Updated link to include /category
+        key={index}
+          className="relative bg-white rounded-lg shadow-md hover:shadow-xl transition-all transform hover:scale-105"
+        >
+          <img
+            src={category.img}
+            alt={category.title}
+            className="object-cover w-full h-96 transition-transform duration-500 ease-in-out transform hover:scale-110" // Increased height from h-80 to h-96
+          />
+          {/* Overlay with Gradient, Centered Text, and Button */}
+<div className="absolute inset-0 flex flex-col justify-end items-center bg-gradient-to-t from-black via-transparent to-transparent opacity-85 pt-4 pb-8">
+  <h3 className="text-5xl font-extrabold text-white text-center mb-2">{category.title}</h3> {/* Reduced margin */}
+  <button
+    onClick={() => window.location.href = `/${category.category}`}
+    className="mt-4 bg-pink-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-pink-700 transition"
+  >
+    Shop Now
+  </button>
+</div>
+        </Link>
+      ))}
+    </Carousel>
+
+    {/* Optional: Remove the additional "Shop Now" button below the carousel if not needed */}
+    {/* <div className="text-center mt-8">
+      <button
+        onClick={() => window.location.href="#shop"}
+        className="bg-gradient-to-r from-pink-500 to-blue-500 text-white px-6 py-3 rounded-full shadow-lg hover:opacity-90 transition"
+      >
+        Shop Now
+      </button>
+    </div> */}
+  </div>
+</section>
+>>>>>>> Stashed changes
 
         {/* New Arrivals Section */}
         <section className="px-0 py-20 bg-white">
@@ -266,7 +320,7 @@ const HomePage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {newArrivals.map((item, index) => (
                 <Link
-                  to={`/shop?category=${encodeURIComponent(item.category)}`}
+                to={`/${item.category}`} 
                   key={index}
                   className="bg-pink-500 rounded-lg shadow-md hover:shadow-xl transition-all transform hover:scale-105"
                 >
