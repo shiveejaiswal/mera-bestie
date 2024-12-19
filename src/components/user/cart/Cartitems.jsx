@@ -92,7 +92,7 @@ const CartItems = () => {
       try {
         const userId = sessionStorage.getItem('userId');
         const response = await fetch('https://ecommercebackend-8gx8.onrender.com/cart/update-quantity', {
-          method: 'PUT',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
@@ -123,16 +123,18 @@ const CartItems = () => {
   
 
   const handleRemoveItem = async (itemId) => {
+    const item = cartItems.find(item => item._id === itemId);
+
     try {
       const userId = sessionStorage.getItem('userId');
       const response = await fetch('https://ecommercebackend-8gx8.onrender.com/cart/delete-items', {
-        method: 'DELETE',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           userId,
-          productId: itemId
+          productId: item.productId
         })
       });
       
