@@ -67,6 +67,15 @@ const DashboardPage = () => {
                     </div>
                 </div>
             </div>
+            <style>
+                {`
+                    @media (max-width: 1024px) {
+                        .sidebar-logo {
+                            display: none; /* Hide the logo name on mobile */
+                        }
+                    }
+                `}
+            </style>
         </>
     );
 };
