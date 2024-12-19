@@ -197,50 +197,44 @@ const HomePage = () => {
       <ScrollProgress />
       <Navbar />
       <div className="w-full bg-white overflow-hidden mt-16">
-        {/* Hero Section with Modern Glassmorphism Design */}
-
-        {/* Product Categories Section with Refined Styling */}
-        <section className="px-0 pt-0 py-20 bg-gray-50">
+                {/* Product Categories Section */}
+                <section className="px-0 pt-0 py-20 bg-gray-50">
           <div className="w-full">
-            {/* Removed carousel heading */}
-
-<<<<<<< Updated upstream
             <Carousel
-              responsive={categoryResponsive} // Use separate responsive settings
+              responsive={categoryResponsive}
               infinite={true}
               autoPlay={true}
               autoPlaySpeed={3000}
               keyBoardControl={true}
               customTransition="transform 0.5s ease-in-out"
               transitionDuration={500}
-              containerClass="carousel-container relative w-full" // Set carousel to full width
-              removeArrowOnDeviceType={[]} // Show arrows on all device types
+              containerClass="carousel-container relative w-full"
+              removeArrowOnDeviceType={[]}
               showDots={false}
-              arrows={true} // Enable navigation arrows
-              customDot={<CustomDot />} // Use CustomDot component
-              dotListClass="flex justify-center mt-4" // Align dots with flex
-              renderDotsOutside={false} // Ensure dots are inside the carousel
-              customLeftArrow={<CustomLeftArrow />} // Custom Left Arrow
-              customRightArrow={<CustomRightArrow />} // Custom Right Arrow
-              itemClass="carousel-item" // Removed padding class
+              arrows={true}
+              customDot={<CustomDot />}
+              dotListClass="flex justify-center mt-4"
+              renderDotsOutside={false}
+              customLeftArrow={<CustomLeftArrow />}
+              customRightArrow={<CustomRightArrow />}
+              itemClass="carousel-item"
             >
               {productCategories.map((category, index) => (
                 <Link
-                  to={`/shop?category=${encodeURIComponent(category.category)}`}
+                to={`/${category.category}`}
                   key={index}
                   className="relative bg-white rounded-lg shadow-md hover:shadow-xl transition-all transform hover:scale-105"
                 >
                   <img
                     src={category.img}
                     alt={category.title}
-                    className="object-cover w-full h-96 transition-transform duration-500 ease-in-out transform hover:scale-110" // Increased height from h-80 to h-96
+                    className="object-cover w-full h-96 transition-transform duration-500 ease-in-out transform hover:scale-110"
                   />
-                  {/* Overlay with Gradient, Centered Text, and Button */}
                   <div className="absolute inset-0 flex flex-col justify-end items-center bg-gradient-to-t from-black/85 via-transparent to-transparent pt-4 pb-8">
-                    <h3 className="text-5xl font-extrabold text-white text-center mb-2">{category.title}</h3> {/* Opacity fixed to 100% */}
+                    <h3 className="text-5xl font-extrabold text-white text-center mb-2">{category.title}</h3>
                     <button
-                      onClick={() => window.location.href="/shop"}
-                      className="mt-4 bg-pink-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-pink-700 transition opacity-100"
+                      onClick={() => (window.location.href = `/${category.category}`)}
+                      className="mt-4 bg-pink-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-pink-700 transition"
                     >
                       Shop Now
                     </button>
@@ -250,46 +244,12 @@ const HomePage = () => {
             </Carousel>
           </div>
         </section>
-=======
-    <Carousel
-      responsive={categoryResponsive} // Use separate responsive settings
-      infinite={true}
-      autoPlay={true}
-      autoPlaySpeed={3000}
-      keyBoardControl={true}
-      customTransition="transform 0.5s ease-in-out"
-      transitionDuration={500}
-      containerClass="carousel-container w-full" // Set carousel to full width
-      removeArrowOnDeviceType={[]} // Show arrows on all device types
-      showDots={false}
-      arrows={true} // Enable navigation arrows
-      dotListClass="custom-dot-list-style flex justify-center mt-4"
-      itemClass="carousel-item" // Removed padding class
-    >
-      {productCategories.map((category, index) => (
-        <Link
-        to={`/${category.category}`} // Updated link to include /category
-        key={index}
-          className="relative bg-white rounded-lg shadow-md hover:shadow-xl transition-all transform hover:scale-105"
-        >
-          <img
-            src={category.img}
-            alt={category.title}
-            className="object-cover w-full h-96 transition-transform duration-500 ease-in-out transform hover:scale-110" // Increased height from h-80 to h-96
-          />
-          {/* Overlay with Gradient, Centered Text, and Button */}
-<div className="absolute inset-0 flex flex-col justify-end items-center bg-gradient-to-t from-black via-transparent to-transparent opacity-85 pt-4 pb-8">
-  <h3 className="text-5xl font-extrabold text-white text-center mb-2">{category.title}</h3> {/* Reduced margin */}
-  <button
-    onClick={() => window.location.href = `/${category.category}`}
-    className="mt-4 bg-pink-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-pink-700 transition"
-  >
-    Shop Now
-  </button>
-</div>
-        </Link>
-      ))}
-    </Carousel>
+
+    
+        {/* Hero Section with Modern Glassmorphism Design */}
+
+        {/* Product Categories Section with Refined Styling */}
+        {/* Removed duplicate closing section tag */}
 
     {/* Optional: Remove the additional "Shop Now" button below the carousel if not needed */}
     {/* <div className="text-center mt-8">
@@ -300,12 +260,8 @@ const HomePage = () => {
         Shop Now
       </button>
     </div> */}
-  </div>
-</section>
->>>>>>> Stashed changes
 
-        {/* New Arrivals Section */}
-        <section className="px-0 py-20 bg-white">
+<section className="px-0 py-20 bg-white">
           <div className="container mx-auto max-w-6xl">
             <motion.div
               className="text-center mb-12"
@@ -320,7 +276,7 @@ const HomePage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {newArrivals.map((item, index) => (
                 <Link
-                to={`/${item.category}`} 
+                  to={`/${item.category}`}
                   key={index}
                   className="bg-pink-500 rounded-lg shadow-md hover:shadow-xl transition-all transform hover:scale-105"
                 >
@@ -340,6 +296,11 @@ const HomePage = () => {
           </div>
         </section>
 
+
+
+
+        {/* New Arrivals Section */}
+        
         
 <section
   className="relative min-h-[80vh] flex items-center py-16 sm:py-20 md:py-24 lg:py-28" // Updated padding
