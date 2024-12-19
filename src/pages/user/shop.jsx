@@ -14,8 +14,6 @@ const Shop = ({ category }) => {
   const [loading, setLoading] = useState(true);
 
   const categories = [
-    
-   
     { name: 'Fashion Accessories', img: 'https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p-modish-fashion-necklace-25631-m.jpg' },
     { name: 'Books', img: "https://tse2.mm.bing.net/th?id=OIP.uyi1Q5l2H8Zf9APJQplJfQHaEK&pid=Api&P=0&h=180" },
     { name: 'Gift Boxes', img: "http://images4.fanpop.com/image/photos/22200000/Christmas-gifts-christmas-gifts-22231235-2048-2048.jpg" },
@@ -95,9 +93,8 @@ const Shop = ({ category }) => {
       <div className="bg-gradient-to-b from-pink-50 to-pink-100 min-h-screen">
         <Navbar className="sticky top-0 z-50 bg-white shadow-md" />
 
-
         {/* Categories Grid */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 my-14">
           <h2 className="text-3xl font-bold text-pink-900 text-center mb-8">
             Shop by Category
           </h2>
@@ -128,7 +125,7 @@ const Shop = ({ category }) => {
         {/* Products Grid */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <h2 className="text-3xl font-bold text-pink-900 text-center mb-8">
-            Explore More
+            {selectedCategory !== 'all' ? `Search By Categories: ${selectedCategory}` : 'Explore More'}
           </h2>
           <motion.div
             className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
