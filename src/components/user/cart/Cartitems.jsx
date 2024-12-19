@@ -64,7 +64,7 @@ const CartItems = () => {
           if (productData.success) {
             return {
               ...productData.product,
-              quantity: productCountMap[productId], // Set quantity from the count map
+              quantity: cartData.cart.productsInCart.find(item => item.productId === productId).productQty, // Set quantity from the count map
               cartItemId: cartData.cart.productsInCart.find(item => item.productId === productId)._id
             };
           }
