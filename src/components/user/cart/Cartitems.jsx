@@ -92,7 +92,7 @@ const CartItems = () => {
       try {
         const userId = sessionStorage.getItem('userId');
         const response = await fetch('https://ecommercebackend-8gx8.onrender.com/cart/update-quantity', {
-          method: 'POST',
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
