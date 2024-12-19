@@ -216,9 +216,10 @@ const Checkout = () => {
       <Helmet>
         <title>Checkout | Mera Bestie</title>
       </Helmet>
-      <Navbar/>
+      <Navbar />
       
-      <div className="container mx-auto px-4 py-8">
+      {/* Increased spacing between Navbar and the container */}
+      <div className="container mx-auto px-4 py-8 mt-12">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Address Section */}
           <div className="md:w-2/3 bg-white rounded-2xl shadow-lg p-8">
@@ -226,6 +227,8 @@ const Checkout = () => {
               <MapPin className="text-pink-600 w-8 h-8" />
               <h2 className="text-3xl font-bold text-gray-800">Shipping Details</h2>
             </div>
+  
+  
             
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
