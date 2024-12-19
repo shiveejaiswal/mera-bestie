@@ -87,22 +87,22 @@ const CartItems = () => {
   const handleQuantityChange = async (itemId, change) => {
     const item = cartItems.find(item => item._id === itemId);
     const newQuantity = item.quantity + change;
-    
+  
     if (newQuantity >= 1) {
       try {
         const userId = sessionStorage.getItem('userId');
-        const response = await fetch('https://ecommercebackend-8gx8.onrender.com/update-quantity', {
+        const response = await fetch('https://ecommercebackend-8gx8.onrender.com/cart/update-quantity', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             userId,
-            productId: itemId,
+            productId: item.productId, // Use productId here instead of itemId
             productQty: newQuantity
           })
         });
-
+  
         const data = await response.json();
         if (data.success) {
           const updatedItems = cartItems.map(item => {
@@ -112,17 +112,20 @@ const CartItems = () => {
             return item;
           });
           setCartItems(updatedItems);
+        } else {
+          console.error('Failed to update quantity:', data.message);
         }
       } catch (err) {
         console.error('Error updating quantity:', err);
       }
     }
   };
+  
 
   const handleRemoveItem = async (itemId) => {
     try {
       const userId = sessionStorage.getItem('userId');
-      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/delete-items', {
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/cart/delete-items', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -152,7 +155,7 @@ const CartItems = () => {
 
   const handleVoucherRedeem = async () => {
     try {
-      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/verify-coupon', {
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/coupon/verify-coupon', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
