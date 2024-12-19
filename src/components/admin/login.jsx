@@ -21,7 +21,7 @@ const AdminLogin = () => {
     }
 
     try {
-      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/api/seller/login', {
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/admin/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -68,7 +68,7 @@ const Sidebar = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch('http://localhost:5000/seller/logout', {
+            const response = await fetch('https://ecommercebackend-8gx8.onrender.com/admin/logout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -7,7 +7,9 @@ import {
     Package, 
     CheckCircle, 
     XCircle 
+    
 } from 'lucide-react';
+import { FaRupeeSign } from 'react-icons/fa';
 
 const Dashboard = () => {
     const [ordersData, setOrdersData] = useState([]);
@@ -120,7 +122,7 @@ const Dashboard = () => {
                             change: 100 
                         },
                         { 
-                            icon: <DollarSign className="text-pink-500" />, 
+                            icon: <FaRupeeSign className="text-pink-500" />, 
                             title: "Revenue Generated", 
                             value: `₹${totalRevenue.toLocaleString()}`, 
                             change: 15 

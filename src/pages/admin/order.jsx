@@ -99,7 +99,7 @@ const Orders = () => {
       }
 
       try {
-        const response = await fetch('https://ecommercebackend-8gx8.onrender.com/verify-seller', {
+        const response = await fetch('https://ecommercebackend-8gx8.onrender.com/admin/verify-seller', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -253,7 +253,7 @@ const Orders = () => {
                     {order.email}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${order.price}
+                    Rs.{order.price}
                   </td>
                   <td className="px-6 py-4">
                     <OrderStatusBadge status={order.status} />
