@@ -147,7 +147,7 @@ const ProductDetail = () => {
     }
   
     try {
-      const response = await fetch('http://localhost:5000/cart/addtocart', {
+      const response = await fetch('https://ecommercebackend-8gx8.onrender.com/cart/addtocart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
